@@ -6,7 +6,7 @@ interface ProductCardProps {
   onClick: (product: Product) => void;
 }
 
-export function ProductCard({ product, onClick }: ProductCardProps) {
+export const ProductCard: React.FC<ProductCardProps> = ({ product, onClick }) => {
   const isRecentlyAdded = useMemo(() => {
     const addedDate = new Date(product.dateAdded);
     const thirtyDaysAgo = new Date();

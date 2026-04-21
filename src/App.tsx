@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { Home } from './pages/Home';
@@ -17,10 +18,9 @@ import { AuthModal } from './components/AuthModal';
 import { auth } from './firebase';
 import { onAuthStateChanged, signOut, User } from 'firebase/auth';
 
-type Page = 'home' | 'collection' | 'new-arrivals' | 'product' | 'cart' | 'profile' | 'orders' | 'delete-account' | 'privacy-policy' | 'terms-of-service';
-
-export default function App() {
-  const [currentPage, setCurrentPage] = useState<Page>('home');
+function AppContent() {
+  const navigate = useNavigate();
+  const location = useLocation();
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [cartItems, setCartItems] = useState<Product[]>([]);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
@@ -35,37 +35,51 @@ export default function App() {
       } else {
         setIsLoggedIn(false);
         setCurrentUser(null);
-        if (currentPage === 'profile') {
-          setCurrentPage('home');
+        if (location.pathname === '/profile') {
+          navigate('/');
         }
       }
     });
 
     return () => unsubscribe();
-  }, [currentPage]);
+  }, [location.pathname, navigate]);
 
   const handleLogout = async () => {
     try {
       await signOut(auth);
+      navigate('/');
     } catch (err) {
       console.error('Error logging out:', err);
     }
   };
 
   const handleNavigate = (page: string) => {
-    setCurrentPage(page as Page);
+    const pageToPath: Record<string, string> = {
+      'home': '/',
+      'collection': '/collection',
+      'new-arrivals': '/new-arrivals',
+      'product': '/product',
+      'cart': '/cart',
+      'profile': '/profile',
+      'orders': '/orders',
+      'delete-account': '/delete-account',
+      'privacy-policy': '/privacy',
+      'terms-of-service': '/terms'
+    };
+    const path = pageToPath[page] || `/${page}`;
+    navigate(path);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleProductClick = (product: Product) => {
     setSelectedProduct(product);
-    setCurrentPage('product');
+    navigate('/product');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleAddToCart = (product: Product) => {
     setCartItems(prev => [...prev, product]);
-    setCurrentPage('cart');
+    navigate('/cart');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -77,7 +91,7 @@ export default function App() {
     <div className="min-h-screen flex flex-col font-arabic">
       <Navbar 
         cartCount={cartItems.length} 
-        currentPage={currentPage} 
+        currentPage={location.pathname === '/' ? 'home' : location.pathname.substring(1)} 
         onNavigate={handleNavigate} 
         onProductClick={handleProductClick}
         isLoggedIn={isLoggedIn}
@@ -89,58 +103,64 @@ export default function App() {
       
       <main className="flex-grow flex w-full">
         <AnimatePresence mode="wait">
-          {currentPage === 'home' && (
-            <Home key="home" onNavigate={handleNavigate} onProductClick={handleProductClick} />
-          )}
-          {currentPage === 'collection' && (
-            <Collection key="collection" onProductClick={handleProductClick} />
-          )}
-          {currentPage === 'new-arrivals' && (
-            <NewArrivals key="new-arrivals" onProductClick={handleProductClick} />
-          )}
-          {currentPage === 'product' && selectedProduct && (
-            <ProductPage 
-              key="product" 
-              product={selectedProduct} 
-              onAddToCart={handleAddToCart} 
-              onNavigate={handleNavigate} 
-            />
-          )}
-          {currentPage === 'cart' && (
-            <Cart 
-              key="cart" 
-              cartItems={cartItems} 
-              onNavigate={handleNavigate} 
-              onRemove={handleRemoveFromCart} 
-            />
-          )}
-          {currentPage === 'profile' && isLoggedIn && (
-            <Profile 
-              key="profile" 
-              user={currentUser} 
-              onLogout={handleLogout}
-              onNavigate={handleNavigate}
-            />
-          )}
-          {currentPage === 'orders' && isLoggedIn && (
-            <Orders 
-              key="orders" 
-              user={currentUser} 
-              onNavigate={handleNavigate} 
-            />
-          )}
-          {currentPage === 'delete-account' && isLoggedIn && (
-            <DeleteAccount 
-              key="delete-account" 
-              onNavigate={handleNavigate} 
-            />
-          )}
-          {currentPage === 'privacy-policy' && (
-            <PrivacyPolicy key="privacy-policy" />
-          )}
-          {currentPage === 'terms-of-service' && (
-            <TermsOfService key="terms-of-service" />
-          )}
+          <Routes location={location}>
+            <Route path="/" element={<Home onNavigate={handleNavigate} onProductClick={handleProductClick} />} />
+            <Route path="/collection" element={<Collection onProductClick={handleProductClick} />} />
+            <Route path="/new-arrivals" element={<NewArrivals onProductClick={handleProductClick} />} />
+            <Route path="/product" element={
+              selectedProduct ? (
+                <ProductPage 
+                  product={selectedProduct} 
+                  onAddToCart={handleAddToCart} 
+                  onNavigate={handleNavigate} 
+                />
+              ) : (
+                <Home onNavigate={handleNavigate} onProductClick={handleProductClick} />
+              )
+            } />
+            <Route path="/cart" element={
+              <Cart 
+                cartItems={cartItems} 
+                onNavigate={handleNavigate} 
+                onRemove={handleRemoveFromCart} 
+              />
+            } />
+            <Route path="/profile" element={
+              isLoggedIn ? (
+                <Profile 
+                  user={currentUser} 
+                  onLogout={handleLogout}
+                  onNavigate={handleNavigate}
+                />
+              ) : (
+                <Home onNavigate={handleNavigate} onProductClick={handleProductClick} />
+              )
+            } />
+            <Route path="/orders" element={
+              isLoggedIn ? (
+                <Orders 
+                  user={currentUser} 
+                  onNavigate={handleNavigate} 
+                />
+              ) : (
+                <Home onNavigate={handleNavigate} onProductClick={handleProductClick} />
+              )
+            } />
+            <Route path="/delete-account" element={
+              isLoggedIn ? (
+                <DeleteAccount 
+                  onNavigate={handleNavigate} 
+                />
+              ) : (
+                <Home onNavigate={handleNavigate} onProductClick={handleProductClick} />
+              )
+            } />
+            <Route path="/privacy" element={<PrivacyPolicy />} />
+            <Route path="/terms" element={<TermsOfService />} />
+            {/* Fallback for old paths or typos */}
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/terms-of-service" element={<TermsOfService />} />
+          </Routes>
         </AnimatePresence>
       </main>
 
@@ -151,12 +171,20 @@ export default function App() {
         onClose={() => setIsAuthModalOpen(false)} 
         onLogin={() => {
           setIsAuthModalOpen(false);
-          // Redirect to profile or home
-          setCurrentPage('profile');
+          navigate('/profile');
           window.scrollTo({ top: 0, behavior: 'smooth' });
         }} 
       />
     </div>
   );
 }
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <AppContent />
+    </BrowserRouter>
+  );
+}
+
 
