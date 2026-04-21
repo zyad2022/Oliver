@@ -9,13 +9,15 @@ import { Cart } from './pages/Cart';
 import { Profile } from './pages/Profile';
 import { Orders } from './pages/Orders';
 import { DeleteAccount } from './pages/DeleteAccount';
+import { PrivacyPolicy } from './pages/PrivacyPolicy';
+import { TermsOfService } from './pages/TermsOfService';
 import { Product } from './data';
 import { AnimatePresence } from 'motion/react';
 import { AuthModal } from './components/AuthModal';
 import { auth } from './firebase';
 import { onAuthStateChanged, signOut, User } from 'firebase/auth';
 
-type Page = 'home' | 'collection' | 'new-arrivals' | 'product' | 'cart' | 'profile' | 'orders' | 'delete-account';
+type Page = 'home' | 'collection' | 'new-arrivals' | 'product' | 'cart' | 'profile' | 'orders' | 'delete-account' | 'privacy-policy' | 'terms-of-service';
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState<Page>('home');
@@ -133,10 +135,16 @@ export default function App() {
               onNavigate={handleNavigate} 
             />
           )}
+          {currentPage === 'privacy-policy' && (
+            <PrivacyPolicy key="privacy-policy" />
+          )}
+          {currentPage === 'terms-of-service' && (
+            <TermsOfService key="terms-of-service" />
+          )}
         </AnimatePresence>
       </main>
 
-      <Footer />
+      <Footer onNavigate={handleNavigate} />
 
       <AuthModal 
         isOpen={isAuthModalOpen} 

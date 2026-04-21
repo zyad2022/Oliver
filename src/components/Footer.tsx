@@ -1,6 +1,10 @@
 import React from 'react';
 
-export function Footer() {
+interface FooterProps {
+  onNavigate?: (page: string) => void;
+}
+
+export function Footer({ onNavigate }: FooterProps) {
   return (
     <footer className="bg-[#2D2D2D] text-white pt-16 pb-8 mt-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -35,8 +39,22 @@ export function Footer() {
           
         </div>
 
-        <div className="border-t border-[#444] pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+          <div className="border-t border-[#444] pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-sm text-[#AAA]">© 2024 Oliver. جميع الحقوق محفوظة.</p>
+          <div className="flex gap-6 text-sm text-[#AAA]">
+            <button 
+              onClick={() => onNavigate?.('privacy-policy')}
+              className="hover:text-white transition-colors"
+            >
+              Privacy Policy
+            </button>
+            <button 
+              onClick={() => onNavigate?.('terms-of-service')}
+              className="hover:text-white transition-colors"
+            >
+              Terms of Service
+            </button>
+          </div>
           <div className="flex gap-4">
             {/* Simple social placeholders */}
             <div className="w-10 h-10 rounded-full border border-[#555] flex items-center justify-center hover:bg-natural-accent transition-colors cursor-pointer en-text">En</div>
