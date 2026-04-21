@@ -1,0 +1,91 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Global Catch-all: Deny any unspecified access
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // -------------------------------------------------------------------------
+    // PRIMITIVE DEFINITIONS
+    // -------------------------------------------------------------------------
+    function isSignedIn() { return request.auth != null; }
+    function isVerified() { return request.auth.token.email_verified == true; }
+    function incoming() { return request.resource.data; }
+    function existing() { return resource.data; }
+    function isValidId(id) { return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$'); }
+
+    // -------------------------------------------------------------------------
+    // ENTITY BLUEPRINTS
+    // -------------------------------------------------------------------------
+
+    function isValidUser(data) {
+      return data.keys().hasAll(['uid', 'name', 'email', 'createdAt'])
+        && data.keys().size() == 4
+        && data.uid is string && data.uid.size() > 0 && data.uid.size() <= 128
+        && data.name is string && data.name.size() <= 100
+        && data.email is string && data.email.size() <= 150
+        && data.createdAt == request.time;
+    }
+
+    function isValidOrder(data) {
+      return data.keys().hasAll(['userId', 'total', 'status', 'items', 'createdAt'])
+        && data.userId is string && data.userId.size() > 0 && data.userId.size() <= 128
+        && data.total is number && data.total >= 0
+        && data.status is string && data.status.size() <= 50
+        && data.items is list && data.items.size() <= 100
+        && data.createdAt == request.time;
+    }
+
+    // -------------------------------------------------------------------------
+    // ROUTING / MATCH BLOCKS
+    // -------------------------------------------------------------------------
+
+    match /users/{userId} {
+      // Allow read only to the owner
+      allow get: if isSignedIn() && isValidId(userId) && request.auth.uid == userId;
+      allow list: if false; // Blanket lists forbidden to prevent PII leaks
+
+      // Create: User can only create their own profile, matching their auth credentials
+      allow create: if isSignedIn() 
+        && isValidId(userId)
+        && request.auth.uid == userId
+        && isValidUser(incoming())
+        && incoming().uid == request.auth.uid;
+
+      // Update: User can update their own profile (e.g., name block)
+      // Here we only allow changing the 'name' field
+      allow update: if isSignedIn() 
+        && isValidId(userId)
+        && request.auth.uid == userId
+        && request.auth.uid == existing().uid
+        && incoming().diff(existing()).affectedKeys().hasOnly(['name'])
+        && incoming().name is string
+        && incoming().name.size() <= 100
+        && incoming().uid == existing().uid
+        && incoming().email == existing().email
+        && incoming().createdAt == existing().createdAt;
+
+      allow delete: if false; // Do not allow manual deletion via client SDK
+    }
+
+    match /orders/{orderId} {
+      // Allow read only to the owner
+      allow get: if isSignedIn() && isValidId(orderId) && resource.data.userId == request.auth.uid;
+      
+      // Allow user to query their own orders list
+      allow list: if isSignedIn() && resource.data.userId == request.auth.uid;
+
+      // Allow order creation logic if needed later
+      allow create: if isSignedIn() 
+        && isValidId(orderId)
+        && isValidOrder(incoming())
+        && incoming().userId == request.auth.uid;
+
+      allow update: if false; 
+      allow delete: if false; 
+    }
+    
+  }
+}
