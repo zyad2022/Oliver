@@ -1,17 +1,21 @@
 import React, { useState, useMemo } from 'react';
 import { motion } from 'motion/react';
-import { products, Product } from '../data';
-import { ProductCard } from '../components/ProductCard';
+import { products, Product } from '../../data';
+import { ProductCard } from '../../components/ProductCard';
+import { PageTitle } from '../../components/PageTitle';
+import { useAppContext } from '../../state';
 
-interface CollectionProps {
-  onProductClick: (product: Product) => void;
-}
-
+type PriceFilter = '10-100' | '150-300' | '300-600' | '600+';
 type SortOption = 'default' | 'newest' | 'price-asc' | 'price-desc';
-type PriceFilter = '100-300' | '300-600' | '600+';
 
-export function Collection({ onProductClick }: CollectionProps) {
-  const categories = ['جميع المنتجات', 'مجوهرات', 'حقائب', 'نظارات شمسية'];
+export function Collection() {
+  const { setSelectedProduct, onNavigate } = useAppContext();
+  const categories = ['جميع المنتجات', 'قلائد', 'خواتم'];
+  
+  const onProductClick = (product: Product) => {
+    setSelectedProduct(product);
+    onNavigate('product');
+  };
   
   const [activeCategory, setActiveCategory] = useState<string>('جميع المنتجات');
   const [activePriceFilters, setActivePriceFilters] = useState<PriceFilter[]>([]);
@@ -29,11 +33,8 @@ export function Collection({ onProductClick }: CollectionProps) {
     // 1. Filter by Category
     let result = products.filter(p => {
       if (activeCategory === 'جميع المنتجات') return true;
-      if (activeCategory === 'مجوهرات') {
-        return ['Earrings', 'Necklaces', 'Rings', 'Bracelets'].includes(p.category);
-      }
-      if (activeCategory === 'حقائب') return p.category === 'Bags';
-      if (activeCategory === 'نظارات شمسية') return p.category === 'Sunglasses';
+      if (activeCategory === 'قلائد') return p.category === 'Necklaces';
+      if (activeCategory === 'خواتم') return p.category === 'Rings';
       return true;
     });
 
@@ -41,7 +42,8 @@ export function Collection({ onProductClick }: CollectionProps) {
     if (activePriceFilters.length > 0) {
       result = result.filter(p => {
         return activePriceFilters.some(filter => {
-          if (filter === '100-300') return p.price >= 100 && p.price <= 300;
+          if (filter === '10-100') return p.price >= 10 && p.price <= 100;
+          if (filter === '150-300') return p.price > 150 && p.price <= 300;
           if (filter === '300-600') return p.price > 300 && p.price <= 600;
           if (filter === '600+') return p.price > 600;
           return false;
@@ -77,12 +79,10 @@ export function Collection({ onProductClick }: CollectionProps) {
       exit={{ opacity: 0 }}
       className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20 w-full"
     >
-      <div className="text-center mb-16">
-        <h1 className="text-4xl md:text-5xl font-arabic font-medium text-natural-text mb-4">تشكيلة الأناقة اليومية</h1>
-        <p className="text-[#666] font-arabic font-light text-lg max-w-2xl mx-auto">
-          تصفحي جميع القطع المميزة وتألقي بإطلالة تعبر عن شخصيتك. كل قطعة تعكس قصة فريدة تنتظر من يبرز جمالها.
-        </p>
-      </div>
+      <PageTitle 
+        title="تشكيلة الأناقة اليومية"
+        description="تصفحي جميع القطع المميزة وتألقي بإطلالة تعبر عن شخصيتك. كل قطعة تعكس قصة فريدة تنتظر من يبرز جمالها."
+      />
 
       <div className="flex flex-col md:flex-row gap-12">
         {/* Filters Sidebar */}
@@ -108,10 +108,19 @@ export function Collection({ onProductClick }: CollectionProps) {
                 <input 
                   type="checkbox" 
                   className="w-4 h-4 accent-natural-accent"
-                  checked={activePriceFilters.includes('100-300')}
-                  onChange={() => togglePriceFilter('100-300')}
+                  checked={activePriceFilters.includes('10-100')}
+                  onChange={() => togglePriceFilter('10-100')}
                 />
-                <span className="en-text">100 - 300 EGP</span>
+                <span className="en-text">10 - 100 EGP</span>
+              </label>
+              <label className="flex items-center gap-3 text-[#666] cursor-pointer">
+                <input 
+                  type="checkbox" 
+                  className="w-4 h-4 accent-natural-accent"
+                  checked={activePriceFilters.includes('150-300')}
+                  onChange={() => togglePriceFilter('150-300')}
+                />
+                <span className="en-text">150 - 300 EGP</span>
               </label>
               <label className="flex items-center gap-3 text-[#666] cursor-pointer">
                 <input 

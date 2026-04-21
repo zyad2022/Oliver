@@ -7,76 +7,70 @@ export interface Product {
   category: string;
   isNew?: boolean;
   dateAdded: string;
+  description?: string;
+}
+
+export interface CartItem extends Product {
+  cartQuantity: number;
 }
 
 export const products: Product[] = [
   {
     id: "1",
-    name: "Lumina Pearl Drop Earrings",
-    price: 2500,
-    image: "https://i.postimg.cc/21kM1MXg/image-jpg.jpg",
-    category: "Earrings",
+    name: "Symbol Of Love & Elegance",
+    price: 80,
+    image: "https://i.postimg.cc/ZB2nHPz6/Gemini-Generated-Image-hu6n7ohu6n7ohu6n.png",
+    category: "Necklaces",
     isNew: true,
-    dateAdded: "2026-04-15T10:00:00Z"
+    dateAdded: "2026-04-15T10:00:00Z",
+    description: "قلادة كلاسيكية بتصميم يعبر عن الحب، مطلية بالذهب ومناسبة لجميع المناسبات السعيدة."
   },
   {
     id: "2",
-    name: "Classic Gold Cuban Chain",
-    price: 420,
-    oldPrice: 550,
-    image: "https://images.unsplash.com/photo-1599643478524-fb66f70000cb?auto=format&fit=crop&q=80&w=800",
+    name: "Like a Swan",
+    price: 120,
+    oldPrice: 170,
+    image: "https://i.postimg.cc/ZWdGvrVX/Gemini-Generated-Image-1mumg61mumg61mum.png",
     category: "Necklaces",
-    dateAdded: "2026-04-20T10:00:00Z"
+    dateAdded: "2026-04-20T10:00:00Z",
+    description: "قلادة بشكل البجعة الأنيقة، مرصعة بالكريستال الفاخر لتعكس جمالك الداخلي في كل زاوية."
   },
   {
     id: "3",
-    name: "Aura Minimalist Ring",
-    price: 195,
-    image: "https://images.unsplash.com/photo-1605100804763-247f67b2548e?auto=format&fit=crop&q=80&w=800",
+    name: "Free Size Ring",
+    price: 35,
+    image: "https://i.postimg.cc/Cn8GsLtP/Gemini-Generated-Image-244z06244z06244z.png",
     category: "Rings",
-    dateAdded: "2026-04-10T10:00:00Z"
+    dateAdded: "2026-04-10T10:00:00Z",
+    description: "خاتم حر المقاس يمكن تعديله بسهولة ليتناسب مع أي إصبع، يتميز بتصميم عصري وبسيط."
   },
   {
     id: "4",
-    name: "Stella Crystal Bracelet",
-    price: 310,
-    image: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&q=80&w=800",
-    category: "Bracelets",
+    name: "New Swan (Gold plated)",
+    price: 120,
+    oldPrice: 200,
+    image: "https://i.postimg.cc/fJwyKR6Y/Gemini-Generated-Image-ylexrkylexrkylex.png",
+    category: "Necklaces",
     isNew: true,
-    dateAdded: "2026-04-18T10:00:00Z"
+    dateAdded: "2026-04-18T10:00:00Z",
+    description: "نسخة جديدة من قلادة البجعة الكلاسيكية، مطلية بالذهب عيار 18 لمنحها بريقاً لا يقاوم."
   },
   {
     id: "5",
-    name: "Eternity Diamond Band",
-    price: 550,
-    image: "https://images.unsplash.com/photo-1601121141461-9d6647bca1ed?auto=format&fit=crop&q=80&w=800",
-    category: "Rings",
-    dateAdded: "2026-04-05T10:00:00Z"
+    name: "Flying Butterflies",
+    price: 100,
+    image: "https://i.postimg.cc/4m7Nf2Hv/Gemini-Generated-Image-is2f5kis2f5kis2f.png",
+    category: "Necklaces",
+    dateAdded: "2026-04-05T10:00:00Z",
+    description: "سلسلة ناعمة تحمل فراشات ذهبية متطايرة، تعبر عن الحرية والأنوثة الرقيقة."
   },
   {
     id: "6",
-    name: "Rose Quartz Pendant",
-    price: 380,
-    image: "https://images.unsplash.com/photo-1588444650733-d0767b0dc22e?auto=format&fit=crop&q=80&w=800",
+    name: "Green Stone Jewel",
+    price: 100,
+    image: "https://i.postimg.cc/zLDsB3Pb/Gemini-Generated-Image-54t7ve54t7ve54t7.png",
     category: "Necklaces",
-    dateAdded: "2026-04-28T10:00:00Z"
+    dateAdded: "2026-04-28T10:00:00Z",
+    description: "قطعة مميزة بحجر أخضر كريم يعكس سحر الطبيعة، مصممة خصيصاً لعاشقات التميز."
   },
-  {
-    id: "7",
-    name: "Classic Leather Tote Bag",
-    price: 850,
-    image: "https://images.unsplash.com/photo-1584916201218-f4242ceb4809?auto=format&fit=crop&q=80&w=800",
-    category: "Bags",
-    isNew: true,
-    dateAdded: "2026-04-19T10:00:00Z"
-  },
-  {
-    id: "8",
-    name: "Vintage Cat-Eye Sunglasses",
-    price: 350,
-    oldPrice: 450,
-    image: "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&q=80&w=800",
-    category: "Sunglasses",
-    dateAdded: "2026-04-01T10:00:00Z"
-  }
 ];

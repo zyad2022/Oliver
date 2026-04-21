@@ -1,15 +1,18 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { products, Product } from '../data';
-import { ProductCard } from '../components/ProductCard';
+import { products, Product } from '../../data';
+import { ProductCard } from '../../components/ProductCard';
+import { PageTitle } from '../../components/PageTitle';
+import { useAppContext } from '../../state';
 
-interface HomeProps {
-  onNavigate: (page: string) => void;
-  onProductClick: (product: Product) => void;
-}
-
-export function Home({ onNavigate, onProductClick }: HomeProps) {
+export function Home() {
+  const { onNavigate, setSelectedProduct } = useAppContext();
   const featuredProducts = products.slice(0, 4);
+
+  const handleProductClick = (product: Product) => {
+    setSelectedProduct(product);
+    onNavigate('product');
+  };
 
   return (
     <motion.div
@@ -43,7 +46,7 @@ export function Home({ onNavigate, onProductClick }: HomeProps) {
               </p>
               <button 
                 onClick={() => onNavigate('collection')}
-                className="bg-[#2D2D2D] text-white px-8 py-4 uppercase tracking-widest text-sm font-medium hover:bg-[#1A1A1A] transition-colors shadow-lg rounded-full en-text"
+                className="bg-natural-accent text-white px-8 py-4 uppercase tracking-widest text-sm font-medium hover:bg-natural-accent-dark transition-colors shadow-lg rounded-full en-text"
               >
                 Shop Collection
               </button>
@@ -53,20 +56,20 @@ export function Home({ onNavigate, onProductClick }: HomeProps) {
       </section>
 
       {/* Value Proposition */}
-      <section className="py-16 md:py-24 bg-natural-bg">
+      <section className="py-16 md:py-24 bg-natural-beige">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10 text-center divide-y md:divide-y-0 md:divide-x md:divide-x-reverse border-natural-border">
             <div className="px-6 py-4 md:py-0">
               <h3 className="text-xl mb-3 text-natural-text">تصميم كلاسيكي</h3>
-              <p className="text-[#666] font-light leading-relaxed">قطع مختارة بعناية لترافقك في كل الفصول دون أن تفقد رونقها.</p>
+              <p className="text-natural-secondary-text font-light leading-relaxed">قطع مختارة بعناية لترافقك في كل الفصول دون أن تفقد رونقها.</p>
             </div>
-            <div className="px-6 py-4 md:py-0">
+            <div className="px-6 py-4 md:py-0 border-natural-border">
               <h3 className="text-xl mb-3 text-natural-text">جودة فاخرة</h3>
-              <p className="text-[#666] font-light leading-relaxed">مطلي بالذهب ومصنوع من مواد لا تسبب حساسية للبشرة.</p>
+              <p className="text-natural-secondary-text font-light leading-relaxed">مطلي بالذهب ومصنوع من مواد لا تسبب حساسية للبشرة.</p>
             </div>
-            <div className="px-6 py-4 md:py-0">
+            <div className="px-6 py-4 md:py-0 border-natural-border">
               <h3 className="text-xl mb-3 text-natural-text">تغليف أنيق</h3>
-              <p className="text-[#666] font-light leading-relaxed">تصلك كل قطعة بتغليف فاخر يليق بك أو كهدية لمن تحبين.</p>
+              <p className="text-natural-secondary-text font-light leading-relaxed">تصلك كل قطعة بتغليف فاخر يليق بك أو كهدية لمن تحبين.</p>
             </div>
           </div>
         </div>
@@ -76,12 +79,12 @@ export function Home({ onNavigate, onProductClick }: HomeProps) {
       <section className="py-16 md:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <div className="flex justify-between items-end mb-12">
           <div>
-            <h2 className="text-3xl text-natural-text mb-2">الأكثر طلباً</h2>
-            <p className="text-[#666] font-light">تشكيلة من أفضل القطع المباعة.</p>
+            <h2 className="text-3xl text-natural-text mb-2 font-serif">الأكثر طلباً</h2>
+            <p className="text-natural-secondary-text font-light">تشكيلة من أفضل القطع المباعة.</p>
           </div>
           <button 
             onClick={() => onNavigate('collection')}
-            className="hidden sm:inline-block border-b border-natural-text pb-1 text-natural-text hover:text-natural-accent transition-colors uppercase tracking-widest text-sm font-medium en-text"
+            className="hidden sm:inline-block border-b border-natural-text pb-1 text-natural-text hover:text-natural-accent hover:border-natural-accent transition-colors uppercase tracking-widest text-sm font-medium en-text"
           >
             View All
           </button>
@@ -92,7 +95,7 @@ export function Home({ onNavigate, onProductClick }: HomeProps) {
             <ProductCard 
               key={product.id} 
               product={product} 
-              onClick={onProductClick} 
+              onClick={handleProductClick} 
             />
           ))}
         </div>
@@ -120,16 +123,20 @@ export function Home({ onNavigate, onProductClick }: HomeProps) {
               />
             </div>
             <div className="w-full md:w-1/2 flex flex-col justify-center max-w-md">
-              <span className="text-natural-accent uppercase tracking-widest text-sm font-medium en-text mb-4">New Arrival</span>
+              <div className="luxury-pill-outer self-start mb-6 scale-90 origin-left">
+                <div className="luxury-pill-core-alt">
+                   <span className="text-natural-accent uppercase tracking-widest text-xs font-bold en-text">New Arrival</span>
+                </div>
+              </div>
               <h2 className="text-4xl font-arabic font-medium text-natural-text mb-6 leading-snug">
                 سحر الطبيعة يتجسد في تصاميمنا
               </h2>
-              <p className="font-arabic text-[#666] font-light leading-relaxed mb-8 text-lg">
+              <p className="font-arabic text-natural-secondary-text font-light leading-relaxed mb-8 text-lg">
                 اكتشفي مجموعة "أورا" الجديدة، المستوحاة من تفاصيل الطبيعة الساحرة. قطع فريدة مصممة لتبرز جمالك الطبيعي وتزيدك إشراقاً.
               </p>
               <button 
                 onClick={() => onNavigate('collection')}
-                className="bg-[#2D2D2D] text-white self-start px-8 py-4 uppercase tracking-widest text-sm font-medium hover:bg-[#1A1A1A] transition-colors rounded-full en-text"
+                className="bg-natural-accent text-white self-start px-8 py-4 uppercase tracking-widest text-sm font-medium hover:bg-natural-accent-dark transition-colors rounded-full en-text"
               >
                 Shop Now
               </button>

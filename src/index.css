@@ -2,17 +2,49 @@
 @import "tailwindcss";
 
 @theme {
-  --color-natural-bg: #FAF8F5;
-  --color-natural-text: #2D2D2D;
-  --color-natural-accent: #B08D57;
-  --color-natural-accent-light: rgba(176, 141, 87, 0.2);
-  --color-natural-hero: #EFECE8;
+  --color-natural-bg: var(--color-gold-light);
+  --color-natural-text: #2B2B2B;
+  --color-natural-secondary-text: #7A7A7A;
+  --color-natural-accent: var(--color-gold-primary);
+  --color-natural-accent-dark: var(--color-gold-dark);
+  --color-natural-accent-deep: var(--color-gold-deep);
+  --color-natural-accent-light: rgba(197, 160, 89, 0.1);
+  --color-natural-beige: #FBF7F0;
+  --color-natural-nude: #E5D5C0;
+  --color-natural-hero: var(--color-gold-soft);
   --color-natural-card: #FFFFFF;
-  --color-natural-img: #F7F4F0;
-  --color-natural-border: #EEEEEE;
+  --color-natural-img: var(--color-gold-light);
+  --color-natural-border: #E5D5C0;
+  
+  /* Gold Theme Tokens */
+  --color-gold-light: #FDFBF7;
+  --color-gold-soft: #F9F2E6;
+  --color-gold-primary: #C5A059;
+  --color-gold-dark: #A48443;
+  --color-gold-deep: #856B34;
   
   --font-arabic: "Tajawal", "Helvetica Neue", Arial, sans-serif;
   --font-serif: "Times New Roman", Times, Georgia, serif;
+}
+
+@layer components {
+  /* Global Luxury Pill System */
+  .luxury-pill-outer {
+    @apply inline-flex items-center justify-center rounded-full border border-natural-border bg-natural-bg p-1 shadow-sm transition-all duration-300;
+  }
+  
+  .luxury-pill-core {
+    @apply flex items-center justify-center rounded-full px-6 py-2 bg-gradient-to-r from-gold-primary via-gold-dark to-gold-primary bg-[length:200%_auto] hover:bg-right transition-all duration-500 text-white shadow-inner;
+  }
+
+  .luxury-pill-core-alt {
+    @apply flex items-center justify-center rounded-full px-5 py-1.5 bg-white border border-gold-primary/20 text-natural-text relative overflow-hidden;
+  }
+  
+  .luxury-pill-core-alt::after {
+    content: '';
+    @apply absolute inset-1 rounded-full border border-gold-primary/30 pointer-events-none;
+  }
 }
 
 html, body {
@@ -30,5 +62,5 @@ html, body {
 }
 
 .natural-shadow {
-  box-shadow: 20px 20px 0px rgba(176, 141, 87, 0.1);
+  box-shadow: 20px 20px 0px rgba(197, 160, 89, 0.1);
 }

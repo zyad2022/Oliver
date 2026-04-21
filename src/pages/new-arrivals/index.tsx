@@ -1,14 +1,18 @@
 import React, { useMemo } from 'react';
-import { products, Product } from '../data';
-import { ProductCard } from '../components/ProductCard';
+import { products, Product } from '../../data';
+import { ProductCard } from '../../components/ProductCard';
 import { motion, AnimatePresence } from 'motion/react';
 import { Sparkles } from 'lucide-react';
+import { PageTitle } from '../../components/PageTitle';
+import { useAppContext } from '../../state';
 
-interface NewArrivalsProps {
-  onProductClick: (product: Product) => void;
-}
-
-export function NewArrivals({ onProductClick }: NewArrivalsProps) {
+export function NewArrivals() {
+  const { setSelectedProduct, onNavigate } = useAppContext();
+  
+  const onProductClick = (product: Product) => {
+    setSelectedProduct(product);
+    onNavigate('product');
+  };
   // Filter products added within the last 30 days and sort by date descending
   const newProducts = useMemo(() => {
     const thirtyDaysAgo = new Date();
@@ -32,16 +36,12 @@ export function NewArrivals({ onProductClick }: NewArrivalsProps) {
       <div className="max-w-7xl mx-auto">
         
         {/* Page Header */}
-        <div className="text-center mb-16 flex flex-col items-center">
-          <div className="inline-flex items-center justify-center gap-2 mb-4 bg-natural-accent/10 px-4 py-1.5 rounded-full">
-            <Sparkles size={16} className="text-natural-accent" />
-            <span className="text-natural-accent font-medium text-sm">أحدث المجموعات</span>
-          </div>
-          <h1 className="text-4xl sm:text-5xl font-arabic font-medium text-natural-text mb-6">وصل حديثاً</h1>
-          <p className="text-[#666] text-lg max-w-2xl mx-auto font-arabic font-light">
-            أحدث المنتجات المضافة إلى مجموعة Oliver
-          </p>
-        </div>
+        <PageTitle 
+          title="وصل حديثاً"
+          description="أحدث المنتجات المضافة إلى مجموعة Oliver"
+          badgeIcon={<Sparkles size={16} className="text-natural-accent" />}
+          badgeText="أحدث المجموعات"
+        />
 
         {/* Product Grid or Empty State */}
         <AnimatePresence mode="wait">

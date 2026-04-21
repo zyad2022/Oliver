@@ -1,28 +1,31 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { Product } from '../data';
-import { Minus, Plus, Trash2, ArrowRight } from 'lucide-react';
+import { products, CartItem } from '../../data';
+import { Minus, Plus, Trash2, ArrowRight, X } from 'lucide-react';
+import { PageTitle } from '../../components/PageTitle';
+import { useAppContext } from '../../state';
 
-interface CartProps {
-  cartItems: Product[];
-  onNavigate: (page: string) => void;
-  onRemove: (index: number) => void;
-}
-
-export function Cart({ cartItems, onNavigate, onRemove }: CartProps) {
-  const subtotal = cartItems.reduce((acc, item) => acc + item.price, 0);
+export function Cart({ cartItems, onRemove, onUpdateQuantity }: { cartItems: CartItem[], onRemove: (id: string) => void, onUpdateQuantity: (id: string, q: number) => void }) {
+  const { onNavigate, setSelectedProduct } = useAppContext();
+  const subtotal = cartItems.reduce((acc, item) => acc + (item.price * item.cartQuantity), 0);
   const shipping = subtotal > 0 ? (subtotal > 1000 ? 0 : 50) : 0;
   const total = subtotal + shipping;
 
-  if (cartItems.length === 0) {
+    if (cartItems.length === 0) {
     return (
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 text-center min-h-[60vh] flex flex-col items-center justify-center w-full"
+        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 text-center min-h-[60vh] flex flex-col items-center justify-center w-full relative"
       >
-        <h1 className="text-3xl text-natural-text mb-6">سلة المشتريات فارغة</h1>
+        <button 
+          onClick={() => onNavigate('home')}
+          className="absolute top-4 left-4 sm:top-8 sm:left-8 p-2 rounded-full bg-natural-bg border border-natural-border text-natural-text hover:bg-natural-accent hover:text-white transition-colors z-10"
+        >
+          <X size={24} />
+        </button>
+        <PageTitle title="سلة المشتريات فارغة" />
         <p className="text-[#666] mb-8 max-w-md mx-auto">يبدو أنك لم تقومي بإضافة أي منتجات إلى سلتك بعد. استكشفي مجموعاتنا واختاري ما يناسب ذوقك الرفيع.</p>
         <button 
           onClick={() => onNavigate('collection')}
@@ -39,9 +42,16 @@ export function Cart({ cartItems, onNavigate, onRemove }: CartProps) {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20 w-full"
+      className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20 w-full relative"
     >
-      <h1 className="text-3xl text-natural-text mb-10">سلة المشتريات ({cartItems.length})</h1>
+      <button 
+        onClick={() => onNavigate('home')}
+        className="absolute top-4 left-4 sm:top-8 sm:left-8 p-2 rounded-full bg-natural-bg border border-natural-border text-natural-text hover:bg-natural-accent hover:text-white transition-colors z-10"
+      >
+        <X size={24} />
+      </button>
+
+      <PageTitle title={`سلة المشتريات (${cartItems.length})`} />
 
       <div className="flex flex-col lg:flex-row gap-12 text-natural-text">
         
@@ -55,11 +65,17 @@ export function Cart({ cartItems, onNavigate, onRemove }: CartProps) {
           </div>
 
           <div className="flex flex-col gap-6">
-            {cartItems.map((item, idx) => (
-              <div key={idx} className="flex flex-col sm:grid sm:grid-cols-12 gap-4 items-center border-b border-[#F9F9F9] pb-6">
+            {cartItems.map((item) => (
+              <div key={item.id} className="flex flex-col sm:grid sm:grid-cols-12 gap-4 items-center border-b border-[#F9F9F9] pb-6">
                 
                 <div className="col-span-6 flex items-center gap-6 w-full">
-                  <div className="w-24 h-24 bg-natural-img rounded-xl flex-shrink-0 cursor-pointer overflow-hidden p-0" onClick={() => onNavigate('product')}>
+                  <div 
+                    className="w-24 h-24 bg-natural-img rounded-xl flex-shrink-0 cursor-pointer overflow-hidden p-0" 
+                    onClick={() => {
+                      setSelectedProduct(item);
+                      onNavigate('product');
+                    }}
+                  >
                     <img 
                       src={item.image} 
                       alt={item.name} 
@@ -71,7 +87,7 @@ export function Cart({ cartItems, onNavigate, onRemove }: CartProps) {
                     <h3 className="en-title text-base sm:text-lg mb-1">{item.name}</h3>
                     <p className="text-[#888] text-sm mb-3 en-text">{item.category}</p>
                     <button 
-                      onClick={() => onRemove(idx)}
+                      onClick={() => onRemove(item.id)}
                       className="text-[#888] hover:text-natural-accent flex items-center gap-1 text-sm transition-colors"
                     >
                       <Trash2 size={14} /> <span className="mt-0.5">إزالة</span>
@@ -84,15 +100,13 @@ export function Cart({ cartItems, onNavigate, onRemove }: CartProps) {
                 </div>
 
                 <div className="col-span-2 flex justify-center w-full mt-4 sm:mt-0">
-                  <div className="flex items-center border border-natural-border rounded-full w-24 h-10">
-                    <button className="flex-1 flex justify-center text-[#666] hover:text-natural-accent"><Minus size={14} /></button>
-                    <span className="en-text text-sm">1</span>
-                    <button className="flex-1 flex justify-center text-[#666] hover:text-natural-accent"><Plus size={14} /></button>
+                  <div className="flex items-center border border-natural-border rounded-full w-10 h-10 justify-center bg-white shadow-sm">
+                    <span className="en-text text-sm font-medium text-natural-text text-center">{item.cartQuantity}</span>
                   </div>
                 </div>
 
                 <div className="col-span-2 text-left mr-auto en-text font-bold text-natural-accent w-full flex justify-between sm:block mt-4 sm:mt-0">
-                  <span className="sm:hidden text-[#666] font-arabic">الإجمالي:</span> {item.price} EGP
+                  <span className="sm:hidden text-[#666] font-arabic">الإجمالي:</span> {item.price * item.cartQuantity} EGP
                 </div>
 
               </div>
@@ -113,7 +127,7 @@ export function Cart({ cartItems, onNavigate, onRemove }: CartProps) {
               <div className="flex justify-between items-center">
                 <span>رسوم التوصيل</span>
                 <span className="en-text font-medium text-natural-text">
-                  {shipping === 0 ? 'Free مجاني' : `${shipping} EGP`}
+                  {shipping === 0 ? 'Free' : `${shipping} EGP`}
                 </span>
               </div>
             </div>
@@ -123,7 +137,7 @@ export function Cart({ cartItems, onNavigate, onRemove }: CartProps) {
               <span className="text-2xl text-natural-accent font-bold en-text">{total} EGP</span>
             </div>
 
-            <button className="w-full bg-natural-accent text-white py-4 uppercase tracking-widest text-sm font-medium hover:bg-[#967645] transition-colors flex justify-center items-center gap-2 en-text rounded-full mb-4">
+            <button className="w-full bg-natural-accent text-white py-4 uppercase tracking-widest text-sm font-medium hover:bg-natural-accent-dark transition-colors flex justify-center items-center gap-2 en-text rounded-full mb-4">
               Proceed to Checkout
             </button>
             

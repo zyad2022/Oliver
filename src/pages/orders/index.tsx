@@ -3,14 +3,12 @@ import { motion } from 'motion/react';
 import { Package, ShoppingBag } from 'lucide-react';
 import { User as FirebaseUser } from 'firebase/auth';
 import { collection, query, where, getDocs, orderBy } from 'firebase/firestore';
-import { db } from '../firebase';
+import { db } from '../../firebase';
+import { useAppContext } from '../../state';
+import { PageTitle } from '../../components/PageTitle';
 
-interface OrdersProps {
-  user: FirebaseUser | null;
-  onNavigate: (page: string) => void;
-}
-
-export function Orders({ user, onNavigate }: OrdersProps) {
+export function Orders() {
+  const { currentUser: user, onNavigate } = useAppContext();
   const [orders, setOrders] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -51,12 +49,8 @@ export function Orders({ user, onNavigate }: OrdersProps) {
       exit={{ opacity: 0 }}
       className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20 w-full font-arabic"
     >
+      <PageTitle title="طلباتي" badgeIcon={<Package size={16} className="text-natural-accent" />} />
       <div className="bg-white rounded-3xl p-8 border border-natural-border shadow-sm min-h-[400px]">
-        <h1 className="text-3xl font-arabic font-medium text-natural-text mb-8 border-b border-natural-border pb-4 flex items-center gap-3">
-          <Package className="text-natural-accent" size={28} />
-          طلباتي
-        </h1>
-
         {loading ? (
           <div className="flex justify-center items-center h-48">
             <p className="text-stone-500 font-medium">جاري التحديث...</p>
@@ -72,8 +66,12 @@ export function Orders({ user, onNavigate }: OrdersProps) {
                       {order.createdAt?.toDate ? order.createdAt.toDate().toLocaleDateString('ar-EG') : ''}
                     </p>
                   </div>
-                  <div className="bg-[#FAF8F5] px-4 py-2 rounded-full text-natural-accent font-medium text-sm">
-                    {order.status === 'delivered' ? 'مكتمل' : order.status === 'processing' ? 'قيد التجهيز' : 'جاري التأكيد'}
+                  <div className="luxury-pill-outer scale-90">
+                    <div className="luxury-pill-core-alt gap-2">
+                       <span className="text-natural-accent font-medium text-xs">
+                        {order.status === 'delivered' ? 'مكتمل' : order.status === 'processing' ? 'قيد التجهيز' : 'جاري التأكيد'}
+                       </span>
+                    </div>
                   </div>
                 </div>
                 <div className="flex justify-between items-center mt-4">
@@ -96,7 +94,7 @@ export function Orders({ user, onNavigate }: OrdersProps) {
             </p>
             <button
               onClick={() => onNavigate('collection')}
-              className="bg-[#2D2D2D] text-white px-8 py-3.5 rounded-full font-medium hover:bg-[#1A1A1A] transition-colors font-arabic text-sm tracking-wide"
+              className="bg-natural-accent text-white px-8 py-3.5 rounded-full font-medium hover:bg-natural-accent-dark transition-colors font-arabic text-sm tracking-wide shadow-sm"
             >
               ابدأ التسوق
             </button>

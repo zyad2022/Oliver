@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { FileText } from 'lucide-react';
+import { PageTitle } from '../../components/PageTitle';
 
 export function TermsOfService() {
   return (
@@ -11,14 +12,12 @@ export function TermsOfService() {
       className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 w-full"
       dir="ltr"
     >
+      <PageTitle 
+        title="Terms of Service" 
+        badgeIcon={<FileText size={16} />}
+        badgeText="Legal"
+      />
       <div className="bg-white rounded-3xl p-8 md:p-12 border border-natural-border shadow-sm">
-        <div className="flex items-center gap-4 mb-8">
-          <div className="w-12 h-12 bg-natural-bg rounded-xl flex items-center justify-center text-natural-accent">
-            <FileText size={24} />
-          </div>
-          <h1 className="text-3xl md:text-4xl font-serif text-stone-900 tracking-tight">Terms of Service</h1>
-        </div>
-
         <div className="prose prose-stone max-w-none space-y-8 text-[#444] text-[15px] leading-relaxed">
           
           <section>

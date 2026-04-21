@@ -1,12 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { ShoppingBag, Search, Menu, User, X, LogOut, Package, UserCircle } from 'lucide-react';
-import { products, Product } from '../data';
+import { products, Product } from '../../data';
 import { motion, AnimatePresence } from 'motion/react';
 
-interface NavbarProps {
+interface HeaderProps {
   cartCount: number;
   currentPage: string;
-  onNavigate: (page: string) => void;
+  onNavigate: (page: string, options?: { replace?: boolean }) => void;
   onProductClick?: (product: Product) => void;
   isLoggedIn: boolean;
   userEmail?: string;
@@ -15,7 +15,7 @@ interface NavbarProps {
   onLogout: () => void;
 }
 
-export function Navbar({ cartCount, currentPage, onNavigate, onProductClick, isLoggedIn, userEmail, userName, onOpenAuth, onLogout }: NavbarProps) {
+export function Header({ cartCount, currentPage, onNavigate, onProductClick, isLoggedIn, userEmail, userName, onOpenAuth, onLogout }: HeaderProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isAccountMenuOpen, setIsAccountMenuOpen] = useState(false);
@@ -166,7 +166,7 @@ export function Navbar({ cartCount, currentPage, onNavigate, onProductClick, isL
                       <p className="text-sm font-medium text-natural-text font-arabic w-full block" style={{ textAlign: 'right' }}>
                         {userName ? `مرحباً ${userName}` : 'مرحباً'}
                       </p>
-                      <p className="text-xs text-[#888] font-arabic truncate mt-1 w-full block" dir="ltr" style={{ textAlign: 'right' }}>
+                      <p className="text-xs text-natural-secondary-text font-arabic truncate mt-1 w-full block" dir="ltr" style={{ textAlign: 'right' }}>
                         {userEmail || ''}
                       </p>
                     </div>
@@ -198,7 +198,9 @@ export function Navbar({ cartCount, currentPage, onNavigate, onProductClick, isL
             </div>
             <button 
               className="text-stone-600 hover:text-stone-900 relative transition-colors"
-              onClick={() => handleNav('cart')}
+              onClick={() => {
+                handleNav('cart');
+              }}
             >
               <ShoppingBag size={20} strokeWidth={1.5} />
               {cartCount > 0 && (
@@ -230,13 +232,13 @@ export function Navbar({ cartCount, currentPage, onNavigate, onProductClick, isL
                     dir="auto"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="ابحثي عن المجوهرات، الحقائب، النظارات..." 
-                    className="w-full bg-[#f9f9f9] border border-natural-border rounded-full py-4 pr-14 pl-14 text-lg outline-none focus:border-natural-accent focus:bg-white transition-all text-natural-text placeholder:text-[#AAA] font-arabic placeholder:font-arabic"
+                    placeholder="ابحثي عن القلائد، الخواتم..." 
+                    className="w-full bg-natural-bg border border-natural-border rounded-full py-4 pr-14 pl-14 text-lg outline-none focus:border-stone-900 focus:bg-white focus:shadow-md transition-all duration-300 shadow-sm text-natural-text placeholder:text-natural-secondary-text font-arabic placeholder:font-arabic"
                   />
                   {searchQuery && (
                     <button 
                       onClick={() => setSearchQuery('')}
-                      className="absolute left-6 text-[#888] hover:text-natural-accent transition-colors"
+                      className="absolute left-6 text-natural-secondary-text hover:text-natural-accent transition-colors"
                     >
                       <X size={18} />
                     </button>
@@ -308,7 +310,7 @@ export function Navbar({ cartCount, currentPage, onNavigate, onProductClick, isL
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="ابحثي..." 
-                  className="w-full border border-natural-border rounded-full py-3 pr-12 pl-4 text-base outline-none focus:border-natural-accent transition-colors bg-white font-arabic text-natural-text"
+                  className="w-full bg-natural-bg border border-natural-border rounded-full py-3 pr-12 pl-4 text-base outline-none focus:border-stone-900 focus:bg-white focus:shadow-md transition-all duration-300 shadow-sm text-natural-text placeholder:text-natural-secondary-text font-arabic"
                 />
               </div>
               {searchQuery.trim() !== '' && (

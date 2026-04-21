@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, Facebook, Eye, EyeOff } from 'lucide-react';
-import { auth, db } from '../firebase';
+import { auth, db } from '../../firebase';
 import { 
   signInWithEmailAndPassword, 
   createUserWithEmailAndPassword, 
@@ -317,7 +317,7 @@ export function AuthModal({ isOpen, onClose, onLogin }: AuthModalProps) {
 
                 {activeTab === 'login' && (
                   <div className="flex justify-end">
-                    <button type="button" dir="ltr" className="text-sm font-medium text-natural-accent hover:text-[#917142] transition-colors en-text">
+                    <button type="button" dir="ltr" className="text-sm font-medium text-natural-accent hover:text-natural-accent-dark transition-colors en-text">
                       Forgot Password ?
                     </button>
                   </div>
@@ -326,7 +326,7 @@ export function AuthModal({ isOpen, onClose, onLogin }: AuthModalProps) {
                 <button 
                   type="submit"
                   disabled={loading}
-                  className="w-full bg-[#2D2D2D] text-white py-4 mt-2 uppercase tracking-widest text-sm font-medium hover:bg-[#1A1A1A] disabled:opacity-70 disabled:cursor-not-allowed transition-colors rounded-full en-text relative"
+                  className="w-full bg-natural-accent text-white py-4 mt-2 uppercase tracking-widest text-sm font-medium hover:bg-natural-accent-dark disabled:opacity-70 disabled:cursor-not-allowed transition-colors rounded-full en-text relative"
                 >
                   {loading ? 'Please wait...' : (activeTab === 'login' ? 'Log In' : 'Create Account')}
                 </button>
