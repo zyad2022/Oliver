@@ -146,15 +146,7 @@ function AppContent() {
                 <Home onNavigate={handleNavigate} onProductClick={handleProductClick} />
               )
             } />
-            <Route path="/delete-account" element={
-              isLoggedIn ? (
-                <DeleteAccount 
-                  onNavigate={handleNavigate} 
-                />
-              ) : (
-                <Home onNavigate={handleNavigate} onProductClick={handleProductClick} />
-              )
-            } />
+            <Route path="/delete-account" element={<DeleteAccount onNavigate={handleNavigate} />} />
             <Route path="/privacy" element={<PrivacyPolicy />} />
             <Route path="/terms" element={<TermsOfService />} />
             {/* Fallback for old paths or typos */}
