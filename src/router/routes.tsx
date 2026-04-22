@@ -9,6 +9,14 @@ import { Profile } from '../pages/profile';
 import { Orders } from '../pages/orders';
 import { PrivacyPolicy } from '../pages/privacy';
 import { TermsOfService } from '../pages/terms';
+import { About } from '../pages/about';
+import { Rate } from '../pages/rate';
+import { FAQ } from '../pages/faq';
+import { Contact } from '../pages/contact';
+import { Returns } from '../pages/returns';
+import { Shipping } from '../pages/shipping';
+import { SizeGuide } from '../pages/size-guide';
+import { JewelryCare } from '../pages/jewelry-care';
 import { useAppContext } from '../state';
 
 export const AppRoutes: React.FC = () => {
@@ -30,6 +38,14 @@ export const AppRoutes: React.FC = () => {
       <Route path="/" element={<Home />} />
       <Route path="/collection" element={<Collection />} />
       <Route path="/new-arrivals" element={<NewArrivals />} />
+      <Route path="/about" element={<About />} />
+      <Route path="/rate" element={<Rate />} />
+      <Route path="/faq" element={<FAQ />} />
+      <Route path="/contact" element={<Contact />} />
+      <Route path="/returns" element={<Returns />} />
+      <Route path="/shipping" element={<Shipping />} />
+      <Route path="/size-guide" element={<SizeGuide />} />
+      <Route path="/jewelry-care" element={<JewelryCare />} />
       <Route path="/product" element={
         selectedProduct ? (
           <ProductPage 

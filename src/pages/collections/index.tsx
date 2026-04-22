@@ -147,17 +147,25 @@ export function Collection() {
         {/* Product Grid */}
         <div className="w-full">
           <div className="flex justify-between items-center mb-8 text-[#666] text-sm">
-            <span>عرض {filteredAndSortedProducts.length} منتجات</span>
-            <select 
-              value={sortOption}
-              onChange={(e) => setSortOption(e.target.value as SortOption)}
-              className="border border-natural-border bg-transparent py-2 px-4 rounded-full outline-none w-48 font-arabic focus:border-natural-accent"
-            >
-              <option value="default">الترتيب الافتراضي</option>
-              <option value="newest">الأحدث</option>
-              <option value="price-asc">السعر: من الأقل للأعلى</option>
-              <option value="price-desc">السعر: من الأعلى للأقل</option>
-            </select>
+            <div className="luxury-pill-outer scale-90 sm:scale-100 origin-right">
+              <div className="luxury-pill-core px-5 py-1.5">
+                <span className="font-arabic text-white">عرض {filteredAndSortedProducts.length} منتجات</span>
+              </div>
+            </div>
+            <div className="luxury-pill-outer">
+              <div className="luxury-pill-core !p-0">
+                <select 
+                  value={sortOption}
+                  onChange={(e) => setSortOption(e.target.value as SortOption)}
+                  className="bg-transparent outline-none w-48 font-arabic cursor-pointer py-2 px-4 text-white relative z-10"
+                >
+                  <option value="default" className="text-natural-text bg-white">الترتيب الافتراضي</option>
+                  <option value="newest" className="text-natural-text bg-white">الأحدث</option>
+                  <option value="price-asc" className="text-natural-text bg-white">السعر: من الأقل للأعلى</option>
+                  <option value="price-desc" className="text-natural-text bg-white">السعر: من الأعلى للأقل</option>
+                </select>
+              </div>
+            </div>
           </div>
 
           <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-12">

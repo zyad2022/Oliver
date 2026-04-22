@@ -113,10 +113,25 @@ export function Header({ cartCount, currentPage, onNavigate, onProductClick, isL
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden sm:flex items-center gap-8 w-1/3 font-arabic">
-            <button onClick={() => handleNav('home')} className="text-stone-600 hover:text-stone-900 transition-colors">الرئيسية</button>
-            <button onClick={() => handleNav('collection')} className="text-stone-600 hover:text-stone-900 transition-colors">التشكيلات</button>
-            <button onClick={() => handleNav('new-arrivals')} className="text-stone-600 hover:text-stone-900 transition-colors">وصل حديثاً</button>
+          <div className="hidden sm:flex items-center gap-3 w-1/3 font-arabic">
+            <button 
+              onClick={() => handleNav('home')} 
+              className="bg-[#F2EEE6] px-6 py-2 rounded-full text-stone-600 hover:text-stone-900 hover:bg-[#EBE5DB] transition-colors duration-300 ease-in-out text-sm font-medium"
+            >
+              الرئيسية
+            </button>
+            <button 
+              onClick={() => handleNav('collection')} 
+              className="bg-[#F2EEE6] px-6 py-2 rounded-full text-stone-600 hover:text-stone-900 hover:bg-[#EBE5DB] transition-colors duration-300 ease-in-out text-sm font-medium"
+            >
+              التشكيلات
+            </button>
+            <button 
+              onClick={() => handleNav('new-arrivals')} 
+              className="bg-[#F2EEE6] px-6 py-2 rounded-full text-stone-600 hover:text-stone-900 hover:bg-[#EBE5DB] transition-colors duration-300 ease-in-out text-sm font-medium"
+            >
+              وصل حديثاً
+            </button>
           </div>
 
           {/* Logo */}
@@ -125,21 +140,21 @@ export function Header({ cartCount, currentPage, onNavigate, onProductClick, isL
           </div>
 
           {/* Icons & Search Toggle */}
-          <div className="flex items-center justify-end gap-5 sm:gap-6 w-1/3 relative z-50">
+          <div className="flex items-center justify-end gap-3 w-1/3 relative z-50">
             <button 
               ref={searchToggleRef}
               onClick={() => {
                 setIsSearchOpen(!isSearchOpen);
                 if (isSearchOpen) setSearchQuery('');
               }} 
-              className="text-stone-600 hover:text-stone-900 hidden sm:block relative transition-colors"
+              className="bg-[#F2EEE6] w-10 h-10 rounded-full flex items-center justify-center text-stone-600 hover:text-stone-900 hover:bg-[#EBE5DB] hidden sm:flex relative transition-colors duration-300 ease-in-out"
             >
               {isSearchOpen ? <X size={20} strokeWidth={1.5} /> : <Search size={20} strokeWidth={1.5} />}
             </button>
             <div className="relative">
               <button 
                 ref={accountToggleRef}
-                className="text-stone-600 hover:text-stone-900 hidden sm:block relative transition-colors"
+                className="bg-[#F2EEE6] w-10 h-10 rounded-full flex items-center justify-center text-stone-600 hover:text-stone-900 hover:bg-[#EBE5DB] hidden sm:flex relative transition-colors duration-300 ease-in-out"
                 onClick={() => {
                   if (isLoggedIn) {
                     setIsAccountMenuOpen(!isAccountMenuOpen);
@@ -197,14 +212,14 @@ export function Header({ cartCount, currentPage, onNavigate, onProductClick, isL
               </AnimatePresence>
             </div>
             <button 
-              className="text-stone-600 hover:text-stone-900 relative transition-colors"
+              className="bg-[#F2EEE6] w-10 h-10 rounded-full flex items-center justify-center text-stone-600 hover:text-stone-900 hover:bg-[#EBE5DB] relative transition-colors duration-300 ease-in-out"
               onClick={() => {
                 handleNav('cart');
               }}
             >
               <ShoppingBag size={20} strokeWidth={1.5} />
               {cartCount > 0 && (
-                <span className="absolute -top-1.5 -right-1.5 bg-natural-accent text-white text-[10px] en-text font-bold w-4 h-4 rounded-full flex items-center justify-center">
+                <span className="absolute -top-1.5 -right-1.5 bg-natural-accent text-white text-[10px] en-text font-bold w-5 h-5 rounded-full flex items-center justify-center shadow-sm">
                   {cartCount}
                 </span>
               )}

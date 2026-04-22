@@ -20,7 +20,7 @@ export function Cart({ cartItems, onRemove, onUpdateQuantity }: { cartItems: Car
         className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 text-center min-h-[60vh] flex flex-col items-center justify-center w-full relative"
       >
         <button 
-          onClick={() => onNavigate('home')}
+          onClick={() => onNavigate('back')}
           className="absolute top-4 left-4 sm:top-8 sm:left-8 p-2 rounded-full bg-natural-bg border border-natural-border text-natural-text hover:bg-natural-accent hover:text-white transition-colors z-10"
         >
           <X size={24} />
@@ -45,7 +45,7 @@ export function Cart({ cartItems, onRemove, onUpdateQuantity }: { cartItems: Car
       className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20 w-full relative"
     >
       <button 
-        onClick={() => onNavigate('home')}
+        onClick={() => onNavigate('back')}
         className="absolute top-4 left-4 sm:top-8 sm:left-8 p-2 rounded-full bg-natural-bg border border-natural-border text-natural-text hover:bg-natural-accent hover:text-white transition-colors z-10"
       >
         <X size={24} />

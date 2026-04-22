@@ -7,7 +7,7 @@ import { useAppContext } from '../../state';
 import { PageTitle } from '../../components/PageTitle';
 
 export function Profile() {
-  const { currentUser: user, logout: onLogout, openModal } = useAppContext();
+  const { currentUser: user, logout: onLogout, openModal, onNavigate } = useAppContext();
   const [userData, setUserData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
@@ -40,7 +40,7 @@ export function Profile() {
       className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20 w-full relative"
     >
       <button 
-        onClick={() => window.history.back()}
+        onClick={() => onNavigate('back')}
         className="absolute top-4 left-4 sm:top-8 sm:left-8 p-2 rounded-full bg-natural-bg border border-natural-border text-natural-text hover:bg-natural-accent hover:text-white transition-colors z-10"
       >
         <X size={24} />

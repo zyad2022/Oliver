@@ -25,11 +25,7 @@ export function ProductPage({ product, onAddToCart, isQuickAdd }: ProductPagePro
 
   const handleBack = () => {
     if (isQuickAdd) return;
-    if (window.history.length > 2) {
-      window.history.back();
-    } else {
-      onNavigate('home');
-    }
+    onNavigate('back');
   };
 
   return (
