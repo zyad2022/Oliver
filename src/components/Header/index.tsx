@@ -103,7 +103,7 @@ export function Header({ cartCount, currentPage, onNavigate, onProductClick, isL
         <div className="flex justify-between items-center h-20">
           
           {/* Mobile Menu Button */}
-          <div className="flex items-center sm:hidden">
+          <div className="flex items-center justify-start flex-1 sm:hidden">
             <button 
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="text-stone-600 hover:text-stone-900"
@@ -113,7 +113,7 @@ export function Header({ cartCount, currentPage, onNavigate, onProductClick, isL
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden sm:flex items-center gap-3 w-1/3 font-arabic">
+          <div className="hidden sm:flex items-center justify-start gap-4 flex-1 font-arabic">
             <button 
               onClick={() => handleNav('home')} 
               className="bg-[#F2EEE6] px-6 py-2 rounded-full text-stone-600 hover:text-stone-900 hover:bg-[#EBE5DB] transition-colors duration-300 ease-in-out text-sm font-medium"
@@ -135,12 +135,15 @@ export function Header({ cartCount, currentPage, onNavigate, onProductClick, isL
           </div>
 
           {/* Logo */}
-          <div className="flex flex-1 justify-center cursor-pointer relative z-50" onClick={() => handleNav('home')}>
-            <h1 className="text-3xl tracking-widest font-serif text-stone-900 uppercase en-title">Oliver</h1>
+          <div 
+            className="flex flex-none justify-center items-center cursor-pointer relative z-50 mx-4 bg-[#F2EEE6] px-8 py-2.5 rounded-full hover:bg-[#EBE5DB] transition-colors duration-300 ease-in-out" 
+            onClick={() => handleNav('home')}
+          >
+            <h1 className="text-3xl tracking-widest font-serif text-stone-900 uppercase en-title leading-none">Oliver</h1>
           </div>
 
           {/* Icons & Search Toggle */}
-          <div className="flex items-center justify-end gap-3 w-1/3 relative z-50">
+          <div className="flex items-center justify-end gap-3 flex-1 relative z-50">
             <button 
               ref={searchToggleRef}
               onClick={() => {
