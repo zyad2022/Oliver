@@ -21,40 +21,48 @@ export function Home() {
       className="flex flex-col w-full bg-natural-bg"
     >
       {/* 1. HERO SECTION */}
-      <section className="relative h-[90vh] w-full overflow-hidden">
-        <motion.img 
-          initial={{ scale: 1.05 }}
-          animate={{ scale: 1 }}
-          transition={{ duration: 1.5, ease: "easeOut" }}
-          src="https://images.unsplash.com/photo-1599643478524-fb66f7f3299c?auto=format&fit=crop&q=80&w=2000" 
-          alt="Luxury Jewelry"
-          className="absolute inset-0 w-full h-full object-cover object-[center_30%]"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-gold-primary/70 via-black/40 to-black/30 mix-blend-multiply" />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-gold-dark/10 to-gold-deep/50 opacity-60" />
+      <section className="relative min-h-[85vh] w-full flex flex-col items-center justify-center overflow-hidden bg-gradient-to-b from-[#FAF8F5] via-[#FDFBF7] to-[#FAF8F5] luxury-hero-bg">
         
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
+        {/* Soft luxury radial glow (Option B/C: Light gradient spotlight / faint gold shimmer) */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70vw] h-[70vw] max-w-[900px] max-h-[900px] bg-gradient-to-tr from-gold-primary/10 via-gold-soft/40 to-transparent rounded-full blur-[100px] pointer-events-none opacity-80" />
+        
+        <div className="relative z-10 flex flex-col items-center justify-center text-center px-4 w-full">
           <motion.div 
-            initial={{ y: 30, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.3, duration: 0.8 }}
-            className="flex flex-col items-center max-w-2xl mt-12"
+            initial={{ scale: 0.96, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+            className="flex flex-col items-center max-w-3xl"
           >
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif text-white tracking-widest uppercase en-title mb-6 drop-shadow-lg">
-              Oliver
-            </h1>
-            <p className="font-arabic text-xl md:text-2xl text-white/95 mb-12 font-light leading-relaxed drop-shadow-md max-w-xl">
-              إشراقة يومية بلمسات من الأناقة التي لا تفقد بريقها
-            </p>
+            {/* Center Logo with Breathing Space and Halo */}
+            <div className="relative mb-10 mt-8">
+              <div className="absolute inset-0 bg-gold-primary/5 blur-3xl rounded-full scale-150" />
+              <h1 className="relative text-7xl md:text-8xl lg:text-9xl font-serif text-stone-900 tracking-[0.15em] uppercase en-title drop-shadow-sm">
+                Oliver
+              </h1>
+            </div>
             
-            <div className="luxury-pill-outer hover:scale-105 transition-transform duration-300">
+            <motion.p 
+              initial={{ y: 15, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.4, duration: 1, ease: 'easeOut' }}
+              className="font-arabic text-xl md:text-2xl text-stone-600 mb-14 font-light leading-relaxed max-w-xl relative"
+            >
+              إشراقة يومية بلمسات من الأناقة التي لا تفقد بريقها
+            </motion.p>
+            
+            <motion.div 
+              initial={{ y: 15, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.6, duration: 1, ease: 'easeOut' }}
+              className="luxury-pill-outer hover:scale-105 transition-transform duration-500"
+            >
               <button 
                 onClick={() => onNavigate('collection')}
-                className="luxury-pill-core px-10 py-4 uppercase tracking-[0.2em] text-sm font-bold en-text shadow-xl"
+                className="rounded-full px-12 py-4 uppercase tracking-[0.2em] text-sm font-bold en-text text-stone-900 bg-[#F0DFAF] hover:bg-[#E6C77B] shadow-[0_4px_12px_rgba(0,0,0,0.08)] transition-all duration-300 ease-in-out"
               >
                 Explore Collections
               </button>
-            </div>
+            </motion.div>
           </motion.div>
         </div>
       </section>
