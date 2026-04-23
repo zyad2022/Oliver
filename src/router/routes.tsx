@@ -20,6 +20,8 @@ import { SizeGuide } from '../pages/size-guide';
 import { JewelryCare } from '../pages/jewelry-care';
 import { useAppContext } from '../state';
 
+import { RedirectToHome } from '../components/RedirectToHome';
+
 export const AppRoutes: React.FC = () => {
   const { 
     isLoggedIn, 
@@ -62,13 +64,13 @@ export const AppRoutes: React.FC = () => {
         />
       } />
       <Route path="/profile" element={
-        isLoggedIn ? <Profile /> : <Home />
+        isLoggedIn ? <Profile /> : <RedirectToHome />
       } />
       <Route path="/orders" element={
         isLoggedIn ? (
           <Orders />
         ) : (
-          <Home />
+          <RedirectToHome />
         )
       } />
       <Route path="/privacy" element={<PrivacyPolicy />} />

@@ -20,8 +20,7 @@ export function Orders() {
       }
       try {
         const q = query(
-          collection(db, 'orders'),
-          where('userId', '==', user.uid),
+          collection(db, 'users', user.uid, 'orders'),
           orderBy('createdAt', 'desc')
         );
         const querySnapshot = await getDocs(q);
@@ -62,21 +61,42 @@ export function Orders() {
                 <div className="flex justify-between items-center border-b border-natural-border pb-4 mb-4">
                   <div>
                     <h3 className="text-sm text-[#888] mb-1 en-title">Order #{order.id.slice(-6).toUpperCase()}</h3>
-                    <p className="font-medium text-natural-text">
-                      {order.createdAt?.toDate ? order.createdAt.toDate().toLocaleDateString('ar-EG') : ''}
+                    <p className="font-medium text-natural-text text-sm">
+                      {order.createdAt?.toDate ? order.createdAt.toDate().toLocaleDateString('ar-EG', { year: 'numeric', month: 'long', day: 'numeric' }) : ''}
                     </p>
                   </div>
-                  <div className="luxury-pill-outer scale-90">
-                    <div className="luxury-pill-core-alt gap-2">
-                       <span className="text-natural-accent font-medium text-xs">
-                        {order.status === 'delivered' ? 'مكتمل' : order.status === 'processing' ? 'قيد التجهيز' : 'جاري التأكيد'}
+                  <div className="luxury-pill-outer scale-95 origin-right">
+                    <div className="luxury-pill-core-alt gap-2 px-4 py-1.5">
+                       <span className="text-natural-accent font-bold text-xs uppercase tracking-widest">
+                        {order.status === 'delivered' ? 'مكتمل' : order.status === 'processing' ? 'قيد التجهيز' : 'قيد المراجعة'}
                        </span>
                     </div>
                   </div>
                 </div>
-                <div className="flex justify-between items-center mt-4">
-                  <p className="text-natural-text font-medium text-lg">الإجمالي: {order.total} EGP</p>
-                  <p className="text-[#666] text-sm">{order.items?.length || 0} منتجات</p>
+                
+                <div className="flex flex-col gap-4 mb-6">
+                  {order.items?.map((item: any, idx: number) => (
+                    <div key={idx} className="flex items-center gap-4">
+                      <div className="w-16 h-16 rounded-lg bg-natural-bg border border-natural-border overflow-hidden flex-shrink-0">
+                        <img 
+                          src={item.productImage} 
+                          alt={item.productName} 
+                          className="w-full h-full object-cover"
+                          onError={(e) => { e.currentTarget.src = 'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&q=80&w=800'; }}
+                        />
+                      </div>
+                      <div className="flex-1">
+                        <p className="en-title text-sm">{item.productName}</p>
+                        <p className="text-xs text-[#888] en-text">{item.quantity} x {item.price} EGP</p>
+                      </div>
+                      <p className="en-text font-medium text-sm">{item.totalPrice} EGP</p>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="flex justify-between items-center pt-4 border-t border-natural-border">
+                  <p className="text-natural-text font-bold text-lg en-text">Total: {order.totalPrice} EGP</p>
+                  <p className="text-[#666] text-xs font-arabic">{order.items?.length || 0} قطع</p>
                 </div>
               </div>
             ))}

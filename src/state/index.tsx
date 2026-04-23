@@ -9,11 +9,11 @@ const AppContext = createContext<any>(undefined);
 export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   return (
     <AppStateProvider>
-      <CartProvider>
-        <UIProvider>
+      <UIProvider>
+        <CartProvider>
           <AppContextWrapper>{children}</AppContextWrapper>
-        </UIProvider>
-      </CartProvider>
+        </CartProvider>
+      </UIProvider>
     </AppStateProvider>
   );
 };

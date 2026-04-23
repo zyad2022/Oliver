@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, Facebook, Eye, EyeOff } from 'lucide-react';
+import { X, Eye, EyeOff } from 'lucide-react';
 import { auth, db } from '../../firebase';
 import { 
   signInWithEmailAndPassword, 
   createUserWithEmailAndPassword, 
   updateProfile,
   signInWithPopup,
-  GoogleAuthProvider,
-  FacebookAuthProvider
+  GoogleAuthProvider
 } from 'firebase/auth';
 import { doc, setDoc, getDoc, serverTimestamp } from 'firebase/firestore';
 
@@ -139,41 +138,6 @@ export function AuthModal({ isOpen, onClose, onLogin }: AuthModalProps) {
         setError(null);
       } else {
         setError('حدث خطأ أثناء تسجيل الدخول بواسطة جوجل.');
-      }
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleFacebookLogin = async () => {
-    setError(null);
-    setLoading(true);
-    try {
-      const provider = new FacebookAuthProvider();
-      const userCredential = await signInWithPopup(auth, provider);
-
-      // Save Facebook user to Firestore if they don't exist
-      const userDocRef = doc(db, 'users', userCredential.user.uid);
-      const userDoc = await getDoc(userDocRef);
-
-      if (!userDoc.exists()) {
-        await setDoc(userDocRef, {
-          uid: userCredential.user.uid,
-          name: userCredential.user.displayName || 'مستخدم جديد',
-          email: userCredential.user.email || '',
-          createdAt: serverTimestamp()
-        });
-      }
-
-      onLogin();
-    } catch (err: any) {
-      console.error(err);
-      if (err.code === 'auth/popup-closed-by-user' || err.code === 'auth/cancelled-popup-request') {
-        setError(null);
-      } else if (err.code === 'auth/account-exists-with-different-credential') {
-        setError('هذا البريد الإلكتروني مسجل مسبقاً بطريقة مختلفة (مثل جوجل). يرجى تسجيل الدخول بها.');
-      } else {
-        setError('حدث خطأ أثناء تسجيل الدخول بواسطة فيسبوك.');
       }
     } finally {
       setLoading(false);
@@ -354,16 +318,6 @@ export function AuthModal({ isOpen, onClose, onLogin }: AuthModalProps) {
                     <path d="M12 5.36C13.62 5.36 15.07 5.92 16.21 7.02L19.36 3.87C17.46 2.09 14.97 1 12 1C7.69 1 3.99 3.44 2.17 7.06L5.83 9.88C6.7 7.3 9.13 5.36 12 5.36Z" fill="#EA4335"/>
                   </svg>
                   Continue with Google
-                </button>
-                
-                <button 
-                  type="button"
-                  onClick={handleFacebookLogin}
-                  disabled={loading}
-                  className="w-full flex items-center justify-center gap-3 border border-natural-border rounded-full py-3.5 hover:bg-[#F3F6FA] disabled:opacity-70 disabled:cursor-not-allowed transition-colors en-text text-sm font-medium text-natural-text"
-                >
-                  <Facebook size={20} className="text-[#1877F2] fill-[#1877F2]" />
-                  Continue with Facebook
                 </button>
               </div>
 

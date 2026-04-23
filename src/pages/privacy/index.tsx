@@ -37,7 +37,7 @@ export function PrivacyPolicy() {
           <section>
             <h2 className="text-xl font-medium text-stone-900 mb-3">3. Third-Party Authentication</h2>
             <p>
-              To simplify the login process, we offer authentication through Google and Facebook. When you choose to sign in using these providers, we receive only the necessary profile information (such as your name and email) required to match your credentials and create your application profile. We do not access or store your passwords for these third-party services.
+              To simplify the login process, we offer authentication through Google. When you choose to sign in using this provider, we receive only the necessary profile information (such as your name and email) required to match your credentials and create your application profile. We do not access or store your passwords for these third-party services.
             </p>
           </section>
 

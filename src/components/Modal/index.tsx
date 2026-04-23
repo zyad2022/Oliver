@@ -2,6 +2,7 @@ import React from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { useAppContext } from '../../state';
 import { AuthModal } from './AuthModal';
+import { AuthRequiredModal } from './AuthRequiredModal';
 import { DeleteAccount } from '../../pages/profile/DeleteAccount'; 
 import { ProductPage } from '../../pages/product'; 
 import { X } from 'lucide-react';
@@ -35,7 +36,14 @@ const ModalOverlay: React.FC<{ children: React.ReactNode; onClose: () => void }>
 );
 
 export const ModalSystem: React.FC = () => {
-  const { activeModal, closeModal, addToCart, onNavigate } = useAppContext() as any; // Temporary cast
+  const { 
+    activeModal, 
+    closeModal, 
+    addToCart, 
+    onNavigate, 
+    isLoggedIn, 
+    setShouldOpenAuth 
+  } = useAppContext();
 
   return (
     <AnimatePresence>
@@ -61,13 +69,31 @@ export const ModalSystem: React.FC = () => {
         </ModalOverlay>
       )}
 
+      {activeModal.type === 'auth-required' && (
+        <ModalOverlay onClose={closeModal}>
+          <AuthRequiredModal 
+            onClose={closeModal} 
+            onLogin={() => {
+              closeModal();
+              onNavigate('profile');
+            }} 
+          />
+        </ModalOverlay>
+      )}
+
       {activeModal.type === 'quick-add' && activeModal.data && (
         <ModalOverlay onClose={closeModal}>
           <ProductPage 
             product={activeModal.data as Product} 
             onAddToCart={(p, q) => {
-              addToCart(p, q);
-              closeModal();
+              if (isLoggedIn) {
+                addToCart(p, q);
+                closeModal();
+              } else {
+                closeModal();
+                setShouldOpenAuth(true);
+                onNavigate('home');
+              }
             }}
             isQuickAdd={true}
           />

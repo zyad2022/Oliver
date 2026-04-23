@@ -21,8 +21,17 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
     openModal, 
     setSelectedProduct,
     logout,
-    onNavigate
+    onNavigate,
+    shouldOpenAuth,
+    setShouldOpenAuth
   } = useAppContext();
+
+  React.useEffect(() => {
+    if (shouldOpenAuth && location.pathname === '/') {
+      openModal('auth');
+      setShouldOpenAuth(false);
+    }
+  }, [shouldOpenAuth, location.pathname, openModal, setShouldOpenAuth]);
 
   const handleProductClick = (product: any) => {
     setSelectedProduct(product);

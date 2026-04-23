@@ -409,6 +409,16 @@ export function Header({ cartCount, currentPage, onNavigate, onProductClick, isL
             </div>
             {/* Mobile Actions */}
             <div className="flex flex-col gap-6 text-lg text-stone-800 border-t border-natural-border pt-8 mt-4 font-arabic">
+              {isLoggedIn && (
+                <>
+                  <button onClick={() => { setIsMobileMenuOpen(false); handleNav('profile'); }} className="text-right flex items-center justify-between group">
+                    إعدادات الحساب
+                  </button>
+                  <button onClick={() => { setIsMobileMenuOpen(false); handleNav('orders'); }} className="text-right flex items-center justify-between group">
+                    طلباتي
+                  </button>
+                </>
+              )}
               <button 
                 onClick={() => {
                   if (isLoggedIn) {
