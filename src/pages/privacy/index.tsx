@@ -51,7 +51,7 @@ export function PrivacyPolicy() {
           <section>
             <h2 className="text-xl font-medium text-stone-900 mb-3">5. Data Deletion</h2>
             <p>
-              You have the full right to remove your presence from our platform. If you wish to delete your account and all associated personal data permanently, please contact our support team at <a href="mailto:zyadraed2020@gmail.com" className="text-natural-accent font-medium hover:underline">zyadraed2020@gmail.com</a>. We will process your request promptly and securely.
+              You have the full right to remove your presence from our platform. If you wish to delete your account and all associated personal data permanently, please contact our support team at <a href="mailto:oliver.brand.market@gmail.com" className="text-natural-accent font-medium hover:underline">oliver.brand.market@gmail.com</a>. We will process your request promptly and securely.
             </p>
           </section>
 

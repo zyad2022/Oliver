@@ -13,7 +13,7 @@ export function DeleteAccount({ onNavigate, isModal }: DeleteAccountProps) {
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [copiedMessage, setCopiedMessage] = useState(false);
 
-  const email = "zyadraed2020@gmail.com";
+  const email = "oliver.brand.market@gmail.com";
   const rawSubject = "Request to Delete My Account";
   const rawBody = "Hello, I would like to request deletion of my account and all associated data.";
   const subject = encodeURIComponent(rawSubject);

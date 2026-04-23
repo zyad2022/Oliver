@@ -189,7 +189,9 @@ export function Home() {
             {/* Product 1 */}
             <div 
               className="group cursor-pointer bg-gradient-to-br from-gold-light via-[#F9F6E5] to-gold-soft border border-gold-primary/20 p-4 rounded-2xl shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-500 ease-in-out flex flex-col"
-              onClick={() => onNavigate('collection')}
+              onClick={() => {
+                onNavigate('product?id=1');
+              }}
             >
               <div className="relative aspect-[4/5] rounded-[24px] overflow-hidden mb-5">
                 <img 
@@ -210,7 +212,9 @@ export function Home() {
             {/* Product 2 */}
             <div 
               className="group cursor-pointer bg-gradient-to-br from-gold-light via-[#F9F6E5] to-gold-soft border border-gold-primary/20 p-4 rounded-2xl shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-500 ease-in-out flex flex-col"
-              onClick={() => onNavigate('collection')}
+              onClick={() => {
+                onNavigate('product?id=2');
+              }}
             >
               <div className="relative aspect-[4/5] rounded-[24px] overflow-hidden mb-5">
                 <img 
@@ -232,7 +236,9 @@ export function Home() {
             {/* Product 3 */}
             <div 
               className="group cursor-pointer bg-gradient-to-br from-gold-light via-[#F9F6E5] to-gold-soft border border-gold-primary/20 p-4 rounded-2xl shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-500 ease-in-out flex flex-col"
-              onClick={() => onNavigate('collection')}
+              onClick={() => {
+                onNavigate('product?id=6');
+              }}
             >
               <div className="relative aspect-[4/5] rounded-[24px] overflow-hidden mb-5">
                 <img 
@@ -253,7 +259,9 @@ export function Home() {
             {/* Product 4 */}
             <div 
               className="group cursor-pointer bg-gradient-to-br from-gold-light via-[#F9F6E5] to-gold-soft border border-gold-primary/20 p-4 rounded-2xl shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-500 ease-in-out flex flex-col"
-              onClick={() => onNavigate('collection')}
+              onClick={() => {
+                onNavigate('product?id=4');
+              }}
             >
               <div className="relative aspect-[4/5] rounded-[24px] overflow-hidden mb-5">
                 <img 

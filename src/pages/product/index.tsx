@@ -1,20 +1,53 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
-import { Product } from '../../data';
+import { Product, products } from '../../data';
 import { Truck, X } from 'lucide-react';
 import { QuantitySelector } from '../../components/QuantitySelector';
 import { useAppContext } from '../../state';
+import { useSearchParams } from 'react-router-dom';
 
 interface ProductPageProps {
-  product: Product;
+  product?: Product;
   onAddToCart: (product: Product, quantity?: number) => void;
   isQuickAdd?: boolean;
 }
 
-export function ProductPage({ product, onAddToCart, isQuickAdd }: ProductPageProps) {
-  const { onNavigate } = useAppContext();
+export function ProductPage({ product: propProduct, onAddToCart, isQuickAdd }: ProductPageProps) {
+  const { onNavigate, setSelectedProduct } = useAppContext();
+  const [searchParams] = useSearchParams();
   const [quantity, setQuantity] = useState(1);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const [product, setProduct] = useState<Product | undefined>(propProduct);
+
+  useEffect(() => {
+    const productId = searchParams.get('id');
+    
+    // If we have a propProduct, use it (usually from state-based navigation)
+    if (propProduct && (!productId || propProduct.id === productId)) {
+      setProduct(propProduct);
+      return;
+    }
+
+    // If we have a productId in URL, and it's different from current product, fetch it
+    if (productId && (!product || product.id !== productId)) {
+      const foundProduct = products.find(p => p.id === productId);
+      if (foundProduct) {
+        setProduct(foundProduct);
+        setSelectedProduct(foundProduct);
+      } else {
+        onNavigate('home');
+      }
+    } else if (!productId && !propProduct) {
+      // No ID and no product in state/props
+      onNavigate('home');
+    }
+  }, [propProduct, searchParams, onNavigate, setSelectedProduct, product]);
+
+  if (!product) {
+    return <div className="min-h-screen flex items-center justify-center">
+      <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-gold-primary"></div>
+    </div>;
+  }
 
   const galleryList = product.gallery && product.gallery.length > 0 
     ? product.gallery 

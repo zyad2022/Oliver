@@ -13,8 +13,7 @@ export function Collection() {
   const categories = ['جميع المنتجات', 'قلائد', 'خواتم'];
   
   const onProductClick = (product: Product) => {
-    setSelectedProduct(product);
-    onNavigate('product');
+    onNavigate(`product?id=${product.id}`);
   };
   
   const [activeCategory, setActiveCategory] = useState<string>('جميع المنتجات');

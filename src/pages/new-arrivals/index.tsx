@@ -10,8 +10,7 @@ export function NewArrivals() {
   const { setSelectedProduct, onNavigate } = useAppContext();
   
   const onProductClick = (product: Product) => {
-    setSelectedProduct(product);
-    onNavigate('product');
+    onNavigate(`product?id=${product.id}`);
   };
   // Filter products added within the last 30 days and sort by date descending
   const newProducts = useMemo(() => {

@@ -51,7 +51,7 @@ export function TermsOfService() {
           <section>
             <h2 className="text-xl font-medium text-stone-900 mb-3">5. Contact and Support</h2>
             <p>
-              If you have any questions, disputes, or require support regarding these Terms of Service or your account status, please reach out to our official support team at <a href="mailto:zyadraed2020@gmail.com" className="text-natural-accent font-medium hover:underline">zyadraed2020@gmail.com</a>.
+              If you have any questions, disputes, or require support regarding these Terms of Service or your account status, please reach out to our official support team at <a href="mailto:oliver.brand.market@gmail.com" className="text-natural-accent font-medium hover:underline">oliver.brand.market@gmail.com</a>.
             </p>
           </section>
 

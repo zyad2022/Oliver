@@ -49,14 +49,10 @@ export const AppRoutes: React.FC = () => {
       <Route path="/size-guide" element={<SizeGuide />} />
       <Route path="/jewelry-care" element={<JewelryCare />} />
       <Route path="/product" element={
-        selectedProduct ? (
-          <ProductPage 
-            product={selectedProduct} 
-            onAddToCart={addToCart} 
-          />
-        ) : (
-          <Home />
-        )
+        <ProductPage 
+          product={selectedProduct || undefined} 
+          onAddToCart={addToCart} 
+        />
       } />
       <Route path="/cart" element={
         <Cart 
