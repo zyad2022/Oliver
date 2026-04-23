@@ -8,7 +8,7 @@ import { useAppContext } from '../../state';
 export function Cart({ cartItems, onRemove, onUpdateQuantity }: { cartItems: CartItem[], onRemove: (id: string) => void, onUpdateQuantity: (id: string, q: number) => void }) {
   const { onNavigate, setSelectedProduct } = useAppContext();
   const subtotal = cartItems.reduce((acc, item) => acc + (item.price * item.cartQuantity), 0);
-  const shipping = subtotal > 0 ? (subtotal > 1000 ? 0 : 50) : 0;
+  const shipping = subtotal > 0 ? (subtotal >= 1000 ? 0 : 50) : 0;
   const total = subtotal + shipping;
 
     if (cartItems.length === 0) {

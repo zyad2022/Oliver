@@ -97,7 +97,7 @@ export const products: Product[] = [
   },
    {
     id: "6",
-    name: "Green Stone Jewe",
+    name: "Green Stone Jewel",
     price: 100,
     listingImage: "https://i.ibb.co/fYgT1YYn/details-H-1.png",
     gallery: [

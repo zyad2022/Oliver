@@ -97,38 +97,67 @@ export function Header({ cartCount, currentPage, onNavigate, onProductClick, isL
     }
   };
 
+  const getNavItemClass = (page: string) => {
+    const isActive = currentPage === page;
+    return `backdrop-blur-md px-6 py-2.5 rounded-full transition-all duration-500 ease-in-out text-sm font-medium border shadow-sm ${
+      isActive 
+        ? 'bg-[#D4AF37]/15 border-[#D4AF37]/30 text-stone-900 shadow-[inset_0_0_20px_rgba(212,175,55,0.15)]' 
+        : 'bg-white/50 border-white/50 text-stone-700 hover:text-stone-900 hover:bg-[#D4AF37]/15 hover:border-[#D4AF37]/30 hover:shadow-[inset_0_0_20px_rgba(212,175,55,0.15)]'
+    }`;
+  };
+
+  const getIconClass = (isActive: boolean = false, extraClasses: string = '') => {
+    return `backdrop-blur-md w-11 h-11 rounded-full flex items-center justify-center transition-all duration-500 ease-in-out border shadow-sm relative ${extraClasses} ${
+      isActive
+        ? 'bg-[#D4AF37]/15 border-[#D4AF37]/30 text-stone-900 shadow-[inset_0_0_20px_rgba(212,175,55,0.15)]'
+        : 'bg-white/50 border-white/50 text-stone-700 hover:text-stone-900 hover:bg-[#D4AF37]/15 hover:border-[#D4AF37]/30 hover:shadow-[inset_0_0_20px_rgba(212,175,55,0.15)]'
+    }`;
+  };
+
+  const logoClass = `flex flex-none justify-center items-center cursor-pointer relative z-50 mx-4 backdrop-blur-md px-8 py-2.5 rounded-full transition-all duration-500 ease-in-out border shadow-sm ${
+    currentPage === 'home'
+      ? 'bg-[#D4AF37]/15 border-[#D4AF37]/30 text-stone-900 shadow-[inset_0_0_20px_rgba(212,175,55,0.15)]'
+      : 'bg-white/70 border-white/60 text-stone-900 hover:bg-[#D4AF37]/15 hover:border-[#D4AF37]/30 hover:shadow-[inset_0_0_20px_rgba(212,175,55,0.15)]'
+  }`;
+
   return (
-    <nav className="sticky top-0 z-50 w-full bg-natural-card border-b border-natural-accent-light">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+    <nav className="sticky top-0 z-50 w-full border-b border-[#D4AF37]/20 relative shadow-sm">
+      {/* Semi-transparent blur backing allowing full continuous canvas bleeding from body */}
+      <div className="absolute inset-0 z-0 overflow-hidden bg-white/40 backdrop-blur-md">
+        {/* Subtle local pattern mixed into the glassmorphism */}
+        <div className="luxury-navbar-pattern absolute inset-[-100px] pointer-events-none opacity-40 mix-blend-multiply" />
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="flex justify-between items-center h-20">
           
           {/* Mobile Menu Button */}
           <div className="flex items-center justify-start flex-1 sm:hidden">
             <button 
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="text-stone-600 hover:text-stone-900"
+              className={getIconClass(false)}
             >
               <Menu size={24} />
             </button>
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden sm:flex items-center justify-start gap-4 flex-1 font-arabic">
+          <div className="hidden sm:flex items-center justify-start gap-3 flex-1 font-arabic">
             <button 
               onClick={() => handleNav('home')} 
-              className="bg-[#F2EEE6] px-6 py-2 rounded-full text-stone-600 hover:text-stone-900 hover:bg-[#EBE5DB] transition-colors duration-300 ease-in-out text-sm font-medium"
+              className={getNavItemClass('home')}
             >
               الرئيسية
             </button>
             <button 
               onClick={() => handleNav('collection')} 
-              className="bg-[#F2EEE6] px-6 py-2 rounded-full text-stone-600 hover:text-stone-900 hover:bg-[#EBE5DB] transition-colors duration-300 ease-in-out text-sm font-medium"
+              className={getNavItemClass('collection')}
             >
               التشكيلات
             </button>
             <button 
               onClick={() => handleNav('new-arrivals')} 
-              className="bg-[#F2EEE6] px-6 py-2 rounded-full text-stone-600 hover:text-stone-900 hover:bg-[#EBE5DB] transition-colors duration-300 ease-in-out text-sm font-medium"
+              className={getNavItemClass('new-arrivals')}
             >
               وصل حديثاً
             </button>
@@ -136,7 +165,7 @@ export function Header({ cartCount, currentPage, onNavigate, onProductClick, isL
 
           {/* Logo */}
           <div 
-            className="flex flex-none justify-center items-center cursor-pointer relative z-50 mx-4 bg-[#F2EEE6] px-8 py-2.5 rounded-full hover:bg-[#EBE5DB] transition-colors duration-300 ease-in-out" 
+            className={logoClass} 
             onClick={() => handleNav('home')}
           >
             <h1 className="text-3xl tracking-widest font-serif text-stone-900 uppercase en-title leading-none">Oliver</h1>
@@ -150,14 +179,14 @@ export function Header({ cartCount, currentPage, onNavigate, onProductClick, isL
                 setIsSearchOpen(!isSearchOpen);
                 if (isSearchOpen) setSearchQuery('');
               }} 
-              className="bg-[#F2EEE6] w-10 h-10 rounded-full flex items-center justify-center text-stone-600 hover:text-stone-900 hover:bg-[#EBE5DB] hidden sm:flex relative transition-colors duration-300 ease-in-out"
+              className={getIconClass(false, 'hidden sm:flex')}
             >
               {isSearchOpen ? <X size={20} strokeWidth={1.5} /> : <Search size={20} strokeWidth={1.5} />}
             </button>
-            <div className="relative">
+            <div className="relative z-50">
               <button 
                 ref={accountToggleRef}
-                className="bg-[#F2EEE6] w-10 h-10 rounded-full flex items-center justify-center text-stone-600 hover:text-stone-900 hover:bg-[#EBE5DB] hidden sm:flex relative transition-colors duration-300 ease-in-out"
+                className={getIconClass(false, 'hidden sm:flex')}
                 onClick={() => {
                   if (isLoggedIn) {
                     setIsAccountMenuOpen(!isAccountMenuOpen);
@@ -178,7 +207,7 @@ export function Header({ cartCount, currentPage, onNavigate, onProductClick, isL
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 10 }}
                     transition={{ duration: 0.2 }}
-                    className="absolute top-10 left-0 w-48 bg-white border border-natural-border shadow-xl rounded-2xl overflow-hidden z-50 py-2"
+                    className="absolute top-12 left-0 w-48 bg-white border border-natural-border shadow-xl rounded-2xl overflow-hidden py-2"
                   >
                     <div className="px-4 py-3 border-b border-natural-border/50 mb-2 w-full text-right" dir="rtl">
                       <p className="text-sm font-medium text-natural-text font-arabic w-full block" style={{ textAlign: 'right' }}>
@@ -192,14 +221,14 @@ export function Header({ cartCount, currentPage, onNavigate, onProductClick, isL
                       onClick={() => { setIsAccountMenuOpen(false); handleNav('profile'); }}
                       className="w-full text-left px-4 py-2 hover:bg-natural-bg transition-colors flex items-center gap-3 text-sm text-natural-text font-arabic"
                     >
-                      <UserCircle size={16} />
+                      <UserCircle size={18} strokeWidth={1.5} />
                       حسابي
                     </button>
                     <button 
                       onClick={() => { setIsAccountMenuOpen(false); handleNav('orders'); }}
                       className="w-full text-left px-4 py-2 hover:bg-natural-bg transition-colors flex items-center gap-3 text-sm text-natural-text font-arabic"
                     >
-                      <Package size={16} />
+                      <Package size={18} strokeWidth={1.5} />
                       طلباتي
                     </button>
                     <div className="h-px bg-natural-border/50 my-2"></div>
@@ -207,7 +236,7 @@ export function Header({ cartCount, currentPage, onNavigate, onProductClick, isL
                       onClick={() => { setIsAccountMenuOpen(false); onLogout(); }}
                       className="w-full text-left px-4 py-2 hover:bg-red-50 transition-colors flex items-center gap-3 text-sm text-red-600 font-arabic"
                     >
-                      <LogOut size={16} />
+                      <LogOut size={18} strokeWidth={1.5} />
                       تسجيل الخروج
                     </button>
                   </motion.div>
@@ -215,14 +244,14 @@ export function Header({ cartCount, currentPage, onNavigate, onProductClick, isL
               </AnimatePresence>
             </div>
             <button 
-              className="bg-[#F2EEE6] w-10 h-10 rounded-full flex items-center justify-center text-stone-600 hover:text-stone-900 hover:bg-[#EBE5DB] relative transition-colors duration-300 ease-in-out"
+              className={getIconClass(currentPage === 'cart', 'flex')}
               onClick={() => {
                 handleNav('cart');
               }}
             >
               <ShoppingBag size={20} strokeWidth={1.5} />
               {cartCount > 0 && (
-                <span className="absolute -top-1.5 -right-1.5 bg-natural-accent text-white text-[10px] en-text font-bold w-5 h-5 rounded-full flex items-center justify-center shadow-sm">
+                <span className="absolute -top-1.5 -right-1.5 bg-black text-[#D4AF37] text-[10px] en-text font-bold w-5 h-5 rounded-full flex items-center justify-center shadow-md">
                   {cartCount}
                 </span>
               )}

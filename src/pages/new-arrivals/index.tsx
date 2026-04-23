@@ -31,7 +31,7 @@ export function NewArrivals() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="w-full bg-[#FAF8F5] pb-20 pt-10 px-4 sm:px-6 lg:px-8"
+      className="w-full pb-20 pt-10 px-4 sm:px-6 lg:px-8 relative z-10"
     >
       <div className="max-w-7xl mx-auto">
         
@@ -71,10 +71,10 @@ export function NewArrivals() {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
               transition={{ duration: 0.4, ease: "easeOut" }}
-              className="text-center py-24 bg-white rounded-[32px] border border-natural-border flex flex-col items-center justify-center natural-shadow max-w-3xl mx-auto"
+              className="text-center py-24 bg-white/40 backdrop-blur-md rounded-[32px] border border-gold-primary/20 flex flex-col items-center justify-center shadow-sm max-w-3xl mx-auto"
             >
-              <p className="text-2xl sm:text-3xl font-arabic font-medium text-natural-text mb-4">لا توجد منتجات حديثة حالياً ✨</p>
-              <p className="text-lg text-[#666] max-w-sm mx-auto font-arabic font-light">
+              <p className="text-2xl sm:text-3xl font-arabic font-medium text-natural-text mb-4 drop-shadow-sm">لا توجد منتجات حديثة حالياً ✨</p>
+              <p className="text-lg text-natural-secondary-text max-w-sm mx-auto font-arabic font-light">
                 تابعنا دائماً لأحدث الإضافات من مجموعة Oliver
               </p>
             </motion.div>
