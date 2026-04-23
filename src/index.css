@@ -60,15 +60,15 @@
   .luxury-hero-bg::before {
     background-image: 
       /* Large soft orb top left */
-      radial-gradient(circle 120px at 10% 15%, #EAD9A0 0%, rgba(234, 217, 160, 0) 100%),
+      radial-gradient(circle 120px at 10% 15%, #E0C46A 0%, rgba(224, 196, 106, 0) 100%),
       /* Small dense sparkle left */
-      radial-gradient(circle 4px at 18% 28%, #EAD9A0 0%, rgba(234, 217, 160, 0) 100%),
+      radial-gradient(circle 4px at 18% 28%, #E0C46A 0%, rgba(224, 196, 106, 0) 100%),
       /* Medium orb bottom left */
-      radial-gradient(circle 80px at 8% 85%, #EAD9A0 0%, rgba(234, 217, 160, 0) 100%),
+      radial-gradient(circle 80px at 8% 85%, #E0C46A 0%, rgba(224, 196, 106, 0) 100%),
       /* Faint broad curve right */
-      radial-gradient(ellipse 200px 300px at 95% 50%, rgba(234, 217, 160, 0) 90%, #EAD9A0 95%, rgba(234, 217, 160, 0) 100%),
+      radial-gradient(ellipse 200px 300px at 95% 50%, rgba(224, 196, 106, 0) 90%, #E0C46A 95%, rgba(224, 196, 106, 0) 100%),
       /* Tiny floating dust bottom left */
-      radial-gradient(circle 2px at 22% 75%, #EAD9A0 0%, rgba(234, 217, 160, 0) 100%);
+      radial-gradient(circle 2px at 22% 75%, #E0C46A 0%, rgba(224, 196, 106, 0) 100%);
     opacity: 0.15;
     animation: luxuryFloatBefore 22s ease-in-out infinite alternate;
   }
@@ -76,15 +76,15 @@
   .luxury-hero-bg::after {
     background-image: 
       /* Large glow bottom right */
-      radial-gradient(circle 150px at 88% 80%, #EAD9A0 0%, rgba(234, 217, 160, 0) 100%),
+      radial-gradient(circle 150px at 88% 80%, #E0C46A 0%, rgba(224, 196, 106, 0) 100%),
       /* Faint curved ring top left */
-      radial-gradient(circle 180px at 5% 5%, rgba(234, 217, 160, 0) 95%, #EAD9A0 98%, rgba(234, 217, 160, 0) 100%),
+      radial-gradient(circle 180px at 5% 5%, rgba(224, 196, 106, 0) 95%, #E0C46A 98%, rgba(224, 196, 106, 0) 100%),
       /* Sparkle dot top right */
-      radial-gradient(circle 5px at 85% 18%, #EAD9A0 0%, rgba(234, 217, 160, 0) 100%),
+      radial-gradient(circle 5px at 85% 18%, #E0C46A 0%, rgba(224, 196, 106, 0) 100%),
       /* Medium blurred dot right */
-      radial-gradient(circle 30px at 92% 35%, #EAD9A0 0%, rgba(234, 217, 160, 0) 100%),
+      radial-gradient(circle 30px at 92% 35%, #E0C46A 0%, rgba(224, 196, 106, 0) 100%),
       /* Dust particle bottom right */
-      radial-gradient(circle 3px at 78% 85%, #EAD9A0 0%, rgba(234, 217, 160, 0) 100%);
+      radial-gradient(circle 3px at 78% 85%, #E0C46A 0%, rgba(224, 196, 106, 0) 100%);
     opacity: 0.12;
     animation: luxuryFloatAfter 28s ease-in-out infinite alternate;
   }

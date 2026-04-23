@@ -152,7 +152,7 @@ export function Home() {
               <div key={product.id} className="group cursor-pointer" onClick={() => handleProductClick(product)}>
                 <div className="relative aspect-[4/5] rounded-[24px] overflow-hidden bg-white mb-6 shadow-sm group-hover:shadow-xl transition-all duration-700 border border-gold-primary/10 group-hover:border-gold-primary/40">
                   <img 
-                    src={product.image} 
+                    src={product.listingImage} 
                     alt={product.name} 
                     className="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-700"
                   />

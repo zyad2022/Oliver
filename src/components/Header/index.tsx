@@ -275,7 +275,7 @@ export function Header({ cartCount, currentPage, onNavigate, onProductClick, isL
                             onClick={() => handleProductSelect(product)}
                           >
                             <img 
-                              src={product.image} 
+                              src={product.listingImage} 
                               alt={product.name} 
                               className="w-16 h-16 object-cover rounded-lg bg-natural-img"
                               onError={(e) => { e.currentTarget.src = 'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&q=80&w=800'; }}
@@ -341,7 +341,7 @@ export function Header({ cartCount, currentPage, onNavigate, onProductClick, isL
                         onClick={() => handleProductSelect(product)}
                       >
                         <img 
-                          src={product.image} 
+                          src={product.listingImage} 
                           alt={product.name} 
                           className="w-14 h-14 object-cover rounded-md"
                         />

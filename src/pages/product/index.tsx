@@ -14,6 +14,13 @@ interface ProductPageProps {
 export function ProductPage({ product, onAddToCart, isQuickAdd }: ProductPageProps) {
   const { onNavigate } = useAppContext();
   const [quantity, setQuantity] = useState(1);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+
+  const galleryList = product.gallery && product.gallery.length > 0 
+    ? product.gallery 
+    : [{ thumb: product.listingImage, full: product.listingImage }];
+    
+  const mainImage = galleryList[selectedImageIndex]?.full || galleryList[0].full;
 
   const handleIncrease = () => {
     if (quantity < 10) setQuantity((prev) => prev + 1);
@@ -50,20 +57,24 @@ export function ProductPage({ product, onAddToCart, isQuickAdd }: ProductPagePro
         <div className="w-full md:w-1/2">
           <div className={`aspect-[4/5] bg-natural-img rounded-2xl overflow-hidden mb-4 ${isQuickAdd ? 'md:max-h-[500px]' : ''}`}>
             <img 
-              src={product.image} 
+              src={mainImage} 
               alt={product.name} 
               onError={(e) => { e.currentTarget.src = 'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&q=80&w=800'; }}
               className="w-full h-full object-cover object-center"
             />
           </div>
-          {!isQuickAdd && (
+          {!isQuickAdd && galleryList.length > 1 && (
             <div className="grid grid-cols-4 gap-4">
-              {[1, 2, 3, 4].map((_, i) => (
-                <div key={i} className="aspect-square bg-natural-img rounded-xl overflow-hidden cursor-pointer border border-transparent hover:border-natural-accent transition-colors">
+              {galleryList.map((imgObj, i) => (
+                <div 
+                  key={i} 
+                  onClick={() => setSelectedImageIndex(i)}
+                  className={`aspect-square bg-natural-img rounded-xl overflow-hidden cursor-pointer border-2 transition-colors ${selectedImageIndex === i ? 'border-natural-accent' : 'border-transparent hover:border-natural-accent/50'}`}
+                >
                   <img 
-                    src={product.image} 
+                    src={imgObj.thumb} 
                     className="w-full h-full object-cover opacity-80 hover:opacity-100" 
-                    alt="thumbnail" 
+                    alt={`thumbnail ${i + 1}`} 
                     onError={(e) => { e.currentTarget.src = 'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&q=80&w=800'; }}
                   />
                 </div>

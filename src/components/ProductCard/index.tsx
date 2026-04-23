@@ -36,7 +36,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onClick }) =>
           </div>
         )}
         <img 
-          src={product.image} 
+          src={product.listingImage} 
           alt={product.name}
           onError={(e) => { e.currentTarget.src = 'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&q=80&w=800'; }}
           className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"

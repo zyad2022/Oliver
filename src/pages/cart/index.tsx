@@ -77,7 +77,7 @@ export function Cart({ cartItems, onRemove, onUpdateQuantity }: { cartItems: Car
                     }}
                   >
                     <img 
-                      src={item.image} 
+                      src={item.listingImage} 
                       alt={item.name} 
                       className="w-full h-full object-cover" 
                       onError={(e) => { e.currentTarget.src = 'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&q=80&w=800'; }}
