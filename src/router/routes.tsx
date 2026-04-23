@@ -11,6 +11,7 @@ import { PrivacyPolicy } from '../pages/privacy';
 import { TermsOfService } from '../pages/terms';
 import { About } from '../pages/about';
 import { Rate } from '../pages/rate';
+import { Reviews } from '../pages/reviews';
 import { FAQ } from '../pages/faq';
 import { Contact } from '../pages/contact';
 import { Returns } from '../pages/returns';
@@ -40,6 +41,7 @@ export const AppRoutes: React.FC = () => {
       <Route path="/new-arrivals" element={<NewArrivals />} />
       <Route path="/about" element={<About />} />
       <Route path="/rate" element={<Rate />} />
+      <Route path="/reviews" element={<Reviews />} />
       <Route path="/faq" element={<FAQ />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/returns" element={<Returns />} />

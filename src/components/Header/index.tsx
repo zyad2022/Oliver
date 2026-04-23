@@ -159,7 +159,13 @@ export function Header({ cartCount, currentPage, onNavigate, onProductClick, isL
               onClick={() => handleNav('new-arrivals')} 
               className={getNavItemClass('new-arrivals')}
             >
-              وصل حديثاً
+             حديثا
+            </button>
+            <button 
+              onClick={() => handleNav('reviews')} 
+              className={getNavItemClass('reviews')}
+            >
+              العملاء
             </button>
           </div>
 
@@ -395,7 +401,10 @@ export function Header({ cartCount, currentPage, onNavigate, onProductClick, isL
                 التشكيلات كاملة
               </button>
               <button onClick={() => handleNav('new-arrivals')} className="text-right flex items-center justify-between group">
-                وصل حديثاً
+                حديثا
+              </button>
+              <button onClick={() => handleNav('reviews')} className="text-right flex items-center justify-between group">
+                العملاء
               </button>
             </div>
             {/* Mobile Actions */}

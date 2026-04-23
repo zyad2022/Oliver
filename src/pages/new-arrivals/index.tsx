@@ -37,7 +37,7 @@ export function NewArrivals() {
         
         {/* Page Header */}
         <PageTitle 
-          title="وصل حديثاً"
+          title="حديثا"
           description="أحدث المنتجات المضافة إلى مجموعة Oliver"
           badgeIcon={<Sparkles size={16} className="text-natural-accent" />}
           badgeText="أحدث المجموعات"

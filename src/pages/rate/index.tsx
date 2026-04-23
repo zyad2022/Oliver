@@ -5,21 +5,37 @@ import { Star, CheckCircle2, X } from 'lucide-react';
 import { PageTitle } from '../../components/PageTitle';
 import { Button } from '../../components/Button';
 import { useAppContext } from '../../state';
+import { db } from '../../firebase';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
 export function Rate() {
   const { onNavigate } = useAppContext();
   const [rating, setRating] = useState<number>(0);
   const [hoveredRating, setHoveredRating] = useState<number>(0);
+  const [name, setName] = useState('');
   const [comment, setComment] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (rating === 0) return;
+    if (rating === 0 || !name.trim() || !comment.trim()) return;
     
-    // Simulate submission
-    setSubmitted(true);
-    // Reset after some time if needed, but for now just show success
+    setIsSubmitting(true);
+    try {
+      await addDoc(collection(db, 'reviews'), {
+        name: name.trim(),
+        comment: comment.trim(),
+        rating,
+        createdAt: serverTimestamp()
+      });
+      setSubmitted(true);
+    } catch (error) {
+      console.error("Error adding review: ", error);
+      alert('حدث خطأ أثناء إرسال التقييم. يرجى المحاولة مرة أخرى.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -88,23 +104,37 @@ export function Rate() {
               </div>
 
               <div className="mb-8">
-                <label htmlFor="comment" className="block text-right mb-3 font-arabic text-natural-text">تعليقك (اختياري)</label>
+                <label htmlFor="name" className="block text-right mb-3 font-arabic text-natural-text">الاسم الكامل (مطلوب)</label>
+                <input
+                  id="name"
+                  type="text"
+                  required
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="ادخلي اسمك هنا..."
+                  className="w-full p-4 rounded-2xl border border-gold-primary/20 focus:border-gold-primary focus:ring-1 focus:ring-gold-primary outline-none transition-all font-arabic text-right text-lg shadow-sm"
+                />
+              </div>
+
+              <div className="mb-8">
+                <label htmlFor="comment" className="block text-right mb-3 font-arabic text-natural-text">تعليقك (مطلوب)</label>
                 <textarea
                   id="comment"
+                  required
                   value={comment}
                   onChange={(e) => setComment(e.target.value)}
-                  placeholder="اكتب تعليقك هنا..."
-                  className="w-full min-h-[150px] p-4 rounded-2xl border border-gold-primary/20 focus:border-gold-primary focus:ring-1 focus:ring-gold-primary outline-none transition-all font-arabic text-right text-lg resize-none"
+                  placeholder="اكتبي تعليقك هنا..."
+                  className="w-full min-h-[150px] p-4 rounded-2xl border border-gold-primary/20 focus:border-gold-primary focus:ring-1 focus:ring-gold-primary outline-none transition-all font-arabic text-right text-lg shadow-sm resize-none"
                 />
               </div>
 
               <Button
                 type="submit"
                 fullWidth
-                disabled={rating === 0}
+                disabled={rating === 0 || !name.trim() || !comment.trim() || isSubmitting}
                 className="py-4 text-lg"
               >
-                إرسال التقييم
+                {isSubmitting ? 'جاري الإرسال...' : 'إرسال التقييم'}
               </Button>
             </motion.form>
           ) : (

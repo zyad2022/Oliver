@@ -24,6 +24,18 @@
         "createdAt": { "type": "timestamp" }
       },
       "required": ["userId", "total", "status", "items", "createdAt"]
+    },
+    "Review": {
+      "title": "Customer Review",
+      "description": "Stores customer feedback and ratings.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "comment": { "type": "string" },
+        "rating": { "type": "number" },
+        "createdAt": { "type": "timestamp" }
+      },
+      "required": ["name", "comment", "rating", "createdAt"]
     }
   },
   "firestore": {
@@ -34,6 +46,10 @@
     "/orders/{orderId}": {
       "schema": { "$ref": "#/entities/Order" },
       "description": "Orders collection."
+    },
+    "/reviews/{reviewId}": {
+      "schema": { "$ref": "#/entities/Review" },
+      "description": "Customer reviews collection."
     }
   }
 }
