@@ -100,6 +100,22 @@ export function Home() {
       {/* 3. CATEGORY SHOWCASE */}
       <section className="py-12">
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Coming Soon Label */}
+          <div className="flex justify-center mb-10">
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="relative inline-flex items-center justify-center px-8 py-3 rounded-full bg-gradient-to-r from-[#D4AF37]/5 via-[#D4AF37]/15 to-[#D4AF37]/5 backdrop-blur-md border border-[#D4AF37]/30 shadow-[0_4px_20px_rgba(212,175,55,0.08)] overflow-hidden group"
+            >
+              <div className="absolute inset-0 bg-white/10 blur-sm pointer-events-none rounded-full" />
+              <span className="relative z-10 text-xs md:text-sm text-gold-deep font-bold en-text tracking-[0.2em] uppercase">
+                Coming Soon
+              </span>
+            </motion.div>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
             {/* Category 1 */}
             <div 
@@ -172,16 +188,16 @@ export function Home() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {/* Product 1 */}
             <div 
-              className="group cursor-pointer bg-white/20 backdrop-blur-md border border-[#D4AF37]/20 hover:border-[#D4AF37]/60 hover:shadow-[0_8px_30px_rgba(212,175,55,0.15)] rounded-[32px] p-4 transition-all duration-500 flex flex-col"
+              className="group cursor-pointer bg-gradient-to-br from-gold-light via-[#F9F6E5] to-gold-soft border border-gold-primary/20 p-4 rounded-2xl shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-500 ease-in-out flex flex-col"
               onClick={() => onNavigate('collection')}
             >
               <div className="relative aspect-[4/5] rounded-[24px] overflow-hidden mb-5">
                 <img 
                   src="https://i.ibb.co/fVcWYJH9/details-H-1.png" 
                   alt="Symbol Of Love & Elegance" 
-                  className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
+                  className="w-full h-full object-cover object-center transition-transform duration-700"
                 />
-                <div className="absolute inset-0 bg-gold-primary/0 group-hover:bg-gold-primary/10 transition-colors duration-700 pointer-events-none" />
+                <div className="absolute inset-0 bg-transparent group-hover:bg-[#D4AF37]/20 transition-all duration-500 pointer-events-none" />
               </div>
               <div className="flex flex-col items-center text-center pb-2">
                 <h3 className="en-title text-base text-natural-text mb-1 group-hover:text-gold-deep transition-colors">Symbol Of Love & Elegance</h3>
@@ -193,16 +209,16 @@ export function Home() {
 
             {/* Product 2 */}
             <div 
-              className="group cursor-pointer bg-white/20 backdrop-blur-md border border-[#D4AF37]/20 hover:border-[#D4AF37]/60 hover:shadow-[0_8px_30px_rgba(212,175,55,0.15)] rounded-[32px] p-4 transition-all duration-500 flex flex-col"
+              className="group cursor-pointer bg-gradient-to-br from-gold-light via-[#F9F6E5] to-gold-soft border border-gold-primary/20 p-4 rounded-2xl shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-500 ease-in-out flex flex-col"
               onClick={() => onNavigate('collection')}
             >
               <div className="relative aspect-[4/5] rounded-[24px] overflow-hidden mb-5">
                 <img 
                   src="https://i.ibb.co/v6Xy7CcQ/672588038-2001103607154376-2871997865707591592-n-1.png" 
                   alt="Like a Swan" 
-                  className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
+                  className="w-full h-full object-cover object-center transition-transform duration-700"
                 />
-                <div className="absolute inset-0 bg-gold-primary/0 group-hover:bg-gold-primary/10 transition-colors duration-700 pointer-events-none" />
+                <div className="absolute inset-0 bg-transparent group-hover:bg-[#D4AF37]/20 transition-all duration-500 pointer-events-none" />
               </div>
               <div className="flex flex-col items-center text-center pb-2">
                 <h3 className="en-title text-base text-natural-text mb-1 group-hover:text-gold-deep transition-colors">Like a Swan</h3>
@@ -215,16 +231,16 @@ export function Home() {
 
             {/* Product 3 */}
             <div 
-              className="group cursor-pointer bg-white/20 backdrop-blur-md border border-[#D4AF37]/20 hover:border-[#D4AF37]/60 hover:shadow-[0_8px_30px_rgba(212,175,55,0.15)] rounded-[32px] p-4 transition-all duration-500 flex flex-col"
+              className="group cursor-pointer bg-gradient-to-br from-gold-light via-[#F9F6E5] to-gold-soft border border-gold-primary/20 p-4 rounded-2xl shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-500 ease-in-out flex flex-col"
               onClick={() => onNavigate('collection')}
             >
               <div className="relative aspect-[4/5] rounded-[24px] overflow-hidden mb-5">
                 <img 
                   src="https://i.ibb.co/fYgT1YYn/details-H-1.png" 
                   alt="Green Stone Jewel" 
-                  className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
+                  className="w-full h-full object-cover object-center transition-transform duration-700"
                 />
-                <div className="absolute inset-0 bg-gold-primary/0 group-hover:bg-gold-primary/10 transition-colors duration-700 pointer-events-none" />
+                <div className="absolute inset-0 bg-transparent group-hover:bg-[#D4AF37]/20 transition-all duration-500 pointer-events-none" />
               </div>
               <div className="flex flex-col items-center text-center pb-2">
                 <h3 className="en-title text-base text-natural-text mb-1 group-hover:text-gold-deep transition-colors">Green Stone Jewel</h3>
@@ -236,16 +252,16 @@ export function Home() {
 
             {/* Product 4 */}
             <div 
-              className="group cursor-pointer bg-white/20 backdrop-blur-md border border-[#D4AF37]/20 hover:border-[#D4AF37]/60 hover:shadow-[0_8px_30px_rgba(212,175,55,0.15)] rounded-[32px] p-4 transition-all duration-500 flex flex-col"
+              className="group cursor-pointer bg-gradient-to-br from-gold-light via-[#F9F6E5] to-gold-soft border border-gold-primary/20 p-4 rounded-2xl shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-500 ease-in-out flex flex-col"
               onClick={() => onNavigate('collection')}
             >
               <div className="relative aspect-[4/5] rounded-[24px] overflow-hidden mb-5">
                 <img 
                   src="https://i.ibb.co/7Hc2rnq/673417208-1618558772732546-2444480640670586524-n-1.png" 
                   alt="New Swan (Gold plated)" 
-                  className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
+                  className="w-full h-full object-cover object-center transition-transform duration-700"
                 />
-                <div className="absolute inset-0 bg-gold-primary/0 group-hover:bg-gold-primary/10 transition-colors duration-700 pointer-events-none" />
+                <div className="absolute inset-0 bg-transparent group-hover:bg-[#D4AF37]/20 transition-all duration-500 pointer-events-none" />
               </div>
               <div className="flex flex-col items-center text-center pb-2">
                 <h3 className="en-title text-base text-natural-text mb-1 group-hover:text-gold-deep transition-colors">New Swan (Gold plated)</h3>
@@ -268,25 +284,6 @@ export function Home() {
         </div>
       </section>
 
-      {/* 5. FINAL CTA SECTION */}
-      <section className="py-32 relative z-10">
-        <div className="max-w-4xl mx-auto px-4 text-center relative z-10">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl text-gold-deep mb-8 font-serif uppercase en-title tracking-widest drop-shadow-sm">
-            Timeless Elegance
-          </h2>
-          <p className="font-arabic text-xl text-natural-secondary-text mb-12 font-light leading-relaxed">
-            استكشفي أحدث مجموعاتنا المصممة لتتألقي كل يوم
-          </p>
-          <div className="luxury-pill-outer hover:scale-105 transition-transform duration-300 bg-white/40 backdrop-blur-md">
-            <button 
-              onClick={() => onNavigate('new-arrivals')}
-              className="luxury-pill-core px-12 py-4 uppercase tracking-[0.2em] text-sm font-bold en-text shadow-lg hover:shadow-xl"
-            >
-              Shop New Arrivals
-            </button>
-          </div>
-        </div>
-      </section>
     </motion.div>
   );
 }

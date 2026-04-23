@@ -61,7 +61,7 @@ export function About() {
               referrerPolicy="no-referrer"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-8">
-              <p className="text-white text-xl font-serif tracking-widest uppercase en-title">Crafting Excellence Since 2024</p>
+              <p className="text-white text-xl font-serif tracking-widest uppercase en-title">Crafting Excellence Since 2026/4/20</p>
             </div>
           </div>
         </div>

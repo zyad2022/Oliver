@@ -24,7 +24,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onClick }) =>
 
   return (
     <div 
-      className="group cursor-pointer flex flex-col gap-3 bg-natural-card border border-natural-border p-4 rounded-2xl"
+      className="group cursor-pointer flex flex-col gap-3 bg-gradient-to-br from-gold-light via-[#F9F6E5] to-gold-soft border border-gold-primary/20 p-4 rounded-2xl shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-500 ease-in-out"
       onClick={() => onClick(product)}
     >
       <div className="relative aspect-[4/5] overflow-hidden bg-natural-img rounded-xl flex items-center justify-center">

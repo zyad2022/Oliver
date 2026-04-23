@@ -84,69 +84,10 @@ export function Collection() {
         description="تصفحي جميع القطع المميزة وتألقي بإطلالة تعبر عن شخصيتك. كل قطعة تعكس قصة فريدة تنتظر من يبرز جمالها."
       />
 
-      <div className="flex flex-col md:flex-row gap-12">
-        {/* Filters Sidebar */}
-        <div className="w-full md:w-64 flex-shrink-0">
-          <div className="sticky top-28">
-            <h3 className="text-xl text-natural-text mb-6 pb-4 border-b border-natural-border">التصنيفات</h3>
-            <ul className="flex flex-col gap-4">
-              {categories.map((cat, idx) => (
-                <li key={idx}>
-                  <button 
-                    onClick={() => setActiveCategory(cat)}
-                    className={`text-lg transition-colors ${activeCategory === cat ? 'text-natural-text font-medium' : 'text-[#666] hover:text-natural-accent'}`}
-                  >
-                    {cat}
-                  </button>
-                </li>
-              ))}
-            </ul>
-
-            <h3 className="text-xl text-natural-text mb-6 pb-4 border-b border-natural-border mt-12">السعر</h3>
-            <div className="flex flex-col gap-3">
-              <label className="flex items-center gap-3 text-[#666] cursor-pointer">
-                <input 
-                  type="checkbox" 
-                  className="w-4 h-4 accent-natural-accent"
-                  checked={activePriceFilters.includes('10-100')}
-                  onChange={() => togglePriceFilter('10-100')}
-                />
-                <span className="en-text">10 - 100 EGP</span>
-              </label>
-              <label className="flex items-center gap-3 text-[#666] cursor-pointer">
-                <input 
-                  type="checkbox" 
-                  className="w-4 h-4 accent-natural-accent"
-                  checked={activePriceFilters.includes('150-300')}
-                  onChange={() => togglePriceFilter('150-300')}
-                />
-                <span className="en-text">150 - 300 EGP</span>
-              </label>
-              <label className="flex items-center gap-3 text-[#666] cursor-pointer">
-                <input 
-                  type="checkbox" 
-                  className="w-4 h-4 accent-natural-accent"
-                  checked={activePriceFilters.includes('300-600')}
-                  onChange={() => togglePriceFilter('300-600')}
-                />
-                <span className="en-text">300 - 600 EGP</span>
-              </label>
-              <label className="flex items-center gap-3 text-[#666] cursor-pointer">
-                <input 
-                  type="checkbox" 
-                  className="w-4 h-4 accent-natural-accent"
-                  checked={activePriceFilters.includes('600+')}
-                  onChange={() => togglePriceFilter('600+')}
-                />
-                <span className="en-text">600+ EGP</span>
-              </label>
-            </div>
-          </div>
-        </div>
-
+      <div className="flex flex-col md:flex-row-reverse gap-12">
         {/* Product Grid */}
         <div className="w-full">
-          <div className="flex justify-between items-center mb-8 text-[#666] text-sm">
+          <div className="flex flex-row-reverse justify-between items-center mb-8 text-[#666] text-sm">
             <div className="luxury-pill-outer scale-90 sm:scale-100 origin-right">
               <div className="luxury-pill-core px-5 py-1.5">
                 <span className="font-arabic text-white">عرض {filteredAndSortedProducts.length} منتجات</span>
@@ -192,6 +133,65 @@ export function Collection() {
               </button>
             </div>
           )}
+        </div>
+
+        {/* Filters Sidebar */}
+        <div className="w-full md:w-64 flex-shrink-0">
+          <div className="sticky top-28 bg-gradient-to-br from-gold-light via-[#FDFBF7] to-gold-soft border border-gold-primary/20 rounded-2xl shadow-[0_8px_30px_rgba(212,175,55,0.08)] p-6 backdrop-blur-sm text-right">
+            <h3 className="text-lg text-gold-deep mb-6 pb-3 border-b border-gold-primary/20 font-arabic font-medium">التصنيفات</h3>
+            <ul className="flex flex-col gap-3">
+              {categories.map((cat, idx) => (
+                <li key={idx}>
+                  <button 
+                    onClick={() => setActiveCategory(cat)}
+                    className={`text-base transition-all duration-300 w-full text-right py-1 px-2 rounded-lg hover:bg-gold-primary/10 ${activeCategory === cat ? 'text-gold-deep font-bold bg-gold-primary/5 shadow-sm' : 'text-natural-secondary-text hover:text-gold-deep'}`}
+                  >
+                    {cat}
+                  </button>
+                </li>
+              ))}
+            </ul>
+
+            <h3 className="text-lg text-gold-deep mb-6 pb-3 border-b border-gold-primary/20 mt-10 font-arabic font-medium">السعر</h3>
+            <div className="flex flex-col gap-4">
+              <label className="flex items-center gap-3 text-natural-secondary-text cursor-pointer group hover:text-gold-deep transition-colors">
+                <input 
+                  type="checkbox" 
+                  className="w-4 h-4 accent-gold-primary rounded cursor-pointer border-gold-primary/30"
+                  checked={activePriceFilters.includes('10-100')}
+                  onChange={() => togglePriceFilter('10-100')}
+                />
+                <span className="en-text text-sm group-hover:-translate-x-1 transition-transform">10 - 100 EGP</span>
+              </label>
+              <label className="flex items-center gap-3 text-natural-secondary-text cursor-pointer group hover:text-gold-deep transition-colors">
+                <input 
+                  type="checkbox" 
+                  className="w-4 h-4 accent-gold-primary rounded cursor-pointer border-gold-primary/30"
+                  checked={activePriceFilters.includes('150-300')}
+                  onChange={() => togglePriceFilter('150-300')}
+                />
+                <span className="en-text text-sm group-hover:-translate-x-1 transition-transform">150 - 300 EGP</span>
+              </label>
+              <label className="flex items-center gap-3 text-natural-secondary-text cursor-pointer group hover:text-gold-deep transition-colors">
+                <input 
+                  type="checkbox" 
+                  className="w-4 h-4 accent-gold-primary rounded cursor-pointer border-gold-primary/30"
+                  checked={activePriceFilters.includes('300-600')}
+                  onChange={() => togglePriceFilter('300-600')}
+                />
+                <span className="en-text text-sm group-hover:-translate-x-1 transition-transform">300 - 600 EGP</span>
+              </label>
+              <label className="flex items-center gap-3 text-natural-secondary-text cursor-pointer group hover:text-gold-deep transition-colors">
+                <input 
+                  type="checkbox" 
+                  className="w-4 h-4 accent-gold-primary rounded cursor-pointer border-gold-primary/30"
+                  checked={activePriceFilters.includes('600+')}
+                  onChange={() => togglePriceFilter('600+')}
+                />
+                <span className="en-text text-sm group-hover:-translate-x-1 transition-transform">600+ EGP</span>
+              </label>
+            </div>
+          </div>
         </div>
       </div>
     </motion.div>
