@@ -7,6 +7,7 @@ import { ProductPage } from '../pages/product';
 import { Cart } from '../pages/cart';
 import { Profile } from '../pages/profile';
 import { Orders } from '../pages/orders';
+import { Checkout } from '../pages/checkout';
 import { PrivacyPolicy } from '../pages/privacy';
 import { TermsOfService } from '../pages/terms';
 import { About } from '../pages/about';
@@ -69,6 +70,13 @@ export const AppRoutes: React.FC = () => {
       <Route path="/orders" element={
         isLoggedIn ? (
           <Orders />
+        ) : (
+          <RedirectToHome />
+        )
+      } />
+      <Route path="/checkout" element={
+        isLoggedIn ? (
+          <Checkout />
         ) : (
           <RedirectToHome />
         )

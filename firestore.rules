@@ -30,11 +30,15 @@ service cloud.firestore {
     }
 
     function isValidOrder(data) {
-      return data.keys().hasAll(['userId', 'total', 'status', 'items', 'createdAt'])
+      return data.keys().hasAll(['userId', 'items', 'totalItems', 'subtotal', 'totalPrice', 'paymentMethod', 'status', 'createdAt'])
+        && data.keys().size() == 8
         && data.userId is string && data.userId.size() > 0 && data.userId.size() <= 128
-        && data.total is number && data.total >= 0
+        && data.items is list && data.items.size() > 0 && data.items.size() <= 100
+        && data.totalItems is number && data.totalItems > 0
+        && data.subtotal is number && data.subtotal >= 0
+        && data.totalPrice is number && data.totalPrice >= 0
+        && data.paymentMethod is string && data.paymentMethod.size() <= 100
         && data.status is string && data.status.size() <= 50
-        && data.items is list && data.items.size() <= 100
         && data.createdAt == request.time;
     }
 
@@ -77,23 +81,25 @@ service cloud.firestore {
         && incoming().createdAt == existing().createdAt;
 
       allow delete: if false; // Do not allow manual deletion via client SDK
-    }
 
-    match /orders/{orderId} {
-      // Allow read only to the owner
-      allow get: if isSignedIn() && isValidId(orderId) && resource.data.userId == request.auth.uid;
-      
-      // Allow user to query their own orders list
-      allow list: if isSignedIn() && resource.data.userId == request.auth.uid;
+      match /orders/{orderId} {
+        // Allow read only to the owner
+        allow get: if isSignedIn() && isValidId(orderId) && request.auth.uid == userId;
+        
+        // Allow user to query their own orders list
+        allow list: if isSignedIn() && request.auth.uid == userId;
 
-      // Allow order creation logic if needed later
-      allow create: if isSignedIn() 
-        && isValidId(orderId)
-        && isValidOrder(incoming())
-        && incoming().userId == request.auth.uid;
+        // Allow order creation logic
+        allow create: if isSignedIn() 
+          && isVerified()
+          && isValidId(orderId)
+          && userId == request.auth.uid
+          && isValidOrder(incoming())
+          && incoming().userId == request.auth.uid;
 
-      allow update: if false; 
-      allow delete: if false; 
+        allow update: if false; 
+        allow delete: if false; 
+      }
     }
     
     match /reviews/{reviewId} {

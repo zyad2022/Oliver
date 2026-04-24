@@ -56,6 +56,7 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
       'cart': '/cart',
       'profile': '/profile',
       'orders': '/orders',
+      'checkout': '/checkout',
       'privacy-policy': '/privacy',
       'terms-of-service': '/terms'
     };

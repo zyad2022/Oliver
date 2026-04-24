@@ -7,21 +7,12 @@ import { useAppContext } from '../../state';
 
 export function Cart({ cartItems, onRemove, onUpdateQuantity }: { cartItems: CartItem[], onRemove: (id: string) => void, onUpdateQuantity: (id: string, q: number) => void }) {
   const { onNavigate, setSelectedProduct, placeOrder } = useAppContext();
-  const [isPlacingOrder, setIsPlacingOrder] = React.useState(false);
   const subtotal = cartItems.reduce((acc, item) => acc + (item.price * item.cartQuantity), 0);
   const shipping = subtotal > 0 ? (subtotal >= 1000 ? 0 : 50) : 0;
   const total = subtotal + shipping;
 
-  const handleCheckout = async () => {
-    setIsPlacingOrder(true);
-    try {
-      await placeOrder();
-      onNavigate('orders');
-    } catch (error) {
-      alert('حدث خطأ أثناء إتمام الطلب. يرجى المحاولة مرة أخرى.');
-    } finally {
-      setIsPlacingOrder(false);
-    }
+  const handleCheckout = () => {
+    onNavigate('checkout');
   };
 
     if (cartItems.length === 0) {
@@ -152,10 +143,9 @@ export function Cart({ cartItems, onRemove, onUpdateQuantity }: { cartItems: Car
 
             <button 
               onClick={handleCheckout}
-              disabled={isPlacingOrder}
-              className="w-full bg-natural-accent text-white py-4 uppercase tracking-widest text-sm font-medium hover:bg-natural-accent-dark transition-colors flex justify-center items-center gap-2 en-text rounded-full mb-4 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full bg-natural-accent text-white py-4 uppercase tracking-widest text-sm font-medium hover:bg-natural-accent-dark transition-colors flex justify-center items-center gap-2 en-text rounded-full mb-4"
             >
-              {isPlacingOrder ? 'Processing...' : 'Proceed to Checkout'}
+              Proceed to Checkout
             </button>
             
             <button 

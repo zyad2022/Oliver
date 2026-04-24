@@ -18,12 +18,15 @@
       "type": "object",
       "properties": {
         "userId": { "type": "string" },
-        "total": { "type": "number" },
-        "status": { "type": "string" },
         "items": { "type": "array" },
+        "totalItems": { "type": "number" },
+        "subtotal": { "type": "number" },
+        "totalPrice": { "type": "number" },
+        "paymentMethod": { "type": "string" },
+        "status": { "type": "string" },
         "createdAt": { "type": "timestamp" }
       },
-      "required": ["userId", "total", "status", "items", "createdAt"]
+      "required": ["userId", "items", "totalItems", "subtotal", "totalPrice", "paymentMethod", "status", "createdAt"]
     },
     "Review": {
       "title": "Customer Review",
@@ -43,9 +46,9 @@
       "schema": { "$ref": "#/entities/User" },
       "description": "User profiles collection, keyed by user UID."
     },
-    "/orders/{orderId}": {
+    "/users/{userId}/orders/{orderId}": {
       "schema": { "$ref": "#/entities/Order" },
-      "description": "Orders collection."
+      "description": "User specific orders collection."
     },
     "/reviews/{reviewId}": {
       "schema": { "$ref": "#/entities/Review" },

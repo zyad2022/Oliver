@@ -3,7 +3,7 @@ import React, { createContext, useContext, useState, useEffect, ReactNode } from
 import { Product, CartItem } from '../../data';
 import { useAppState } from '../appState';
 import { useUI } from '../uiState';
-import { db } from '../../firebase';
+import { db, handleFirestoreError } from '../../firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
 interface CartState {
@@ -12,7 +12,7 @@ interface CartState {
   removeFromCart: (productId: string) => void;
   updateCartQuantity: (productId: string, quantity: number) => void;
   clearCart: () => void;
-  placeOrder: () => Promise<void>;
+  placeOrder: (paymentMethod: string) => Promise<void>;
 }
 
 const CartContext = createContext<CartState | undefined>(undefined);
@@ -82,7 +82,7 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const clearCart = () => setCartItems([]);
 
-  const placeOrder = async () => {
+  const placeOrder = async (paymentMethod: string) => {
     if (!currentUser || cartItems.length === 0) return;
 
     try {
@@ -99,6 +99,7 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         totalItems: cartItems.length,
         subtotal: cartItems.reduce((acc, item) => acc + (item.price * item.cartQuantity), 0),
         totalPrice: cartItems.reduce((acc, item) => acc + (item.price * item.cartQuantity), 0) + (cartItems.reduce((acc, item) => acc + (item.price * item.cartQuantity), 0) >= 1000 ? 0 : 50),
+        paymentMethod: paymentMethod,
         status: 'pending',
         createdAt: serverTimestamp(),
       };
@@ -107,7 +108,7 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       clearCart();
     } catch (error) {
       console.error('Error placing order:', error);
-      throw error;
+      handleFirestoreError(error, 'create', `users/${currentUser.uid}/orders`);
     }
   };
 
