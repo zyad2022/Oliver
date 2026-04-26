@@ -52,7 +52,9 @@ export function AuthModal({ isOpen, onClose, onLogin }: AuthModalProps) {
       try {
         userCredential = await signInWithPopup(auth, provider);
       } catch (popupError: any) {
-        console.error('Popup error:', popupError);
+        if (popupError.code !== 'auth/popup-closed-by-user' && popupError.code !== 'auth/cancelled-popup-request') {
+          console.error('Popup error:', popupError);
+        }
         // If popup is blocked or fails due to cross-origin isolation, try redirect
         if (
           popupError.code === 'auth/popup-blocked' || 
@@ -117,19 +119,33 @@ export function AuthModal({ isOpen, onClose, onLogin }: AuthModalProps) {
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[420px] bg-white sm:rounded-[24px] rounded-t-[24px] rounded-b-none sm:rounded-b-[24px] z-[70] flex flex-col overflow-hidden shadow-2xl p-8 bottom-0 sm:bottom-auto"
+            transition={{ duration: 0.3, ease: 'easeOut' }}
+            style={{ 
+              background: 'linear-gradient(135deg, #f8f3e8, #f1e4c9, #e8d8b5)',
+              boxShadow: '0 0 40px rgba(212, 175, 55, 0.25), 0 25px 50px -12px rgba(0, 0, 0, 0.25)'
+            }}
+            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[420px] sm:rounded-[24px] rounded-[24px] z-[70] flex flex-col overflow-hidden p-8 bottom-auto"
           >
+            {/* Pattern Overlay */}
+            <div 
+              className="absolute inset-0 pointer-events-none opacity-[0.08]"
+              style={{
+                backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 10 L35 25 L50 25 L38 35 L42 50 L30 40 L18 50 L22 35 L10 25 L25 25 Z' fill='none' stroke='%23D4AF37' stroke-width='1' stroke-opacity='0.5'/%3E%3Ccircle cx='30' cy='30' r='5' fill='none' stroke='%23D4AF37' stroke-width='1' stroke-opacity='0.5'/%3E%3C/svg%3E")`,
+                backgroundSize: '60px 60px',
+                backgroundRepeat: 'repeat'
+              }}
+            />
+
             {/* Close Button */}
             <button 
               onClick={onClose}
-              className="absolute top-6 left-6 p-2 text-stone-400 hover:text-stone-800 transition-colors rounded-full hover:bg-natural-bg/80 z-10"
+              className="absolute top-6 left-6 p-2 text-stone-500 hover:text-stone-900 transition-colors rounded-full hover:bg-black/5 z-10"
             >
               <X size={20} />
             </button>
 
             {/* Header / Brand */}
-            <div className="flex flex-col items-center text-center mt-4 mb-10">
+            <div className="flex flex-col items-center text-center mt-4 mb-10 relative z-10">
               <h1 className="text-4xl font-serif text-natural-text mb-2 tracking-wide uppercase en-text">
                 Oliver
               </h1>
@@ -139,19 +155,19 @@ export function AuthModal({ isOpen, onClose, onLogin }: AuthModalProps) {
             </div>
 
             {/* Welcome Text */}
-            <div className="text-center mb-8">
+            <div className="text-center mb-8 relative z-10">
               <h2 className="text-2xl font-arabic font-bold text-natural-text mb-3">
                 مرحباً بك
               </h2>
-              <p className="font-arabic text-sm text-[#666] leading-relaxed max-w-[280px] mx-auto">
+              <p className="font-arabic text-sm text-[#555] leading-relaxed max-w-[280px] mx-auto">
                 سجل دخولك في ثواني باستخدام حسابك على Google
               </p>
             </div>
 
             {/* Form & Actions */}
-            <div className="flex flex-col gap-4 w-full">
+            <div className="flex flex-col gap-4 w-full relative z-10">
               {error && (
-                <div className="bg-red-50 text-red-600 text-sm p-3 rounded-xl text-center font-arabic border border-red-100 mb-2">
+                <div className="bg-red-50/90 text-red-600 text-sm p-3 rounded-xl text-center font-arabic border border-red-100/50 mb-2 backdrop-blur-sm">
                   {error}
                 </div>
               )}
@@ -160,7 +176,10 @@ export function AuthModal({ isOpen, onClose, onLogin }: AuthModalProps) {
                 type="button"
                 onClick={handleGoogleLogin}
                 disabled={loading}
-                className="w-full flex items-center justify-center gap-3 border border-natural-border/60 bg-white rounded-full py-4 hover:bg-[#F8F9FA] hover:border-[#E8EAED] disabled:opacity-70 disabled:cursor-not-allowed transition-all shadow-sm hover:shadow-md active:scale-[0.98] en-text text-[15px] font-medium text-[#3C4043]"
+                className="w-full flex items-center justify-center gap-3 border border-gold-primary/30 rounded-2xl py-4 hover:-translate-y-[2px] disabled:-translate-y-0 disabled:opacity-70 disabled:cursor-not-allowed transition-all shadow-md hover:shadow-[0_8px_25px_-5px_rgba(197,160,89,0.3)] active:scale-[0.98] en-text text-[15px] font-semibold text-natural-text"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(197,160,89,0.1), rgba(197,160,89,0.25))'
+                }}
               >
                 {loading ? (
                   <Loader2 className="animate-spin text-[#888]" size={22} strokeWidth={2.5} />
@@ -176,6 +195,10 @@ export function AuthModal({ isOpen, onClose, onLogin }: AuthModalProps) {
                   </>
                 )}
               </button>
+              
+              <p className="mt-2 text-center text-xs font-arabic text-[#777]">
+                لن نقوم بمشاركة بياناتك مع أي طرف ثالث
+              </p>
             </div>
           </motion.div>
         </>
