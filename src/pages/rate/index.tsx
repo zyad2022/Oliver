@@ -4,12 +4,12 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Star, CheckCircle2, X } from 'lucide-react';
 import { PageTitle } from '../../components/PageTitle';
 import { Button } from '../../components/Button';
-import { useAppContext } from '../../state';
+import { useAppState } from '../../state';;
 import { db } from '../../firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
 export function Rate() {
-  const { onNavigate } = useAppContext();
+  const { onNavigate } = useAppState();;
   const [rating, setRating] = useState<number>(0);
   const [hoveredRating, setHoveredRating] = useState<number>(0);
   const [name, setName] = useState('');

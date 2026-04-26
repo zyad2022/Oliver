@@ -54,16 +54,16 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
     return () => unsubscribe();
   }, []);
 
-  const logout = async () => {
+  const logout = React.useCallback(async () => {
     try {
       await signOut(auth);
       navigate('/');
     } catch (err) {
       console.error('Error logging out:', err);
     }
-  };
+  }, [navigate]);
 
-  const onNavigate = (page: string, options?: { replace?: boolean }) => {
+  const onNavigate = React.useCallback((page: string, options?: { replace?: boolean }) => {
     const pageToPath: Record<string, string> = {
       'home': '/',
       'collection': '/collection',
@@ -133,10 +133,14 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
     
     // 3. RESET SCROLL ON NEW PAGE ENTRY (Instant)
     window.scrollTo({ top: 0, behavior: 'instant' });
-  };
+  }, [navigate, navHistory]);
+
+  const value = React.useMemo(() => ({
+    currentUser, isLoggedIn, logout, onNavigate, prevPage
+  }), [currentUser, isLoggedIn, logout, onNavigate, prevPage]);
 
   return (
-    <AppStateContext.Provider value={{ currentUser, isLoggedIn, logout, onNavigate, prevPage }}>
+    <AppStateContext.Provider value={value}>
       {children}
     </AppStateContext.Provider>
   );

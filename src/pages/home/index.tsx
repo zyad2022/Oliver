@@ -1,11 +1,12 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { products, Product } from '../../data';
-import { useAppContext } from '../../state';
+import { useAppState, useUI } from '../../state';;
 import { ArrowRight } from 'lucide-react';
 
 export function Home() {
-  const { onNavigate, setSelectedProduct } = useAppContext();
+  const { onNavigate } = useAppState();
+  const { setSelectedProduct } = useUI();;
 
   return (
     <motion.div

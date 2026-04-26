@@ -1,14 +1,14 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, memo } from 'react';
 import { Product } from '../../data';
-import { useAppContext } from '../../state';
+import { useUI } from '../../state';
 
 interface ProductCardProps {
   product: Product;
   onClick: (product: Product) => void;
 }
 
-export const ProductCard: React.FC<ProductCardProps> = ({ product, onClick }) => {
-  const { openModal } = useAppContext();
+export const ProductCard = memo(({ product, onClick }: ProductCardProps) => {
+  const { openModal } = useUI();
   
   const isRecentlyAdded = useMemo(() => {
     const addedDate = new Date(product.dateAdded);
@@ -62,4 +62,4 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onClick }) =>
       </div>
     </div>
   );
-}
+});

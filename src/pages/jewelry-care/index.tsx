@@ -2,10 +2,10 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { X, Droplets, Archive, Sparkles } from 'lucide-react';
 import { PageTitle } from '../../components/PageTitle';
-import { useAppContext } from '../../state';
+import { useAppState } from '../../state';;
 
 export function JewelryCare() {
-  const { onNavigate } = useAppContext();
+  const { onNavigate } = useAppState();;
 
   const sections = [
     {

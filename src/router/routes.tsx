@@ -1,90 +1,82 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { Home } from '../pages/home';
-import { Collection } from '../pages/collections';
-import { NewArrivals } from '../pages/new-arrivals';
-import { ProductPage } from '../pages/product';
-import { Cart } from '../pages/cart';
-import { Profile } from '../pages/profile';
-import { Orders } from '../pages/orders';
-import { Checkout } from '../pages/checkout';
-import { PrivacyPolicy } from '../pages/privacy';
-import { TermsOfService } from '../pages/terms';
-import { About } from '../pages/about';
-import { Rate } from '../pages/rate';
-import { Reviews } from '../pages/reviews';
-import { FAQ } from '../pages/faq';
-import { Contact } from '../pages/contact';
-import { Returns } from '../pages/returns';
-import { Shipping } from '../pages/shipping';
-import { SizeGuide } from '../pages/size-guide';
-import { JewelryCare } from '../pages/jewelry-care';
-import { useAppContext } from '../state';
-
+import { useAppState, useUI, useCart } from '../state';
 import { RedirectToHome } from '../components/RedirectToHome';
 
-export const AppRoutes: React.FC = () => {
-  const { 
-    isLoggedIn, 
-    currentUser, 
-    selectedProduct,
-    addToCart,
-    removeFromCart,
-    updateCartQuantity
-  } = useAppContext();
+const Home = lazy(() => import('../pages/home').then(m => ({ default: m.Home })));
+const Collection = lazy(() => import('../pages/collections').then(m => ({ default: m.Collection })));
+const NewArrivals = lazy(() => import('../pages/new-arrivals').then(m => ({ default: m.NewArrivals })));
+const ProductPage = lazy(() => import('../pages/product').then(m => ({ default: m.ProductPage })));
+const Cart = lazy(() => import('../pages/cart').then(m => ({ default: m.Cart })));
+const Profile = lazy(() => import('../pages/profile').then(m => ({ default: m.Profile })));
+const Orders = lazy(() => import('../pages/orders').then(m => ({ default: m.Orders })));
+const Checkout = lazy(() => import('../pages/checkout').then(m => ({ default: m.Checkout })));
+const PrivacyPolicy = lazy(() => import('../pages/privacy').then(m => ({ default: m.PrivacyPolicy })));
+const TermsOfService = lazy(() => import('../pages/terms').then(m => ({ default: m.TermsOfService })));
+const About = lazy(() => import('../pages/about').then(m => ({ default: m.About })));
+const Rate = lazy(() => import('../pages/rate').then(m => ({ default: m.Rate })));
+const Reviews = lazy(() => import('../pages/reviews').then(m => ({ default: m.Reviews })));
+const FAQ = lazy(() => import('../pages/faq').then(m => ({ default: m.FAQ })));
+const Contact = lazy(() => import('../pages/contact').then(m => ({ default: m.Contact })));
+const Returns = lazy(() => import('../pages/returns').then(m => ({ default: m.Returns })));
+const Shipping = lazy(() => import('../pages/shipping').then(m => ({ default: m.Shipping })));
+const SizeGuide = lazy(() => import('../pages/size-guide').then(m => ({ default: m.SizeGuide })));
+const JewelryCare = lazy(() => import('../pages/jewelry-care').then(m => ({ default: m.JewelryCare })));
 
-  // Navigation handlers are managed by MainLayout/Header
-  // These props are passed down to pages where necessary
-  // In a real production app, we would use a more robust routing solution with protected routes
+const Loader = () => (
+  <div className="min-h-[60vh] flex items-center justify-center">
+    <div className="w-10 h-10 border-4 border-gold-primary border-t-transparent rounded-full animate-spin"></div>
+  </div>
+);
+
+export const AppRoutes: React.FC = () => {
+  const { isLoggedIn } = useAppState();
+  const { selectedProduct } = useUI();
+  const { cartItems, addToCart, removeFromCart, updateCartQuantity } = useCart();
 
   return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/collection" element={<Collection />} />
-      <Route path="/new-arrivals" element={<NewArrivals />} />
-      <Route path="/about" element={<About />} />
-      <Route path="/rate" element={<Rate />} />
-      <Route path="/reviews" element={<Reviews />} />
-      <Route path="/faq" element={<FAQ />} />
-      <Route path="/contact" element={<Contact />} />
-      <Route path="/returns" element={<Returns />} />
-      <Route path="/shipping" element={<Shipping />} />
-      <Route path="/size-guide" element={<SizeGuide />} />
-      <Route path="/jewelry-care" element={<JewelryCare />} />
-      <Route path="/product" element={
-        <ProductPage 
-          product={selectedProduct || undefined} 
-          onAddToCart={addToCart} 
-        />
-      } />
-      <Route path="/cart" element={
-        <Cart 
-          cartItems={useAppContext().cartItems} 
-          onRemove={removeFromCart}
-          onUpdateQuantity={updateCartQuantity}
-        />
-      } />
-      <Route path="/profile" element={
-        isLoggedIn ? <Profile /> : <RedirectToHome />
-      } />
-      <Route path="/orders" element={
-        isLoggedIn ? (
-          <Orders />
-        ) : (
-          <RedirectToHome />
-        )
-      } />
-      <Route path="/checkout" element={
-        isLoggedIn ? (
-          <Checkout />
-        ) : (
-          <RedirectToHome />
-        )
-      } />
-      <Route path="/privacy" element={<PrivacyPolicy />} />
-      <Route path="/terms" element={<TermsOfService />} />
-      <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-      <Route path="/terms-of-service" element={<TermsOfService />} />
-    </Routes>
+    <Suspense fallback={<Loader />}>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/collection" element={<Collection />} />
+        <Route path="/new-arrivals" element={<NewArrivals />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/rate" element={<Rate />} />
+        <Route path="/reviews" element={<Reviews />} />
+        <Route path="/faq" element={<FAQ />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/returns" element={<Returns />} />
+        <Route path="/shipping" element={<Shipping />} />
+        <Route path="/size-guide" element={<SizeGuide />} />
+        <Route path="/jewelry-care" element={<JewelryCare />} />
+        <Route path="/product" element={
+          <ProductPage 
+            product={selectedProduct || undefined} 
+            onAddToCart={addToCart} 
+          />
+        } />
+        <Route path="/cart" element={
+          <Cart 
+            cartItems={cartItems} 
+            onRemove={removeFromCart}
+            onUpdateQuantity={updateCartQuantity}
+          />
+        } />
+        <Route path="/profile" element={
+          isLoggedIn ? <Profile /> : <RedirectToHome />
+        } />
+        <Route path="/orders" element={
+          isLoggedIn ? <Orders /> : <RedirectToHome />
+        } />
+        <Route path="/checkout" element={
+          isLoggedIn ? <Checkout /> : <RedirectToHome />
+        } />
+        <Route path="/privacy" element={<PrivacyPolicy />} />
+        <Route path="/terms" element={<TermsOfService />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/terms-of-service" element={<TermsOfService />} />
+        <Route path="*" element={<RedirectToHome />} />
+      </Routes>
+    </Suspense>
   );
 };

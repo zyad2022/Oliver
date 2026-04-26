@@ -25,30 +25,32 @@ export const UIProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [lastScrollPos, setLastScrollPos] = useState(0);
   const [shouldOpenAuth, setShouldOpenAuth] = useState(false);
 
-  const openModal = (type: ModalState['type'], data?: any) => {
+  const openModal = React.useCallback((type: ModalState['type'], data?: any) => {
     if (type) {
       setLastScrollPos(window.scrollY);
     }
     setActiveModal({ type, data });
-  };
+  }, []);
 
-  const closeModal = () => {
+  const closeModal = React.useCallback(() => {
     setActiveModal({ type: null });
-    setTimeout(() => {
-      window.scrollTo({ top: lastScrollPos, behavior: 'instant' });
-    }, 10);
-  };
+    // setTimeout(() => {
+    //   window.scrollTo({ top: lastScrollPos, behavior: 'instant' });
+    // }, 10);
+  }, []);
+
+  const value = React.useMemo(() => ({
+    activeModal, 
+    openModal, 
+    closeModal, 
+    selectedProduct, 
+    setSelectedProduct,
+    shouldOpenAuth,
+    setShouldOpenAuth
+  }), [activeModal, openModal, closeModal, selectedProduct, shouldOpenAuth]);
 
   return (
-    <UIContext.Provider value={{ 
-      activeModal, 
-      openModal, 
-      closeModal, 
-      selectedProduct, 
-      setSelectedProduct,
-      shouldOpenAuth,
-      setShouldOpenAuth
-    }}>
+    <UIContext.Provider value={value}>
       {children}
     </UIContext.Provider>
   );

@@ -1,17 +1,26 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { motion } from 'motion/react';
-import { products, Product } from '../../data';
+import { Product } from '../../data';
 import { ProductCard } from '../../components/ProductCard';
 import { PageTitle } from '../../components/PageTitle';
-import { useAppContext } from '../../state';
+import { useUI, useAppState } from '../../state';
+import { useQuery } from '@tanstack/react-query';
+import { fetchProducts } from '../../services/api';
+import { useWindowVirtualizer } from '@tanstack/react-virtual';
 
 type PriceFilter = '10-100' | '150-300' | '300-600' | '600+';
 type SortOption = 'default' | 'newest' | 'price-asc' | 'price-desc';
 
 export function Collection() {
-  const { setSelectedProduct, onNavigate } = useAppContext();
+  const { setSelectedProduct } = useUI();
+  const { onNavigate } = useAppState();
   const categories = ['جميع المنتجات', 'قلائد', 'خواتم'];
   
+  const { data: products = [], isLoading } = useQuery({
+    queryKey: ['products'],
+    queryFn: fetchProducts,
+  });
+
   const onProductClick = (product: Product) => {
     onNavigate(`product?id=${product.id}`);
   };
@@ -69,7 +78,26 @@ export function Collection() {
     }
 
     return result;
-  }, [activeCategory, activePriceFilters, sortOption]);
+  }, [activeCategory, activePriceFilters, sortOption, products]);
+
+  // Virtualization setup
+  const [columns, setColumns] = useState(2);
+  useEffect(() => {
+    const handleResize = () => {
+      setColumns(window.innerWidth >= 1024 ? 3 : 2);
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const rowCount = Math.ceil(filteredAndSortedProducts.length / columns);
+
+  const virtualizer = useWindowVirtualizer({
+    count: rowCount,
+    estimateSize: () => 450, // Approx height of ProductCard + gap
+    overscan: 2,
+  });
 
   return (
     <motion.div
@@ -108,17 +136,49 @@ export function Collection() {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-12">
-            {filteredAndSortedProducts.map(product => (
-              <ProductCard 
-                key={product.id} 
-                product={product} 
-                onClick={onProductClick} 
-              />
-            ))}
-          </div>
+          {isLoading ? (
+            <div className="flex justify-center items-center h-64">
+              <div className="w-10 h-10 border-4 border-gold-primary border-t-transparent rounded-full animate-spin"></div>
+            </div>
+          ) : (
+            <div 
+              style={{
+                height: `${virtualizer.getTotalSize()}px`,
+                width: '100%',
+                position: 'relative',
+              }}
+            >
+              {virtualizer.getVirtualItems().map((virtualRow) => {
+                const startIndex = virtualRow.index * columns;
+                const rowProducts = filteredAndSortedProducts.slice(startIndex, startIndex + columns);
+                
+                return (
+                  <div
+                    key={virtualRow.index}
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      width: '100%',
+                      height: `${virtualRow.size}px`,
+                      transform: `translateY(${virtualRow.start}px)`,
+                    }}
+                    className={`grid grid-cols-2 lg:grid-cols-3 gap-x-6 pb-12`}
+                  >
+                    {rowProducts.map(product => (
+                      <ProductCard 
+                        key={product.id} 
+                        product={product} 
+                        onClick={onProductClick} 
+                      />
+                    ))}
+                  </div>
+                );
+              })}
+            </div>
+          )}
           
-          {filteredAndSortedProducts.length === 0 && (
+          {!isLoading && filteredAndSortedProducts.length === 0 && (
             <div className="text-center py-20 text-[#666]">
               <p className="text-xl mb-4">لاتوجد منتجات تطابق بحثك</p>
               <button 

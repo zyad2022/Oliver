@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ChevronDown, X } from 'lucide-react';
 import { PageTitle } from '../../components/PageTitle';
-import { useAppContext } from '../../state';
+import { useAppState } from '../../state';;
 
 interface FAQItem {
   question: string;
@@ -94,7 +94,7 @@ const faqs: FAQItem[] = [
 ];
 
 export function FAQ() {
-  const { onNavigate } = useAppContext();
+  const { onNavigate } = useAppState();;
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const toggleFAQ = (index: number) => {

@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
-import { Product, products } from '../../data';
+import { Product } from '../../data';
 import { Truck, X } from 'lucide-react';
 import { QuantitySelector } from '../../components/QuantitySelector';
-import { useAppContext } from '../../state';
+import { useAppState, useUI } from '../../state';
 import { useSearchParams } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import { fetchProducts } from '../../services/api';
 
 interface ProductPageProps {
   product?: Product;
@@ -13,11 +15,17 @@ interface ProductPageProps {
 }
 
 export function ProductPage({ product: propProduct, onAddToCart, isQuickAdd }: ProductPageProps) {
-  const { onNavigate, setSelectedProduct } = useAppContext();
+  const { onNavigate } = useAppState();
+  const { setSelectedProduct } = useUI();
   const [searchParams] = useSearchParams();
   const [quantity, setQuantity] = useState(1);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [product, setProduct] = useState<Product | undefined>(propProduct);
+
+  const { data: allProducts = [] } = useQuery({
+    queryKey: ['products'],
+    queryFn: fetchProducts,
+  });
 
   useEffect(() => {
     const productId = searchParams.get('id');
@@ -30,22 +38,23 @@ export function ProductPage({ product: propProduct, onAddToCart, isQuickAdd }: P
 
     // If we have a productId in URL, and it's different from current product, fetch it
     if (productId && (!product || product.id !== productId)) {
-      const foundProduct = products.find(p => p.id === productId);
+      const foundProduct = allProducts.find(p => p.id === productId);
       if (foundProduct) {
         setProduct(foundProduct);
         setSelectedProduct(foundProduct);
-      } else {
+      } else if (allProducts.length > 0) {
+        // Only redirect if allProducts are loaded and it's not found
         onNavigate('home');
       }
     } else if (!productId && !propProduct) {
       // No ID and no product in state/props
       onNavigate('home');
     }
-  }, [propProduct, searchParams, onNavigate, setSelectedProduct, product]);
+  }, [propProduct, searchParams, onNavigate, setSelectedProduct, product, allProducts]);
 
   if (!product) {
     return <div className="min-h-screen flex items-center justify-center">
-      <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-gold-primary"></div>
+      <div className="w-10 h-10 border-4 border-gold-primary border-t-transparent rounded-full animate-spin"></div>
     </div>;
   }
 

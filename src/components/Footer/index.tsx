@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { useAppContext } from '../../state';
+import { useAppState } from '../../state';;
 import { Star, Send } from 'lucide-react';
 import { db } from '../../firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
 export function Footer() {
-  const { onNavigate } = useAppContext();
+  const { onNavigate } = useAppState();;
   const [rating, setRating] = useState(0);
   const [name, setName] = useState('');
   const [comment, setComment] = useState('');

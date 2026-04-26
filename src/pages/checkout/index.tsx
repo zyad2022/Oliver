@@ -1,12 +1,13 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { useAppContext } from '../../state';
+import { useCart, useAppState } from '../../state';;
 import { PageTitle } from '../../components/PageTitle';
 import { X, Check, Wallet, Truck, Smartphone, Share } from 'lucide-react';
 
 export function Checkout() {
-  const { cartItems, onNavigate, placeOrder } = useAppContext();
+  const { cartItems, placeOrder } = useCart();
+  const { onNavigate } = useAppState();;
   const [selectedMethod, setSelectedMethod] = useState<'vodafone' | 'cod' | null>(null);
   const [isPlacingOrder, setIsPlacingOrder] = useState(false);
   const [showModal, setShowModal] = useState(false);

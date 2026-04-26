@@ -4,11 +4,11 @@ import { Package, ShoppingBag } from 'lucide-react';
 import { User as FirebaseUser } from 'firebase/auth';
 import { collection, query, where, getDocs, orderBy } from 'firebase/firestore';
 import { db } from '../../firebase';
-import { useAppContext } from '../../state';
+import { useAppState } from '../../state';;
 import { PageTitle } from '../../components/PageTitle';
 
 export function Orders() {
-  const { currentUser: user, onNavigate } = useAppContext();
+  const { currentUser: user, onNavigate } = useAppState();;
   const [orders, setOrders] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 

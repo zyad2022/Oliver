@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
 import { ModalSystem } from '../components/Modal';
-import { useAppContext } from '../state';
+import { useAppState, useCart, useUI } from '../state';;
 import { useLocation, useNavigate } from 'react-router-dom';
 import { signOut } from 'firebase/auth';
 import { auth } from '../firebase';
@@ -14,17 +14,9 @@ interface MainLayoutProps {
 export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { 
-    isLoggedIn, 
-    currentUser, 
-    cartItems, 
-    openModal, 
-    setSelectedProduct,
-    logout,
-    onNavigate,
-    shouldOpenAuth,
-    setShouldOpenAuth
-  } = useAppContext();
+  const { isLoggedIn, currentUser, logout, onNavigate } = useAppState();
+  const { cartItems } = useCart();
+  const { openModal, setSelectedProduct, shouldOpenAuth, setShouldOpenAuth } = useUI();;
 
   React.useEffect(() => {
     if (shouldOpenAuth && location.pathname === '/') {

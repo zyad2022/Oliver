@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { LogIn, X } from 'lucide-react';
-import { useAppContext } from '../../state';
+import { useUI, useAppState } from '../../state';;
 
 interface AuthRequiredModalProps {
   onClose: () => void;
@@ -9,7 +9,8 @@ interface AuthRequiredModalProps {
 }
 
 export function AuthRequiredModal({ onClose, onLogin }: AuthRequiredModalProps) {
-  const { setShouldOpenAuth, onNavigate } = useAppContext();
+  const { setShouldOpenAuth } = useUI();
+  const { onNavigate } = useAppState();;
 
   const handleLoginRedirect = () => {
     onClose();

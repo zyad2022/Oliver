@@ -3,11 +3,12 @@ import { motion } from 'motion/react';
 import { User, Mail, LogOut, Calendar, ShieldAlert, X } from 'lucide-react';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../../firebase';
-import { useAppContext } from '../../state';
+import { useAppState, useUI } from '../../state';;
 import { PageTitle } from '../../components/PageTitle';
 
 export function Profile() {
-  const { currentUser: user, logout: onLogout, openModal, onNavigate } = useAppContext();
+  const { currentUser: user, logout: onLogout, onNavigate } = useAppState();
+  const { openModal } = useUI();;
   const [userData, setUserData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 

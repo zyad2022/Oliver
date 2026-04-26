@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Star, X, MessageSquare, Quote } from 'lucide-react';
 import { PageTitle } from '../../components/PageTitle';
-import { useAppContext } from '../../state';
+import { useAppState } from '../../state';;
 import { db } from '../../firebase';
 import { collection, query, orderBy, onSnapshot } from 'firebase/firestore';
 
@@ -15,7 +15,7 @@ interface Review {
 }
 
 export function Reviews() {
-  const { onNavigate } = useAppContext();
+  const { onNavigate } = useAppState();;
   const [reviews, setReviews] = useState<Review[]>([]);
   const [loading, setLoading] = useState(true);
 

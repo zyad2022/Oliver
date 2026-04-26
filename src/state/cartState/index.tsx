@@ -50,7 +50,7 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }
   }, [cartItems, isLoggedIn, currentUser]);
 
-  const addToCart = (product: Product, quantity: number = 1) => {
+  const addToCart = React.useCallback((product: Product, quantity: number = 1) => {
     if (!isLoggedIn) {
       setShouldOpenAuth(true);
       onNavigate('home');
@@ -62,27 +62,27 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       if (existing) {
         return prev.map(item => 
           item.id === product.id 
-            ? { ...item, cartQuantity: item.cartQuantity + quantity } 
+            ? { ...item, cartQuantity: Math.min(10, item.cartQuantity + quantity) } 
             : item
         );
       }
-      return [...prev, { ...product, cartQuantity: quantity }];
+      return [...prev, { ...product, cartQuantity: Math.min(10, Math.max(1, quantity)) }];
     });
-  };
+  }, [isLoggedIn, setShouldOpenAuth, onNavigate]);
 
-  const removeFromCart = (productId: string) => {
+  const removeFromCart = React.useCallback((productId: string) => {
     setCartItems(prev => prev.filter(item => item.id !== productId));
-  };
+  }, []);
 
-  const updateCartQuantity = (productId: string, quantity: number) => {
+  const updateCartQuantity = React.useCallback((productId: string, quantity: number) => {
     setCartItems(prev => prev.map(item => 
       item.id === productId ? { ...item, cartQuantity: Math.max(1, Math.min(10, quantity)) } : item
     ));
-  };
+  }, []);
 
-  const clearCart = () => setCartItems([]);
+  const clearCart = React.useCallback(() => setCartItems([]), []);
 
-  const placeOrder = async (paymentMethod: string) => {
+  const placeOrder = React.useCallback(async (paymentMethod: string) => {
     if (!currentUser || cartItems.length === 0) return;
 
     try {
@@ -110,10 +110,14 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       console.error('Error placing order:', error);
       handleFirestoreError(error, 'create', `users/${currentUser.uid}/orders`);
     }
-  };
+  }, [currentUser, cartItems, clearCart]);
+
+  const value = React.useMemo(() => ({
+    cartItems, addToCart, removeFromCart, updateCartQuantity, clearCart, placeOrder
+  }), [cartItems, addToCart, removeFromCart, updateCartQuantity, clearCart, placeOrder]);
 
   return (
-    <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, updateCartQuantity, clearCart, placeOrder }}>
+    <CartContext.Provider value={value}>
       {children}
     </CartContext.Provider>
   );

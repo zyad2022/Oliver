@@ -3,10 +3,10 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { X } from 'lucide-react';
 import { PageTitle } from '../../components/PageTitle';
-import { useAppContext } from '../../state';
+import { useAppState } from '../../state';;
 
 export function About() {
-  const { onNavigate } = useAppContext();
+  const { onNavigate } = useAppState();;
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}

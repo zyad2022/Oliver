@@ -2,10 +2,10 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { X, Edit2, Info, CheckCircle2 } from 'lucide-react';
 import { PageTitle } from '../../components/PageTitle';
-import { useAppContext } from '../../state';
+import { useAppState } from '../../state';;
 
 export function SizeGuide() {
-  const { onNavigate } = useAppContext();
+  const { onNavigate } = useAppState();;
 
   const sections = [
     {

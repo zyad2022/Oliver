@@ -3,10 +3,12 @@ import { motion } from 'motion/react';
 import { products, CartItem } from '../../data';
 import { Minus, Plus, Trash2, ArrowRight, X } from 'lucide-react';
 import { PageTitle } from '../../components/PageTitle';
-import { useAppContext } from '../../state';
+import { useAppState, useUI, useCart } from '../../state';;
 
 export function Cart({ cartItems, onRemove, onUpdateQuantity }: { cartItems: CartItem[], onRemove: (id: string) => void, onUpdateQuantity: (id: string, q: number) => void }) {
-  const { onNavigate, setSelectedProduct, placeOrder } = useAppContext();
+  const { onNavigate } = useAppState();
+  const { setSelectedProduct } = useUI();
+  const { placeOrder } = useCart();;
   const subtotal = cartItems.reduce((acc, item) => acc + (item.price * item.cartQuantity), 0);
   const shipping = subtotal > 0 ? (subtotal >= 1000 ? 0 : 50) : 0;
   const total = subtotal + shipping;
