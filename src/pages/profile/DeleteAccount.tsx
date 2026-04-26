@@ -33,6 +33,30 @@ export function DeleteAccount({ onNavigate, isModal }: DeleteAccountProps) {
     setTimeout(() => setCopiedMessage(false), 2000);
   };
 
+  const handleOpenEmailApp = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 768;
+
+    if (isMobile) {
+      window.location.href = mailtoLink;
+    } else {
+      let windowHasBlurred = false;
+      const onBlur = () => { windowHasBlurred = true; };
+      window.addEventListener('blur', onBlur);
+
+      window.location.href = mailtoLink;
+
+      setTimeout(() => {
+        window.removeEventListener('blur', onBlur);
+        if (!windowHasBlurred) {
+          const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email)}&su=${subject}&body=${body}`;
+          window.open(gmailUrl, '_blank');
+        }
+      }, 500);
+    }
+  };
+
   return (
     <motion.div
       initial={isModal ? {} : { opacity: 0, y: 10 }}
@@ -158,6 +182,7 @@ export function DeleteAccount({ onNavigate, isModal }: DeleteAccountProps) {
 
                 <a
                   href={mailtoLink}
+                  onClick={handleOpenEmailApp}
                   className="flex items-center justify-center gap-2 bg-natural-accent text-white py-3.5 rounded-xl text-sm font-medium hover:bg-natural-accent-dark transition-colors shadow-sm"
                 >
                   <ExternalLink size={16} />
