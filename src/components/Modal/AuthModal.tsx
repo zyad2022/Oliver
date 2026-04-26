@@ -111,12 +111,39 @@ export function AuthModal({ isOpen, onClose, onLogin }: AuthModalProps) {
     }
   };
 
-  const handleGoogleLogin = async () => {
+const handleGoogleLogin = async () => {
     setError(null);
     setLoading(true);
     try {
       const provider = new GoogleAuthProvider();
-      const userCredential = await signInWithPopup(auth, provider);
+      // Configure provider properly if needed (optional)
+      provider.setCustomParameters({
+        prompt: 'select_account'
+      });
+      
+      let userCredential;
+      try {
+        userCredential = await signInWithPopup(auth, provider);
+      } catch (popupError: any) {
+        console.error('Popup error:', popupError);
+        // If popup is blocked or fails due to cross-origin isolation, try redirect
+        if (
+          popupError.code === 'auth/popup-blocked' || 
+          popupError.message?.includes('Cross-Origin-Opener-Policy') ||
+          popupError.code === 'auth/unauthorized-domain'
+        ) {
+           setError('جاري تحويلك لتسجيل الدخول...');
+           const { signInWithRedirect } = await import('firebase/auth');
+           await signInWithRedirect(auth, provider);
+           return; // Stop execution, page will redirect
+        }
+        // If the user manually closed the popup, just reset loading and return
+        if (popupError.code === 'auth/popup-closed-by-user' || popupError.code === 'auth/cancelled-popup-request') {
+           setLoading(false);
+           return;
+        }
+        throw popupError;
+      }
       
       // Save Google user to Firestore if they don't exist
       const userDocRef = doc(db, 'users', userCredential.user.uid);
@@ -133,11 +160,11 @@ export function AuthModal({ isOpen, onClose, onLogin }: AuthModalProps) {
 
       onLogin();
     } catch (err: any) {
-      console.error(err);
+      console.error('Google Auth Error:', err);
       if (err.code === 'auth/popup-closed-by-user' || err.code === 'auth/cancelled-popup-request') {
         setError(null);
       } else {
-        setError('حدث خطأ أثناء تسجيل الدخول بواسطة جوجل.');
+        setError('حدث خطأ أثناء تسجيل الدخول بواسطة جوجل، تأكد من إعدادات المتصفح وحاول مرة أخرى.');
       }
     } finally {
       setLoading(false);

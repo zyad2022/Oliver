@@ -1,7 +1,8 @@
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { User as FirebaseUser, onAuthStateChanged, signOut } from 'firebase/auth';
-import { auth } from '../../firebase';
+import { User as FirebaseUser, onAuthStateChanged, signOut, getRedirectResult } from 'firebase/auth';
+import { auth, db } from '../../firebase';
+import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 
 interface AppState {
@@ -22,6 +23,30 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
   const navigate = useNavigate();
 
   useEffect(() => {
+    // Handle redirect result from Google login
+    const handleRedirectResult = async () => {
+      try {
+        const result = await getRedirectResult(auth);
+        if (result?.user) {
+          // Save Google user to Firestore if they don't exist
+          const userDocRef = doc(db, 'users', result.user.uid);
+          const userDoc = await getDoc(userDocRef);
+          
+          if (!userDoc.exists()) {
+            await setDoc(userDocRef, {
+              uid: result.user.uid,
+              name: result.user.displayName || 'مستخدم جديد',
+              email: result.user.email || '',
+              createdAt: serverTimestamp()
+            });
+          }
+        }
+      } catch (error) {
+        console.error('Error handling redirect result:', error);
+      }
+    };
+    handleRedirectResult();
+
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
       setIsLoggedIn(!!user);
