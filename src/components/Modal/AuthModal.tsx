@@ -7,7 +7,8 @@ import {
   createUserWithEmailAndPassword, 
   updateProfile,
   signInWithPopup,
-  GoogleAuthProvider
+  GoogleAuthProvider,
+  fetchSignInMethodsForEmail
 } from 'firebase/auth';
 import { doc, setDoc, getDoc, serverTimestamp } from 'firebase/firestore';
 
@@ -84,6 +85,7 @@ export function AuthModal({ isOpen, onClose, onLogin }: AuthModalProps) {
       if (activeTab === 'login') {
         await signInWithEmailAndPassword(auth, email, password);
         onLogin();
+        setLoading(false);
       } else {
         if (password !== confirmPassword) {
           setError('كلمتي المرور غير متطابقتين');
@@ -102,11 +104,27 @@ export function AuthModal({ isOpen, onClose, onLogin }: AuthModalProps) {
         });
 
         onLogin();
+        setLoading(false);
       }
     } catch (err: any) {
       console.error(err);
+      
+      if (err.code === 'auth/email-already-in-use') {
+        try {
+          const methods = await fetchSignInMethodsForEmail(auth, email);
+          if (methods.includes('google.com')) {
+            setError('هذا البريد مسجل بالفعل باستخدام Google، سيتم تسجيل دخولك تلقائياً');
+            setTimeout(() => {
+              handleGoogleLogin();
+            }, 2000);
+            return; // Exit early, leaving loading=true while we wait for Google login
+          }
+        } catch (fetchErr) {
+          console.error('Error fetching sign in methods:', fetchErr);
+        }
+      }
+
       setError(getFriendlyErrorMessage(err.code));
-    } finally {
       setLoading(false);
     }
   };
