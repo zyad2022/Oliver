@@ -33,18 +33,16 @@ export function Checkout() {
     const customerName = currentUser?.displayName || currentUser?.email || 'عميل';
 
     const message =
-      `⭐ *طلب جديد | Oliver Luxury Brands* ⭐\n\n` +
-      `👤 *اسم العميل:*\n${customerName}\n\n` +
-      `📦 *تفاصيل الطلب:*\n${orderItemsText}\n\n` +
-      `-------------------\n\n` +
-      `💰 *ملخص الدفع:*\n` +
-      `المجموع: ${subtotal} EGP\n` +
-      `الشحن: ${shipping === 0 ? 'مجاني' : shipping + ' EGP'}\n` +
-      `الإجمالي: *${total} EGP*\n\n` +
-      `-------------------\n\n` +
-      `📞 *طريقة الدفع:*\n${methodLabel}\n\n` +
-      `✅ سيتم تأكيد الطلب مع العميل قريبًا\n` +
-      `شكراً لاختياركم *Oliver* ⭐`;
+      `*طلب جديد | Oliver Luxury Brands*\n\n` +
+      `*اسم العميل:*\n• ${customerName}\n\n` +
+      `*تفاصيل الطلب:*\n${orderItemsText}\n\n` +
+      `*ملخص الدفع:*\n` +
+      `• المجموع: ${subtotal} EGP\n` +
+      `• الشحن: ${shipping === 0 ? 'مجاني' : shipping + ' EGP'}\n` +
+      `• الإجمالي: *${total} EGP*\n\n` +
+      `*طريقة الدفع:*\n• ${methodLabel}\n\n` +
+      `• سيتم تأكيد الطلب قريبًا\n` +
+      `شكراً لاختياركم *Oliver*`;
 
     const encodedMessage = encodeURIComponent(message);
     const whatsappUrl = `https://wa.me/201550240629?text=${encodedMessage}`;
