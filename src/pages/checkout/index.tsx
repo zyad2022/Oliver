@@ -7,7 +7,7 @@ import { X, Check, Wallet, Truck, Smartphone, Share } from 'lucide-react';
 
 export function Checkout() {
   const { cartItems, placeOrder } = useCart();
-  const { onNavigate } = useAppState();;
+  const { onNavigate, currentUser } = useAppState();
   const [selectedMethod, setSelectedMethod] = useState<'vodafone' | 'cod' | null>(null);
   const [isPlacingOrder, setIsPlacingOrder] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -27,16 +27,24 @@ export function Checkout() {
     
     // Generate WhatsApp message
     const orderItemsText = cartItems
-      .map(item => `• ${item.name} (${item.cartQuantity}x) - ${item.price * item.cartQuantity} EGP`)
+      .map(item => `• ${item.name} × ${item.cartQuantity} — ${item.price * item.cartQuantity} EGP`)
       .join('\n');
 
-    const message = `*طلب جديد من Oliver Luxury Brands*\n\n` +
-      `*تفاصيل المنتجات:*\n${orderItemsText}\n\n` +
-      `*المجموع:* ${subtotal} EGP\n` +
-      `*الشحن:* ${shipping === 0 ? 'مجاني' : shipping + ' EGP'}\n` +
-      `*الإجمالي النهائي:* ${total} EGP\n\n` +
-      `*طريقة الدفع المختارة:* ${methodLabel}\n\n` +
-      `شكراً لتسوقكم معنا!`;
+    const customerName = currentUser?.displayName || currentUser?.email || 'عميل';
+
+    const message =
+      `✨ *طلب جديد | Oliver Luxury Brands* ✨\n\n` +
+      `👤 *اسم العميل:*\n${customerName}\n\n` +
+      `🛍️ *تفاصيل الطلب:*\n${orderItemsText}\n\n` +
+      `───────────────\n\n` +
+      `💰 *ملخص الدفع:*\n` +
+      `المجموع: ${subtotal} EGP\n` +
+      `الشحن: ${shipping === 0 ? 'مجاني' : shipping + ' EGP'}\n` +
+      `الإجمالي: *${total} EGP*\n\n` +
+      `───────────────\n\n` +
+      `💳 *طريقة الدفع:*\n${methodLabel}\n\n` +
+      `📩 سيتم تأكيد الطلب مع العميل قريبًا\n` +
+      `شكراً لاختياركم *Oliver* 💎`;
 
     const encodedMessage = encodeURIComponent(message);
     const whatsappUrl = `https://wa.me/201550240629?text=${encodedMessage}`;
