@@ -47,17 +47,44 @@ export function Checkout() {
       `شكراً لاختياركم *Oliver*`;
 
     const encodedMessage = encodeURIComponent(message);
-    const whatsappUrl = `https://wa.me/201550240629?text=${encodedMessage}`;
 
-    executeOrderCompletion(whatsappUrl, methodLabel);
+    executeOrderCompletion(encodedMessage, methodLabel);
   };
 
-  const executeOrderCompletion = async (url: string, methodLabel: string) => {
+  const executeOrderCompletion = async (encodedMessage: string, methodLabel: string) => {
     setIsPlacingOrder(true);
     try {
       await placeOrder(methodLabel);
-      // Redirect to WhatsApp
-      window.location.href = url;
+      
+      const phoneNumber = "201550240629";
+      const intentUrl = `whatsapp://send?phone=${phoneNumber}&text=${encodedMessage}`;
+      const webUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+      
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 768;
+
+      if (isMobile) {
+        const now = Date.now();
+        let hasNavigated = false;
+
+        const handleVisibilityChange = () => {
+          if (document.hidden) {
+            hasNavigated = true;
+          }
+        };
+
+        document.addEventListener('visibilitychange', handleVisibilityChange);
+        window.location.href = intentUrl;
+
+        setTimeout(() => {
+          document.removeEventListener('visibilitychange', handleVisibilityChange);
+          // If we haven't navigated and it's been less than 1000ms (to account for slightly delayed executions without app)
+          if (!hasNavigated && !document.hidden) {
+            window.location.href = webUrl;
+          }
+        }, 500);
+      } else {
+        window.location.href = webUrl;
+      }
     } catch (error) {
       alert('حدث خطأ أثناء إتمام الطلب. يرجى المحاولة مرة أخرى.');
     } finally {
