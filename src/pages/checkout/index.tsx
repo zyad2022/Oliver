@@ -34,14 +34,20 @@ export function Checkout() {
 
     const message =
       `*طلب جديد | Oliver Luxury Brands*\n\n` +
+      `-------------------\n` +
       `*اسم العميل:*\n• ${customerName}\n\n` +
+      `-------------------\n` +
       `*تفاصيل الطلب:*\n${orderItemsText}\n\n` +
+      `-------------------\n` +
       `*ملخص الدفع:*\n` +
       `• المجموع: ${subtotal} EGP\n` +
       `• الشحن: ${shipping === 0 ? 'مجاني' : shipping + ' EGP'}\n` +
       `• الإجمالي: *${total} EGP*\n\n` +
+      `-------------------\n` +
       `*طريقة الدفع:*\n• ${methodLabel}\n\n` +
-      `• سيتم تأكيد الطلب قريبًا\n` +
+      `-------------------\n` +
+      `*حالة الطلب:*\n• سيتم تأكيد الطلب قريبًا\n\n` +
+      `-------------------\n` +
       `شكراً لاختياركم *Oliver*`;
 
     const encodedMessage = encodeURIComponent(message);
