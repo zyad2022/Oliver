@@ -123,7 +123,6 @@ export function Footer() {
             </div>
             <ul className="flex flex-col gap-4 text-gold-deep/90 w-full">
               <li><button onClick={() => onNavigate?.('returns')} className="hover:text-natural-text transition-colors text-right w-full">سياسة الاسترجاع والاستبدال</button></li>
-              <li><button onClick={() => onNavigate?.('shipping')} className="hover:text-natural-text transition-colors text-right w-full">الشحن والتوصيل</button></li>
               <li><button onClick={() => onNavigate?.('size-guide')} className="hover:text-natural-text transition-colors text-right w-full">دليل المقاسات</button></li>
               <li><button onClick={() => onNavigate?.('jewelry-care')} className="hover:text-natural-text transition-colors text-right w-full">العناية بالمجوهرات</button></li>
             </ul>

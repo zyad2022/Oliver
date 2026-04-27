@@ -18,7 +18,6 @@ const Reviews = lazy(() => import('../pages/reviews').then(m => ({ default: m.Re
 const FAQ = lazy(() => import('../pages/faq').then(m => ({ default: m.FAQ })));
 const Contact = lazy(() => import('../pages/contact').then(m => ({ default: m.Contact })));
 const Returns = lazy(() => import('../pages/returns').then(m => ({ default: m.Returns })));
-const Shipping = lazy(() => import('../pages/shipping').then(m => ({ default: m.Shipping })));
 const SizeGuide = lazy(() => import('../pages/size-guide').then(m => ({ default: m.SizeGuide })));
 const JewelryCare = lazy(() => import('../pages/jewelry-care').then(m => ({ default: m.JewelryCare })));
 
@@ -45,7 +44,6 @@ export const AppRoutes: React.FC = () => {
         <Route path="/faq" element={<FAQ />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/returns" element={<Returns />} />
-        <Route path="/shipping" element={<Shipping />} />
         <Route path="/size-guide" element={<SizeGuide />} />
         <Route path="/jewelry-care" element={<JewelryCare />} />
         <Route path="/product" element={

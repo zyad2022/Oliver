@@ -10,8 +10,7 @@ export function Cart({ cartItems, onRemove, onUpdateQuantity }: { cartItems: Car
   const { setSelectedProduct } = useUI();
   const { placeOrder } = useCart();;
   const subtotal = cartItems.reduce((acc, item) => acc + (item.price * item.cartQuantity), 0);
-  const shipping = subtotal > 0 ? (subtotal >= 1000 ? 0 : 50) : 0;
-  const total = subtotal + shipping;
+  const total = subtotal;
 
   const handleCheckout = () => {
     onNavigate('checkout');
@@ -129,12 +128,6 @@ export function Cart({ cartItems, onRemove, onUpdateQuantity }: { cartItems: Car
               <div className="flex justify-between items-center">
                 <span>المجموع الفرعي</span>
                 <span className="en-text font-medium text-natural-text">{subtotal} EGP</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span>رسوم التوصيل</span>
-                <span className="en-text font-medium text-natural-text">
-                  {shipping === 0 ? 'Free' : `${shipping} EGP`}
-                </span>
               </div>
             </div>
 

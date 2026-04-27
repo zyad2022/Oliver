@@ -14,8 +14,7 @@ export function Checkout() {
   const [whatsappInfo, setWhatsappInfo] = useState({ url: '', methodLabel: '' });
 
   const subtotal = cartItems.reduce((acc, item) => acc + (item.price * item.cartQuantity), 0);
-  const shipping = subtotal >= 1000 ? 0 : 50;
-  const total = subtotal + shipping;
+  const total = subtotal;
 
   const handlePlaceOrderClick = () => {
     if (!selectedMethod) {
@@ -41,7 +40,6 @@ export function Checkout() {
       `-------------------\n` +
       `*ملخص الدفع:*\n` +
       `• المجموع: ${subtotal} EGP\n` +
-      `• الشحن: ${shipping === 0 ? 'مجاني' : shipping + ' EGP'}\n` +
       `• الإجمالي: *${total} EGP*\n\n` +
       `-------------------\n` +
       `*طريقة الدفع:*\n• ${methodLabel}\n\n` +
@@ -228,12 +226,6 @@ export function Checkout() {
               <div className="flex justify-between items-center text-sm">
                 <span>المجموع الفرعي</span>
                 <span className="en-text font-medium text-natural-text">{subtotal} EGP</span>
-              </div>
-              <div className="flex justify-between items-center text-sm">
-                <span>رسوم التوصيل</span>
-                <span className="en-text font-medium text-natural-text">
-                  {shipping === 0 ? 'مجاني' : `${shipping} EGP`}
-                </span>
               </div>
             </div>
 
