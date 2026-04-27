@@ -1,17 +1,15 @@
 
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import { useCart, useAppState } from '../../state';;
+import { motion } from 'motion/react';
+import { useCart, useAppState } from '../../state';
 import { PageTitle } from '../../components/PageTitle';
-import { X, Check, Wallet, Truck, Smartphone, Share } from 'lucide-react';
+import { X, Check, Truck, Smartphone } from 'lucide-react';
 
 export function Checkout() {
   const { cartItems, placeOrder } = useCart();
   const { onNavigate, currentUser } = useAppState();
   const [selectedMethod, setSelectedMethod] = useState<'vodafone' | 'cod' | null>(null);
   const [isPlacingOrder, setIsPlacingOrder] = useState(false);
-  const [showModal, setShowModal] = useState(false);
-  const [whatsappInfo, setWhatsappInfo] = useState({ url: '', methodLabel: '' });
 
   const subtotal = cartItems.reduce((acc, item) => acc + (item.price * item.cartQuantity), 0);
   const total = subtotal;
@@ -51,20 +49,10 @@ export function Checkout() {
     const encodedMessage = encodeURIComponent(message);
     const whatsappUrl = `https://wa.me/201550240629?text=${encodedMessage}`;
 
-    setWhatsappInfo({ url: whatsappUrl, methodLabel });
-
-    // Device check
-    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 768;
-    if (isMobile) {
-      // allow normal checkout flow directly
-      executeOrderCompletion(whatsappUrl, methodLabel);
-    } else {
-      // encourage WhatsApp action via popup
-      setShowModal(true);
-    }
+    executeOrderCompletion(whatsappUrl, methodLabel);
   };
 
-  const executeOrderCompletion = async (url = whatsappInfo.url, methodLabel = whatsappInfo.methodLabel) => {
+  const executeOrderCompletion = async (url: string, methodLabel: string) => {
     setIsPlacingOrder(true);
     try {
       await placeOrder(methodLabel);
@@ -74,7 +62,6 @@ export function Checkout() {
       alert('حدث خطأ أثناء إتمام الطلب. يرجى المحاولة مرة أخرى.');
     } finally {
       setIsPlacingOrder(false);
-      setShowModal(false);
     }
   };
 
@@ -241,73 +228,6 @@ export function Checkout() {
         </div>
 
       </div>
-
-      {/* Completion Modal */}
-      <AnimatePresence>
-        {showModal && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
-          >
-            <motion.div
-              initial={{ scale: 0.95, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.95, opacity: 0 }}
-              className="bg-white rounded-3xl w-full max-w-md overflow-hidden shadow-2xl relative"
-            >
-              {/* Close Button */}
-              <button 
-                onClick={() => setShowModal(false)}
-                className="absolute top-4 left-4 p-2 rounded-full bg-natural-bg/50 hover:bg-natural-bg text-natural-text transition-colors z-10"
-              >
-                <X size={20} />
-              </button>
-
-              <div className="p-8 text-center pt-12">
-                <h3 className="text-xl font-bold text-natural-text mb-6">لإتمام طلبك بسهولة:</h3>
-                
-                <div className="space-y-6 text-sm text-natural-text/80 leading-relaxed mb-10 text-right">
-                  <div className="flex items-start gap-4 p-4 rounded-xl bg-natural-bg/50">
-                    <Smartphone className="w-6 h-6 text-natural-accent flex-shrink-0 mt-1" />
-                    <div>
-                      <p className="font-bold text-natural-text mb-1">إذا كنت تستخدم الهاتف:</p>
-                      <p>اضغط على زر 'إكمال الطلب' مرة أخرى وسيتم تحويلك تلقائيًا</p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start gap-4 p-4 rounded-xl bg-natural-bg/50">
-                    <Share className="w-6 h-6 text-natural-accent flex-shrink-0 mt-1" />
-                    <div>
-                      <p className="font-bold text-natural-text mb-1">إذا كنت تستخدم الكمبيوتر:</p>
-                      <p>يرجى إرسال تفاصيل الطلب عبر واتساب على الرقم:<br/><span className="en-text font-bold text-natural-text">01550240629</span></p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex flex-col gap-3">
-                  <button
-                    onClick={() => executeOrderCompletion()}
-                    disabled={isPlacingOrder}
-                    className="w-full bg-natural-accent text-white py-4 rounded-full font-bold hover:bg-natural-accent-dark transition-colors disabled:opacity-50"
-                  >
-                    {isPlacingOrder ? 'Processing...' : 'إكمال الطلب'}
-                  </button>
-                  <a
-                    href="https://wa.me/201550240629"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full bg-[#18C359]/10 text-[#18C359] hover:bg-[#18C359]/20 border border-[#18C359]/20 py-4 rounded-full font-bold transition-colors flex justify-center items-center gap-2"
-                  >
-                    واتساب
-                  </a>
-                </div>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </motion.div>
   );
 }
