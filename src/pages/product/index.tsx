@@ -8,6 +8,8 @@ import { useSearchParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { fetchProducts } from '../../services/api';
 
+const SHOW_PRODUCT_THUMBNAILS = false;
+
 interface ProductPageProps {
   product?: Product;
   onAddToCart: (product: Product, quantity?: number) => void;
@@ -97,33 +99,34 @@ export function ProductPage({ product: propProduct, onAddToCart, isQuickAdd }: P
         
         {/* Images */}
         <div className="w-full md:w-1/2">
-          <div className={`aspect-[4/5] bg-natural-img rounded-2xl overflow-hidden mb-4 ${isQuickAdd ? 'md:max-h-[500px]' : ''}`}>
-            <img 
-              src={mainImage} 
-              alt={product.name} 
-              onError={(e) => { e.currentTarget.src = 'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&q=80&w=800'; }}
-              className="w-full h-full object-cover object-center"
-            />
-          </div>
-          {!isQuickAdd && galleryList.length > 1 && (
+         <div className={`aspect-[4/5] bg-natural-img rounded-2xl overflow-hidden mb-4 ${isQuickAdd ? 'md:max-h-[500px]' : ''}`}>
+          <img 
+            src={mainImage} 
+            alt={product.name} 
+            onError={(e) => { e.currentTarget.src = 'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&q=80&w=800'; }}
+            className="w-full h-full object-cover object-center"
+          />
+           </div>
+
+          {SHOW_PRODUCT_THUMBNAILS && !isQuickAdd && galleryList.length > 1 && (
             <div className="grid grid-cols-4 gap-4">
-              {galleryList.map((imgObj, i) => (
-                <div 
-                  key={i} 
-                  onClick={() => setSelectedImageIndex(i)}
-                  className={`aspect-square bg-natural-img rounded-xl overflow-hidden cursor-pointer border-2 transition-colors ${selectedImageIndex === i ? 'border-natural-accent' : 'border-transparent hover:border-natural-accent/50'}`}
-                >
-                  <img 
-                    src={imgObj.thumb} 
-                    className="w-full h-full object-cover opacity-80 hover:opacity-100" 
-                    alt={`thumbnail ${i + 1}`} 
-                    onError={(e) => { e.currentTarget.src = 'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&q=80&w=800'; }}
-                  />
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
+             {galleryList.map((imgObj, i) => (
+              <div 
+               key={i} 
+               onClick={() => setSelectedImageIndex(i)}
+               className={`aspect-square bg-natural-img rounded-xl overflow-hidden cursor-pointer border-2 transition-colors ${selectedImageIndex === i ? 'border-natural-accent' : 'border-transparent hover:border-natural-accent/50'}`}
+              >
+               <img 
+                src={imgObj.thumb} 
+                className="w-full h-full object-cover opacity-80 hover:opacity-100" 
+                alt={`thumbnail ${i + 1}`} 
+                onError={(e) => { e.currentTarget.src = 'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&q=80&w=800'; }}
+              />
+           </div>
+         ))}
+      </div>
+     )}
+  </div>
 
         {/* Details */}
         <div className={`w-full md:w-1/2 ${isQuickAdd ? 'mt-0' : 'mt-4 md:mt-10'}`}>

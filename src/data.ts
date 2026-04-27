@@ -29,7 +29,7 @@ export const products: Product[] = [
     ],
     category: "Necklaces",
     isNew: true,
-    dateAdded: "2026-04-15T10:00:00Z",
+    dateAdded: "2026-01-15T10:00:00Z",
     description: "قلادة كلاسيكية بتصميم يعبر عن الحب، مطلية بالذهب ومناسبة لجميع المناسبات السعيدة."
   },
   {
@@ -45,7 +45,7 @@ export const products: Product[] = [
       { thumb: "https://i.ibb.co/nv6k211/672588038-2001103607154376-2871997865707591592-n-1.png", full: "https://i.ibb.co/nv6k211/672588038-2001103607154376-2871997865707591592-n-1.png" }
     ],
     category: "Necklaces",
-    dateAdded: "2026-04-20T10:00:00Z",
+    dateAdded: "2026-01-20T10:00:00Z",
     description: "قلادة بشكل البجعة الأنيقة، مرصعة بالكريستال الفاخر لتعكس جمالك الداخلي في كل زاوية."
   },
   {
@@ -60,7 +60,7 @@ export const products: Product[] = [
       { thumb: "https://i.ibb.co/jPkvcrX8/677876020-2420418575126897-6043031926358544604-n-1.png", full: "https://i.ibb.co/jPkvcrX8/677876020-2420418575126897-6043031926358544604-n-1.png" }
     ],
     category: "Rings",
-    dateAdded: "2026-04-10T10:00:00Z",
+    dateAdded: "2026-01-10T10:00:00Z",
     description: "خاتم حر المقاس يمكن تعديله بسهولة ليتناسب مع أي إصبع، يتميز بتصميم عصري وبسيط."
   },
   {
@@ -77,7 +77,7 @@ export const products: Product[] = [
     ],
     category: "Necklaces",
     isNew: true,
-    dateAdded: "2026-04-18T10:00:00Z",
+    dateAdded: "2026-01-18T10:00:00Z",
     description: "نسخة جديدة من قلادة البجعة الكلاسيكية، مطلية بالذهب عيار 18 لمنحها بريقاً لا يقاوم."
   },
   {
@@ -92,7 +92,7 @@ export const products: Product[] = [
       { thumb: "https://i.ibb.co/TxTt6NJN/672697037-2463838294057377-3321035897148113262-n-1.png", full: "https://i.ibb.co/TxTt6NJN/672697037-2463838294057377-3321035897148113262-n-1.png" }
     ],
     category: "Necklaces",
-    dateAdded: "2026-04-05T10:00:00Z",
+    dateAdded: "2026-01-05T10:00:00Z",
     description: "سلسلة ناعمة تحمل فراشات ذهبية متطايرة، تعبر عن الحرية والأنوثة الرقيقة."
   },
    {
@@ -107,7 +107,7 @@ export const products: Product[] = [
       { thumb: "https://i.ibb.co/b5TJ3VYb/674026961-998234786105363-5904082933620735298-n-1.png", full: "https://i.ibb.co/b5TJ3VYb/674026961-998234786105363-5904082933620735298-n-1.png" }
     ],
     category: "Necklaces",
-    dateAdded: "2026-04-28T10:00:00Z",
+    dateAdded: "2026-01-28T10:00:00Z",
     description: "قطعة مميزة بحجر أخضر كريم يعكس سحر الطبيعة، مصممة خصيصاً لعاشقات التميز."
   },
 ];
