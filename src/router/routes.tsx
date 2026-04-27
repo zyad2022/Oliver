@@ -9,7 +9,6 @@ const NewArrivals = lazy(() => import('../pages/new-arrivals').then(m => ({ defa
 const ProductPage = lazy(() => import('../pages/product').then(m => ({ default: m.ProductPage })));
 const Cart = lazy(() => import('../pages/cart').then(m => ({ default: m.Cart })));
 const Profile = lazy(() => import('../pages/profile').then(m => ({ default: m.Profile })));
-const Orders = lazy(() => import('../pages/orders').then(m => ({ default: m.Orders })));
 const Checkout = lazy(() => import('../pages/checkout').then(m => ({ default: m.Checkout })));
 const PrivacyPolicy = lazy(() => import('../pages/privacy').then(m => ({ default: m.PrivacyPolicy })));
 const TermsOfService = lazy(() => import('../pages/terms').then(m => ({ default: m.TermsOfService })));
@@ -65,9 +64,7 @@ export const AppRoutes: React.FC = () => {
         <Route path="/profile" element={
           isLoggedIn ? <Profile /> : <RedirectToHome />
         } />
-        <Route path="/orders" element={
-          isLoggedIn ? <Orders /> : <RedirectToHome />
-        } />
+        <Route path="/orders" element={<RedirectToHome />} />
         <Route path="/checkout" element={
           isLoggedIn ? <Checkout /> : <RedirectToHome />
         } />

@@ -86,29 +86,9 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     if (!currentUser || cartItems.length === 0) return;
 
     try {
-      const orderData = {
-        userId: currentUser.uid,
-        items: cartItems.map(item => ({
-          productId: item.id,
-          productName: item.name,
-          productImage: item.listingImage,
-          price: item.price,
-          quantity: item.cartQuantity,
-          totalPrice: item.price * item.cartQuantity
-        })),
-        totalItems: cartItems.length,
-        subtotal: cartItems.reduce((acc, item) => acc + (item.price * item.cartQuantity), 0),
-        totalPrice: cartItems.reduce((acc, item) => acc + (item.price * item.cartQuantity), 0) + (cartItems.reduce((acc, item) => acc + (item.price * item.cartQuantity), 0) >= 1000 ? 0 : 50),
-        paymentMethod: paymentMethod,
-        status: 'pending',
-        createdAt: serverTimestamp(),
-      };
-
-      await addDoc(collection(db, 'users', currentUser.uid, 'orders'), orderData);
       clearCart();
     } catch (error) {
       console.error('Error placing order:', error);
-      handleFirestoreError(error, 'create', `users/${currentUser.uid}/orders`);
     }
   }, [currentUser, cartItems, clearCart]);
 

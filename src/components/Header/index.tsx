@@ -230,13 +230,7 @@ export function Header({ cartCount, currentPage, onNavigate, onProductClick, isL
                       <UserCircle size={18} strokeWidth={1.5} />
                       حسابي
                     </button>
-                    <button 
-                      onClick={() => { setIsAccountMenuOpen(false); handleNav('orders'); }}
-                      className="w-full text-left px-4 py-2 hover:bg-natural-bg transition-colors flex items-center gap-3 text-sm text-natural-text font-arabic"
-                    >
-                      <Package size={18} strokeWidth={1.5} />
-                      طلباتي
-                    </button>
+
                     <div className="h-px bg-natural-border/50 my-2"></div>
                     <button 
                       onClick={() => { setIsAccountMenuOpen(false); onLogout(); }}
@@ -414,9 +408,7 @@ export function Header({ cartCount, currentPage, onNavigate, onProductClick, isL
                   <button onClick={() => { setIsMobileMenuOpen(false); handleNav('profile'); }} className="text-right flex items-center justify-between group">
                     إعدادات الحساب
                   </button>
-                  <button onClick={() => { setIsMobileMenuOpen(false); handleNav('orders'); }} className="text-right flex items-center justify-between group">
-                    طلباتي
-                  </button>
+
                 </>
               )}
               <button 
