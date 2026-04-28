@@ -132,7 +132,7 @@ export function Footer() {
 
         <div className="border-t border-gold-primary/20 pt-8 flex flex-wrap justify-center items-center gap-3 sm:gap-4 text-sm text-gold-deep/90">
           <button 
-            onClick={() => onNavigate?.('privacy-policy')}
+            onClick={() => onNavigate?.('privacy')}
             className="hover:text-gold-primary transition-colors"
           >
             Privacy Policy
@@ -141,12 +141,16 @@ export function Footer() {
           <span className="w-px h-4 bg-black/40"></span>
           
           <button 
-            onClick={() => onNavigate?.('terms-of-service')}
+            onClick={() => onNavigate?.('terms')}
             className="hover:text-gold-primary transition-colors"
           >
             Terms of Service
           </button>
           
+          <span className="w-px h-4 bg-black/40"></span>
+
+          <span className="font-medium">Made By Zyad Raed</span>
+
           <span className="w-px h-4 bg-black/40"></span>
           
           <span className="font-medium">جميع الحقوق محفوظة © 2024 Oliver</span>
