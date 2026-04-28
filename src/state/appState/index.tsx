@@ -25,6 +25,9 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
   useEffect(() => {
     // Handle redirect result from Google login
     const handleRedirectResult = async () => {
+      // Force clear any body lock left over from mobile popup attempt
+      document.body.style.overflow = 'unset';
+      
       try {
         const result = await getRedirectResult(auth);
         if (result?.user) {
@@ -40,6 +43,9 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
               createdAt: serverTimestamp()
             });
           }
+          
+          // Redirect to homepage & reload after successful login
+          window.location.href = '/';
         }
       } catch (error) {
         console.error('Error handling redirect result:', error);
@@ -48,6 +54,10 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
     handleRedirectResult();
 
     const unsubscribe = onAuthStateChanged(auth, (user) => {
+      // Ensure UI is updated and clean up any lock
+      if (user) {
+        document.body.style.overflow = 'unset';
+      }
       setCurrentUser(user);
       setIsLoggedIn(!!user);
     });

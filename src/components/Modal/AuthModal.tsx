@@ -88,6 +88,9 @@ export function AuthModal({ isOpen, onClose, onLogin }: AuthModalProps) {
       }
 
       onLogin();
+      // Fix visual lock issues and force refresh to home
+      document.body.style.overflow = 'unset';
+      window.location.href = '/';
     } catch (err: any) {
       console.error('Google Auth Error:', err);
       if (err.code === 'auth/popup-closed-by-user' || err.code === 'auth/cancelled-popup-request') {
