@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Star, X, MessageSquare, Quote } from 'lucide-react';
 import { PageTitle } from '../../components/PageTitle';
-import { useAppState } from '../../state';;
+import { useAppState } from '../../state';
 import { db } from '../../firebase';
 import { collection, query, orderBy, onSnapshot } from 'firebase/firestore';
 
@@ -14,8 +14,82 @@ interface Review {
   createdAt: any;
 }
 
+function ReviewsSummary({ reviews }: { reviews: Review[] }) {
+  if (reviews.length === 0) return null;
+
+  const totalReviews = reviews.length;
+  const averageRating = reviews.reduce((sum, r) => sum + r.rating, 0) / totalReviews;
+  
+  const distribution = [5, 4, 3, 2, 1].map(star => {
+    const count = reviews.filter(r => r.rating === star).length;
+    return {
+      star,
+      count,
+      percentage: Math.round((count / totalReviews) * 100)
+    };
+  });
+
+  return (
+    <motion.div 
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="mb-8 p-8 bg-white/30 backdrop-blur-xl border border-white/40 rounded-[2rem] shadow-[0_15px_50px_-15px_rgba(212,175,55,0.15)] flex flex-col md:flex-row items-center gap-8 md:justify-center md:gap-20"
+    >
+      <div className="flex flex-col items-center justify-center text-center min-w-[200px]">
+        <h3 className="text-xl font-arabic text-gold-deep mb-3 font-semibold">التقييم العام</h3>
+        <div className="text-6xl font-bold text-natural-text mb-4 en-text tracking-tighter">
+          {averageRating.toFixed(1)}
+        </div>
+        <div className="flex gap-1 mb-3 justify-center" dir="ltr">
+          {[1, 2, 3, 4, 5].map((star) => {
+            const fillPercentage = Math.max(0, Math.min(100, (averageRating - star + 1) * 100));
+            return (
+              <div key={star} className="relative w-7 h-7 flex-shrink-0">
+                <Star size={28} className="text-gray-200 absolute inset-0" />
+                <div 
+                  className="absolute top-0 left-0 h-full overflow-hidden" 
+                  style={{ width: `${fillPercentage}%` }}
+                >
+                  <Star size={28} className="fill-gold-primary text-gold-primary absolute top-0 left-0" />
+                </div>
+              </div>
+            );
+          })}
+        </div>
+        <p className="text-natural-secondary-text font-arabic">
+          بناءً على <span className="font-bold text-gold-deep text-lg">{totalReviews}</span> تقييمات
+        </p>
+      </div>
+
+      <div className="w-px h-32 bg-gold-primary/20 hidden md:block"></div>
+
+      <div className="w-full max-w-sm flex flex-col gap-3">
+        {distribution.map((item) => (
+          <div key={item.star} className="flex items-center gap-4 text-sm" dir="ltr">
+            <div className="flex items-center gap-1 min-w-[2.5rem] text-natural-text justify-end">
+              <span className="font-bold en-text text-base">{item.star}</span>
+              <Star size={16} className="fill-gold-primary text-gold-primary" />
+            </div>
+            <div className="flex-1 h-2.5 bg-gray-200 rounded-full overflow-hidden">
+              <motion.div 
+                initial={{ width: 0 }}
+                animate={{ width: `${item.percentage}%` }}
+                transition={{ duration: 1, ease: 'easeOut' }}
+                className="h-full bg-gradient-to-r from-gold-soft to-gold-primary rounded-full"
+              />
+            </div>
+            <div className="min-w-[2.5rem] text-left text-natural-secondary-text en-text font-medium">
+              {item.percentage}%
+            </div>
+          </div>
+        ))}
+      </div>
+    </motion.div>
+  );
+}
+
 export function Reviews() {
-  const { onNavigate } = useAppState();;
+  const { onNavigate } = useAppState();
   const [reviews, setReviews] = useState<Review[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -83,11 +157,13 @@ export function Reviews() {
               <p className="mt-4 text-gold-deep font-arabic">جاري تحميل التقييمات...</p>
             </div>
           ) : reviews.length > 0 ? (
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="bg-white/30 backdrop-blur-xl border border-white/40 rounded-[2rem] shadow-[0_15px_50px_-15px_rgba(212,175,55,0.15)] overflow-hidden"
-            >
+            <div className="flex flex-col gap-6">
+              <ReviewsSummary reviews={reviews} />
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="bg-white/30 backdrop-blur-xl border border-white/40 rounded-[2rem] shadow-[0_15px_50px_-15px_rgba(212,175,55,0.15)] overflow-hidden"
+              >
               <div className="overflow-x-auto">
                 <table className="w-full border-collapse">
                   <thead>
@@ -134,7 +210,8 @@ export function Reviews() {
                   </tbody>
                 </table>
               </div>
-            </motion.div>
+              </motion.div>
+            </div>
           ) : (
             <motion.div 
               initial={{ opacity: 0, scale: 0.95 }}

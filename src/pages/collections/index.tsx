@@ -14,7 +14,7 @@ type SortOption = 'default' | 'newest' | 'price-asc' | 'price-desc';
 export function Collection() {
   const { setSelectedProduct } = useUI();
   const { onNavigate } = useAppState();
-  const categories = ['جميع المنتجات', 'قلائد', 'خواتم'];
+  const categories = ['مجموعة North Star', 'قلائد', 'أساور', 'خواتم'];
   
   const { data: products = [], isLoading } = useQuery({
     queryKey: ['products'],
@@ -43,6 +43,8 @@ export function Collection() {
       if (activeCategory === 'جميع المنتجات') return true;
       if (activeCategory === 'قلائد') return p.category === 'Necklaces';
       if (activeCategory === 'خواتم') return p.category === 'Rings';
+      if (activeCategory === 'أساور') return p.category === 'Bracelets';
+      if (activeCategory === 'مجموعة North Star') return p.category === 'North Star';
       return true;
     });
 
@@ -203,6 +205,14 @@ export function Collection() {
           <div className="sticky top-28 bg-gradient-to-br from-gold-light via-[#FDFBF7] to-gold-soft border border-gold-primary/20 rounded-2xl shadow-[0_8px_30px_rgba(212,175,55,0.08)] p-6 backdrop-blur-sm text-right">
             <h3 className="text-lg text-gold-deep mb-6 pb-3 border-b border-gold-primary/20 font-arabic font-medium">التصنيفات</h3>
             <ul className="flex flex-col gap-3">
+              <li>
+                <button 
+                  onClick={() => setActiveCategory('جميع المنتجات')}
+                  className={`text-base transition-all duration-300 w-full text-right py-1 px-2 rounded-lg hover:bg-gold-primary/10 ${activeCategory === 'جميع المنتجات' ? 'text-gold-deep font-bold bg-gold-primary/5 shadow-sm' : 'text-natural-secondary-text hover:text-gold-deep'}`}
+                >
+                  جميع المنتجات
+                </button>
+              </li>
               {categories.map((cat, idx) => (
                 <li key={idx}>
                   <button 

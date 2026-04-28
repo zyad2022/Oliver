@@ -6,6 +6,7 @@ import { AppRoutes } from './router/routes';
 import { AnimatePresence } from 'motion/react';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { queryClient } from './queryClient';
+import { Analytics } from '@vercel/analytics/react';
 
 export default function App() {
   return (
@@ -19,6 +20,7 @@ export default function App() {
           </MainLayout>
         </AppProvider>
       </BrowserRouter>
+      <Analytics />
     </QueryClientProvider>
   );
 }

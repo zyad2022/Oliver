@@ -119,7 +119,7 @@ export const products: Product[] = [
       { thumb: "https://i.ibb.co/yFYVpnYc/674582170-828702483047185-2404788357332388730-n-1.png", full: "https://i.ibb.co/fYgY3VvW/680422727-905462842509702-1493722085757743725-n-1.png" },
       { thumb: "https://i.ibb.co/yFYVpnYc/674582170-828702483047185-2404788357332388730-n-1.png", full: "https://i.ibb.co/fYgY3VvW/680422727-905462842509702-1493722085757743725-n-1.png" }
     ],
-    category: "Necklaces",
+    category: "Bracelets",
     dateAdded: "2026-04-27",
     description: "فرع من الأناقة الملكية مرصع بفصوص حمراء متوهجة يمنح معصمكِ سحراً لا يُقاوم"
   },
@@ -134,7 +134,7 @@ export const products: Product[] = [
       { thumb: "https://i.ibb.co/yFYVpnYc/674582170-828702483047185-2404788357332388730-n-1.png", full: "https://i.ibb.co/kVtzXhtG/677762474-1846938465979583-1906584830548281926-n-1.png" },
       { thumb: "https://i.ibb.co/yFYVpnYc/674582170-828702483047185-2404788357332388730-n-1.png", full: "https://i.ibb.co/kVtzXhtG/677762474-1846938465979583-1906584830548281926-n-1.png" }
     ],
-    category: "Necklaces",
+    category: "North Star",
     dateAdded: "2026-04-28",
     description: "قلادة نجمة الشمال بتصميم فخم يجمع بين الذهب المرصع بفصوص الزركون وتفاصيل السلسلة الفريدة"
   },
@@ -149,7 +149,7 @@ export const products: Product[] = [
       { thumb: "https://i.ibb.co/yFYVpnYc/674582170-828702483047185-2404788357332388730-n-1.png", full: "https://i.ibb.co/TM39B6VM/679627907-4586172888336051-2311157449215246784-n-1.png" },
       { thumb: "https://i.ibb.co/yFYVpnYc/674582170-828702483047185-2404788357332388730-n-1.png", full: "https://i.ibb.co/TM39B6VM/679627907-4586172888336051-2311157449215246784-n-1.png" }
     ],
-    category: "Necklaces",
+    category: "North Star",
     dateAdded: "2026-04-29",
     description: "قلادة نجمة الشمال الذهبية بحجم متوسط وتصميم نجمة بارز يجمع بين الفخامة والبريق لتكون القطعة الأجمل في مجموعتك"
   },
@@ -164,7 +164,7 @@ export const products: Product[] = [
       { thumb: "https://i.ibb.co/yFYVpnYc/674582170-828702483047185-2404788357332388730-n-1.png", full: "https://i.ibb.co/q3y2960v/679705912-1280731207497067-3453457073751169632-n-1.png" },
       { thumb: "https://i.ibb.co/yFYVpnYc/674582170-828702483047185-2404788357332388730-n-1.png", full: "https://i.ibb.co/q3y2960v/679705912-1280731207497067-3453457073751169632-n-1.png" }
     ],
-    category: "Necklaces",
+    category: "North Star",
     dateAdded: "2026-04-30",
     description: "قلادة نجمة الشمال الذهبية الملكية بحجم لافت وتصميم نجمة متوهجة قطعة استثنائية تمنحكِ حضوراً طاغياً وفخامة لا تُنسى"
   },
@@ -179,7 +179,7 @@ export const products: Product[] = [
       { thumb: "https://i.ibb.co/yFYVpnYc/674582170-828702483047185-2404788357332388730-n-1.png", full: "https://i.ibb.co/jv2gkRb4/677795446-1517056107097261-4897403476822941281-n-1.png" },
       { thumb: "https://i.ibb.co/yFYVpnYc/674582170-828702483047185-2404788357332388730-n-1.png", full: "https://i.ibb.co/jv2gkRb4/677795446-1517056107097261-4897403476822941281-n-1.png" }
     ],
-    category: "Necklaces",
+    category: "North Star",
     dateAdded: "2026-05-01",
     description: "قلادة نجمة الشمال من الفضة الخالصة بحجم بارز وتصميم نجمة متوهجة قطعة كلاسيكية تمنحكِ حضوراً لافتاً وأناقة لا تنتهي"
   },
@@ -194,7 +194,7 @@ export const products: Product[] = [
       { thumb: "https://i.ibb.co/yFYVpnYc/674582170-828702483047185-2404788357332388730-n-1.png", full: "https://i.ibb.co/Kcswv8g6/677755509-1352480736690317-4955107282099352070-n-1.png" },
       { thumb: "https://i.ibb.co/yFYVpnYc/674582170-828702483047185-2404788357332388730-n-1.png", full: "https://i.ibb.co/Kcswv8g6/677755509-1352480736690317-4955107282099352070-n-1.png" }
     ],
-    category: "Necklaces",
+    category: "North Star",
     dateAdded: "2026-05-02",
     description: "قلادة نجمة الشمال العصرية بحجم متوسط تتألق بمزيج ساحر من الذهب والفضة لتعطيكِ إطلالة متجددة تليق بكل أوقاتكِ"
   },
@@ -209,7 +209,7 @@ export const products: Product[] = [
       { thumb: "https://i.ibb.co/yFYVpnYc/674582170-828702483047185-2404788357332388730-n-1.png", full: "https://i.ibb.co/PGW9TY5C/680375103-1466845035174408-393904534670594113-n-1.png" },
       { thumb: "https://i.ibb.co/yFYVpnYc/674582170-828702483047185-2404788357332388730-n-1.png", full: "https://i.ibb.co/PGW9TY5C/680375103-1466845035174408-393904534670594113-n-1.png" }
     ],
-    category: "Necklaces",
+    category: "North Star",
     dateAdded: "2026-05-03",
     description: "قلادة نجمة الشمال الملكية بحجم لافت يمزج بين بريق الذهب ونقاء الفضة قطعة استثنائية تعكس التميز والفخامة في آنٍ واحد"
   },
