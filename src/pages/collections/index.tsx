@@ -161,15 +161,16 @@ export function Collection() {
                 return (
                   <div
                     key={virtualRow.index}
+                    ref={virtualizer.measureElement}
+                    data-index={virtualRow.index}
                     style={{
                       position: 'absolute',
                       top: 0,
                       left: 0,
                       width: '100%',
-                      height: `${virtualRow.size}px`,
                       transform: `translateY(${virtualRow.start}px)`,
                     }}
-                    className={`grid grid-cols-2 lg:grid-cols-3 gap-x-6 pb-12`}
+                    className={`grid grid-cols-2 lg:grid-cols-3 gap-x-4 sm:gap-x-6 pb-6 sm:pb-12`}
                   >
                     {rowProducts.map(product => (
                       <ProductCard 

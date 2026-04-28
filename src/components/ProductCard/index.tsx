@@ -24,7 +24,7 @@ export const ProductCard = memo(({ product, onClick }: ProductCardProps) => {
 
   return (
     <div 
-      className="group cursor-pointer flex flex-col gap-3 bg-gradient-to-br from-gold-light via-[#F9F6E5] to-gold-soft border border-gold-primary/20 p-4 rounded-2xl shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-500 ease-in-out"
+      className="group cursor-pointer flex flex-col h-auto justify-between gap-3 sm:gap-4 bg-gradient-to-br from-gold-light via-[#F9F6E5] to-gold-soft border border-gold-primary/20 p-3 sm:p-4 rounded-2xl shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-500 ease-in-out"
       onClick={() => onClick(product)}
     >
       <div className="relative aspect-[4/5] overflow-hidden bg-natural-img rounded-xl flex items-center justify-center">
@@ -51,9 +51,9 @@ export const ProductCard = memo(({ product, onClick }: ProductCardProps) => {
         </div>
       </div>
       
-      <div className="flex flex-col items-center text-center">
-        <h3 className="en-title text-base text-natural-text mb-1">{product.name}</h3>
-        <div className="flex items-center gap-3">
+      <div className="flex flex-col items-center justify-between flex-grow text-center mt-auto">
+        <h3 className="en-title text-sm sm:text-base text-natural-text mb-1 sm:mb-2">{product.name}</h3>
+        <div className="flex items-center gap-2 sm:gap-3">
           <span className="en-text text-natural-accent font-bold">{product.price} EGP</span>
           {product.oldPrice && (
             <span className="en-text text-natural-secondary-text line-through text-sm">{product.oldPrice} EGP</span>
