@@ -4,6 +4,7 @@ import { products, CartItem } from '../../data';
 import { Minus, Plus, Trash2, ArrowRight, X } from 'lucide-react';
 import { PageTitle } from '../../components/PageTitle';
 import { useAppState, useUI, useCart } from '../../state';;
+import { UI_CONSTANTS } from '../../constants';
 
 export function Cart({ cartItems, onRemove, onUpdateQuantity }: { cartItems: CartItem[], onRemove: (id: string) => void, onUpdateQuantity: (id: string, q: number) => void }) {
   const { onNavigate } = useAppState();
@@ -129,6 +130,11 @@ export function Cart({ cartItems, onRemove, onUpdateQuantity }: { cartItems: Car
                 <span>المجموع الفرعي</span>
                 <span className="en-text font-medium text-natural-text">{subtotal} EGP</span>
               </div>
+              {subtotal < UI_CONSTANTS.SHIPPING_THRESHOLD && (
+                 <div className="flex justify-between items-center text-xs text-amber-600">
+                    <span>يتبقى {UI_CONSTANTS.SHIPPING_THRESHOLD - subtotal} EGP للشحن المجاني</span>
+                 </div>
+              )}
             </div>
 
             <div className="flex justify-between items-center mb-8">

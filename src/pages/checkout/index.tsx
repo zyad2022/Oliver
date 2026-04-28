@@ -56,7 +56,7 @@ export function Checkout() {
     try {
       await placeOrder(methodLabel);
       
-      const phoneNumber = "201550240629";
+      const phoneNumber = UI_CONSTANTS.WHATSAPP_NUMBER;
       const intentUrl = `whatsapp://send?phone=${phoneNumber}&text=${encodedMessage}`;
       const webUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
       

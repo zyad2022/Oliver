@@ -71,8 +71,6 @@ export const AppRoutes: React.FC = () => {
         <Route path="/checkout" element={<AuthRoute element={<Checkout />} />} />
         <Route path="/privacy" element={<PrivacyPolicy />} />
         <Route path="/terms" element={<TermsOfService />} />
-        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-        <Route path="/terms-of-service" element={<TermsOfService />} />
         <Route path="*" element={<RedirectToHome />} />
       </Routes>
     </Suspense>

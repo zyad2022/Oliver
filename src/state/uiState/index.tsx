@@ -28,16 +28,18 @@ export const UIProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const openModal = React.useCallback((type: ModalState['type'], data?: any) => {
     if (type) {
       setLastScrollPos(window.scrollY);
+      document.body.style.overflow = 'hidden';
     }
     setActiveModal({ type, data });
   }, []);
 
   const closeModal = React.useCallback(() => {
     setActiveModal({ type: null });
-    // setTimeout(() => {
-    //   window.scrollTo({ top: lastScrollPos, behavior: 'instant' });
-    // }, 10);
-  }, []);
+    document.body.style.overflow = 'unset';
+    setTimeout(() => {
+      window.scrollTo({ top: lastScrollPos, behavior: 'auto' });
+    }, 10);
+  }, [lastScrollPos]);
 
   const value = React.useMemo(() => ({
     activeModal, 

@@ -7,6 +7,7 @@ import { useAppState, useUI } from '../../state';
 import { useSearchParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { fetchProducts } from '../../services/api';
+import { UI_CONSTANTS } from '../../constants';
 
 const SHOW_PRODUCT_THUMBNAILS = false;
 
@@ -67,7 +68,7 @@ export function ProductPage({ product: propProduct, onAddToCart, isQuickAdd }: P
   const mainImage = galleryList[selectedImageIndex]?.full || galleryList[0].full;
 
   const handleIncrease = () => {
-    if (quantity < 10) setQuantity((prev) => prev + 1);
+    if (quantity < UI_CONSTANTS.MAX_CART_QUANTITY) setQuantity((prev) => prev + 1);
   };
 
   const handleDecrease = () => {
@@ -172,7 +173,7 @@ export function ProductPage({ product: propProduct, onAddToCart, isQuickAdd }: P
           <div className={`flex flex-col gap-4 py-6 border-t border-b border-natural-border ${isQuickAdd ? 'hidden sm:flex' : ''}`}>
             <div className="flex items-center gap-4 text-[#666]">
               <Truck size={24} strokeWidth={1.5} />
-              <p className="font-light">توصيل مجاني داخل مصر للطلبات التي تبلغ 300 جنيه مصري أو أكثر</p>
+              <p className="font-light">{UI_CONSTANTS.SHIPPING_TEXT_AR}</p>
             </div>
           </div>
 
