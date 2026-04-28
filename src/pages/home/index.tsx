@@ -16,39 +16,94 @@ export function Home() {
       className="flex flex-col w-full relative z-10"
     >
       {/* 1. HERO SECTION */}
-      <section className="relative min-h-[85vh] w-full flex flex-col items-center justify-center">
+      <section className="relative min-h-[85vh] w-full flex flex-col items-center justify-center overflow-hidden">
         
-        {/* Soft luxury radial glow */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70vw] h-[70vw] max-w-[900px] max-h-[900px] bg-gradient-to-tr from-gold-primary/10 via-gold-soft/40 to-transparent rounded-full blur-[100px] pointer-events-none opacity-80" />
+        {/* Background Slow Zoom */}
+        <motion.div
+          initial={{ scale: 1 }}
+          animate={{ scale: 1.05 }}
+          transition={{ 
+            duration: 20, 
+            ease: "linear", 
+            repeat: Infinity, 
+            repeatType: "reverse" 
+          }}
+          className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none"
+        >
+          {/* Soft luxury radial glow */}
+          <div className="w-[80vw] h-[80vw] max-w-[1000px] max-h-[1000px] bg-gradient-to-tr from-gold-primary/10 via-gold-soft/30 to-transparent rounded-full blur-[120px] opacity-80" />
+        </motion.div>
         
         <div className="relative z-10 flex flex-col items-center justify-center text-center px-4 w-full">
           <motion.div 
-            initial={{ scale: 0.96, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+            initial="hidden"
+            animate="visible"
+            variants={{
+              hidden: { opacity: 0 },
+              visible: {
+                opacity: 1,
+                transition: {
+                  staggerChildren: 0.3,
+                  delayChildren: 0.2,
+                }
+              }
+            }}
             className="flex flex-col items-center max-w-3xl"
           >
             {/* Center Logo with Breathing Space and Halo */}
             <div className="relative mb-10 mt-8">
-              <div className="absolute inset-0 bg-gold-primary/5 blur-[80px] rounded-full scale-150" />
-              <h1 className="relative text-7xl md:text-8xl lg:text-9xl font-serif text-stone-900 tracking-[0.15em] uppercase en-title drop-shadow-sm">
+              {/* Logo Glow Pulse */}
+              <motion.div 
+                animate={{ 
+                  opacity: [0.4, 0.8, 0.4],
+                  scale: [1, 1.15, 1]
+                }}
+                transition={{
+                  duration: 4,
+                  ease: "easeInOut",
+                  repeat: Infinity
+                }}
+                className="absolute inset-0 bg-gold-primary/20 blur-[60px] rounded-full pointer-events-none" 
+              />
+              
+              <motion.h1 
+                variants={{
+                  hidden: { y: 60, opacity: 0 },
+                  visible: { 
+                    y: 0, 
+                    opacity: 1, 
+                    transition: { duration: 1.2, ease: [0.16, 1, 0.3, 1] } 
+                  }
+                }}
+                className="relative text-7xl md:text-8xl lg:text-9xl font-serif text-stone-900 tracking-[0.15em] uppercase en-title drop-shadow-sm m-0"
+              >
                 Oliver
-              </h1>
+              </motion.h1>
             </div>
             
             <motion.p 
-              initial={{ y: 15, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.4, duration: 1, ease: 'easeOut' }}
+              variants={{
+                hidden: { y: 20, opacity: 0 },
+                visible: { 
+                  y: 0, 
+                  opacity: 1, 
+                  transition: { duration: 1, ease: [0.25, 0.1, 0.25, 1] } 
+                }
+              }}
               className="font-arabic text-xl md:text-2xl text-stone-600 mb-14 font-light leading-relaxed max-w-xl relative"
             >
               إشراقة يومية بلمسات من الأناقة التي لا تفقد بريقها
             </motion.p>
             
             <motion.div 
-              initial={{ y: 15, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.6, duration: 1, ease: 'easeOut' }}
+              variants={{
+                hidden: { y: 20, opacity: 0 },
+                visible: { 
+                  y: 0, 
+                  opacity: 1, 
+                  transition: { duration: 1, ease: [0.25, 0.1, 0.25, 1] } 
+                }
+              }}
               className="luxury-pill-outer hover:scale-105 transition-transform duration-500 bg-white/30 backdrop-blur-md"
             >
               <button 
