@@ -172,7 +172,7 @@ export function ProductPage({ product: propProduct, onAddToCart, isQuickAdd }: P
           <div className={`flex flex-col gap-4 py-6 border-t border-b border-natural-border ${isQuickAdd ? 'hidden sm:flex' : ''}`}>
             <div className="flex items-center gap-4 text-[#666]">
               <Truck size={24} strokeWidth={1.5} />
-              <p className="font-light">توصيل مجاني داخل مصر للطلبات التي تبلغ 1000 جنيه مصري أو أكثر</p>
+              <p className="font-light">توصيل مجاني داخل مصر للطلبات التي تبلغ 300 جنيه مصري أو أكثر</p>
             </div>
           </div>
 

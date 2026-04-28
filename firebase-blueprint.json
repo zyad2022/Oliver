@@ -39,6 +39,18 @@
         "createdAt": { "type": "timestamp" }
       },
       "required": ["name", "comment", "rating", "createdAt"]
+    },
+    "ContactMessage": {
+      "title": "Contact Message",
+      "description": "Stores messages sent via the contact form.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "message": { "type": "string" },
+        "createdAt": { "type": "timestamp" }
+      },
+      "required": ["name", "email", "message", "createdAt"]
     }
   },
   "firestore": {
@@ -53,6 +65,10 @@
     "/reviews/{reviewId}": {
       "schema": { "$ref": "#/entities/Review" },
       "description": "Customer reviews collection."
+    },
+    "/contact_messages/{messageId}": {
+      "schema": { "$ref": "#/entities/ContactMessage" },
+      "description": "Messages from the contact form."
     }
   }
 }
