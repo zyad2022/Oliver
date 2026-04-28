@@ -191,21 +191,21 @@ export function Home() {
             <div 
               className="group cursor-pointer bg-gradient-to-br from-gold-light via-[#F9F6E5] to-gold-soft border border-gold-primary/20 p-4 rounded-2xl shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-500 ease-in-out flex flex-col"
               onClick={() => {
-                onNavigate('product?id=1');
+                onNavigate('product?id=13');
               }}
             >
               <div className="relative aspect-[4/5] rounded-[24px] overflow-hidden mb-5">
                 <img 
-                  src="https://i.ibb.co/fVcWYJH9/details-H-1.png" 
-                  alt="Symbol Of Love & Elegance" 
+                  src="https://i.ibb.co/yF0J5g9g/680375103-1466845035174408-393904534670594113-n-1.png" 
+                  alt="Gold & Silver North Star (Large size)" 
                   className="w-full h-full object-cover object-center transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-transparent group-hover:bg-[#D4AF37]/20 transition-all duration-500 pointer-events-none" />
               </div>
               <div className="flex flex-col items-center text-center pb-2">
-                <h3 className="en-title text-base text-natural-text mb-1 group-hover:text-gold-deep transition-colors">Symbol Of Love & Elegance</h3>
+                <h3 className="en-title text-base text-natural-text mb-1 group-hover:text-gold-deep transition-colors">Gold & Silver North Star (Large size)</h3>
                 <div className="flex items-center gap-3">
-                  <span className="en-text text-natural-accent font-bold">80 EGP</span>
+                  <span className="en-text text-natural-accent font-bold">120 EGP</span>
                 </div>
               </div>
             </div>
@@ -214,22 +214,21 @@ export function Home() {
             <div 
               className="group cursor-pointer bg-gradient-to-br from-gold-light via-[#F9F6E5] to-gold-soft border border-gold-primary/20 p-4 rounded-2xl shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-500 ease-in-out flex flex-col"
               onClick={() => {
-                onNavigate('product?id=2');
+                onNavigate('product?id=11');
               }}
             >
               <div className="relative aspect-[4/5] rounded-[24px] overflow-hidden mb-5">
                 <img 
-                  src="https://i.ibb.co/v6Xy7CcQ/672588038-2001103607154376-2871997865707591592-n-1.png" 
-                  alt="Like a Swan" 
+                  src="https://i.ibb.co/dwpTMwgB/677795446-1517056107097261-4897403476822941281-n-1.png" 
+                  alt="Silver North Star (Large size)" 
                   className="w-full h-full object-cover object-center transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-transparent group-hover:bg-[#D4AF37]/20 transition-all duration-500 pointer-events-none" />
               </div>
               <div className="flex flex-col items-center text-center pb-2">
-                <h3 className="en-title text-base text-natural-text mb-1 group-hover:text-gold-deep transition-colors">Like a Swan</h3>
+                <h3 className="en-title text-base text-natural-text mb-1 group-hover:text-gold-deep transition-colors">Silver North Star (Large size)</h3>
                 <div className="flex items-center gap-3">
                   <span className="en-text text-natural-accent font-bold">120 EGP</span>
-                  <span className="en-text text-natural-secondary-text line-through text-sm">170 EGP</span>
                 </div>
               </div>
             </div>
@@ -238,21 +237,21 @@ export function Home() {
             <div 
               className="group cursor-pointer bg-gradient-to-br from-gold-light via-[#F9F6E5] to-gold-soft border border-gold-primary/20 p-4 rounded-2xl shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-500 ease-in-out flex flex-col"
               onClick={() => {
-                onNavigate('product?id=6');
+                onNavigate('product?id=10');
               }}
             >
               <div className="relative aspect-[4/5] rounded-[24px] overflow-hidden mb-5">
                 <img 
-                  src="https://i.ibb.co/fYgT1YYn/details-H-1.png" 
-                  alt="Green Stone Jewel" 
+                  src="https://i.ibb.co/xtxYdhs1/679705912-1280731207497067-3453457073751169632-n-1.png" 
+                  alt="Gold North Star (Large size)" 
                   className="w-full h-full object-cover object-center transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-transparent group-hover:bg-[#D4AF37]/20 transition-all duration-500 pointer-events-none" />
               </div>
               <div className="flex flex-col items-center text-center pb-2">
-                <h3 className="en-title text-base text-natural-text mb-1 group-hover:text-gold-deep transition-colors">Green Stone Jewel</h3>
+                <h3 className="en-title text-base text-natural-text mb-1 group-hover:text-gold-deep transition-colors">Gold North Star (Large size)</h3>
                 <div className="flex items-center gap-3">
-                  <span className="en-text text-natural-accent font-bold">100 EGP</span>
+                  <span className="en-text text-natural-accent font-bold">120 EGP</span>
                 </div>
               </div>
             </div>
@@ -261,22 +260,21 @@ export function Home() {
             <div 
               className="group cursor-pointer bg-gradient-to-br from-gold-light via-[#F9F6E5] to-gold-soft border border-gold-primary/20 p-4 rounded-2xl shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-500 ease-in-out flex flex-col"
               onClick={() => {
-                onNavigate('product?id=4');
+                onNavigate('product?id=12');
               }}
             >
               <div className="relative aspect-[4/5] rounded-[24px] overflow-hidden mb-5">
                 <img 
-                  src="https://i.ibb.co/7Hc2rnq/673417208-1618558772732546-2444480640670586524-n-1.png" 
-                  alt="New Swan (Gold plated)" 
+                  src="https://i.ibb.co/1tTMGRhj/677755509-1352480736690317-4955107282099352070-n-1.png" 
+                  alt="Gold & Silver North Star (Medium size)" 
                   className="w-full h-full object-cover object-center transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-transparent group-hover:bg-[#D4AF37]/20 transition-all duration-500 pointer-events-none" />
               </div>
               <div className="flex flex-col items-center text-center pb-2">
-                <h3 className="en-title text-base text-natural-text mb-1 group-hover:text-gold-deep transition-colors">New Swan (Gold plated)</h3>
+                <h3 className="en-title text-base text-natural-text mb-1 group-hover:text-gold-deep transition-colors">Gold & Silver North Star (Medium size)</h3>
                 <div className="flex items-center gap-3">
                   <span className="en-text text-natural-accent font-bold">120 EGP</span>
-                  <span className="en-text text-natural-secondary-text line-through text-sm">200 EGP</span>
                 </div>
               </div>
             </div>

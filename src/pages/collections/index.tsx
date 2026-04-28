@@ -8,7 +8,7 @@ import { useQuery } from '@tanstack/react-query';
 import { fetchProducts } from '../../services/api';
 import { useWindowVirtualizer } from '@tanstack/react-virtual';
 
-type PriceFilter = '10-100' | '150-300' | '300-600' | '600+';
+type PriceFilter = '10-50' | '50-100' | '100-200' | '200+';
 type SortOption = 'default' | 'newest' | 'price-asc' | 'price-desc';
 
 export function Collection() {
@@ -50,10 +50,10 @@ export function Collection() {
     if (activePriceFilters.length > 0) {
       result = result.filter(p => {
         return activePriceFilters.some(filter => {
-          if (filter === '10-100') return p.price >= 10 && p.price <= 100;
-          if (filter === '150-300') return p.price > 150 && p.price <= 300;
-          if (filter === '300-600') return p.price > 300 && p.price <= 600;
-          if (filter === '600+') return p.price > 600;
+          if (filter === '10-50') return p.price >= 10 && p.price <= 50;
+          if (filter === '50-100') return p.price > 50 && p.price <= 100;
+          if (filter === '100-200') return p.price > 100 && p.price <= 200;
+          if (filter === '200+') return p.price > 200;
           return false;
         });
       });
@@ -221,37 +221,37 @@ export function Collection() {
                 <input 
                   type="checkbox" 
                   className="w-4 h-4 accent-gold-primary rounded cursor-pointer border-gold-primary/30"
-                  checked={activePriceFilters.includes('10-100')}
-                  onChange={() => togglePriceFilter('10-100')}
+                  checked={activePriceFilters.includes('10-50')}
+                  onChange={() => togglePriceFilter('10-50')}
                 />
-                <span className="en-text text-sm group-hover:-translate-x-1 transition-transform">10 - 100 EGP</span>
+                <span className="en-text text-sm group-hover:-translate-x-1 transition-transform">10 - 50 EGP</span>
               </label>
               <label className="flex items-center gap-3 text-natural-secondary-text cursor-pointer group hover:text-gold-deep transition-colors">
                 <input 
                   type="checkbox" 
                   className="w-4 h-4 accent-gold-primary rounded cursor-pointer border-gold-primary/30"
-                  checked={activePriceFilters.includes('150-300')}
-                  onChange={() => togglePriceFilter('150-300')}
+                  checked={activePriceFilters.includes('50-100')}
+                  onChange={() => togglePriceFilter('50-100')}
                 />
-                <span className="en-text text-sm group-hover:-translate-x-1 transition-transform">150 - 300 EGP</span>
+                <span className="en-text text-sm group-hover:-translate-x-1 transition-transform">50 - 100 EGP</span>
               </label>
               <label className="flex items-center gap-3 text-natural-secondary-text cursor-pointer group hover:text-gold-deep transition-colors">
                 <input 
                   type="checkbox" 
                   className="w-4 h-4 accent-gold-primary rounded cursor-pointer border-gold-primary/30"
-                  checked={activePriceFilters.includes('300-600')}
-                  onChange={() => togglePriceFilter('300-600')}
+                  checked={activePriceFilters.includes('100-200')}
+                  onChange={() => togglePriceFilter('100-200')}
                 />
-                <span className="en-text text-sm group-hover:-translate-x-1 transition-transform">300 - 600 EGP</span>
+                <span className="en-text text-sm group-hover:-translate-x-1 transition-transform">100 - 200 EGP</span>
               </label>
               <label className="flex items-center gap-3 text-natural-secondary-text cursor-pointer group hover:text-gold-deep transition-colors">
                 <input 
                   type="checkbox" 
                   className="w-4 h-4 accent-gold-primary rounded cursor-pointer border-gold-primary/30"
-                  checked={activePriceFilters.includes('600+')}
-                  onChange={() => togglePriceFilter('600+')}
+                  checked={activePriceFilters.includes('200+')}
+                  onChange={() => togglePriceFilter('200+')}
                 />
-                <span className="en-text text-sm group-hover:-translate-x-1 transition-transform">600+ EGP</span>
+                <span className="en-text text-sm group-hover:-translate-x-1 transition-transform">200+ EGP</span>
               </label>
             </div>
           </div>
