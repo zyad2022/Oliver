@@ -23,10 +23,10 @@ export function AuthModal({ isOpen, onClose, onLogin }: AuthModalProps) {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
     } else {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = '';
     }
     return () => {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = '';
     };
   }, [isOpen]);
 
@@ -88,9 +88,8 @@ export function AuthModal({ isOpen, onClose, onLogin }: AuthModalProps) {
       }
 
       onLogin();
-      // Fix visual lock issues and force refresh to home
-      document.body.style.overflow = 'unset';
-      window.location.href = '/';
+      // Fix visual lock issues
+      document.body.style.overflow = '';
     } catch (err: any) {
       console.error('Google Auth Error:', err);
       if (err.code === 'auth/popup-closed-by-user' || err.code === 'auth/cancelled-popup-request') {

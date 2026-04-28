@@ -27,6 +27,13 @@ const Loader = () => (
   </div>
 );
 
+const AuthRoute: React.FC<{ element: React.ReactNode }> = ({ element }) => {
+  const { isLoggedIn, isAuthLoaded } = useAppState();
+  if (!isAuthLoaded) return <Loader />;
+  if (!isLoggedIn) return <RedirectToHome />;
+  return <>{element}</>;
+};
+
 export const AppRoutes: React.FC = () => {
   const { isLoggedIn } = useAppState();
   const { selectedProduct } = useUI();
@@ -59,13 +66,9 @@ export const AppRoutes: React.FC = () => {
             onUpdateQuantity={updateCartQuantity}
           />
         } />
-        <Route path="/profile" element={
-          isLoggedIn ? <Profile /> : <RedirectToHome />
-        } />
+        <Route path="/profile" element={<AuthRoute element={<Profile />} />} />
         <Route path="/orders" element={<RedirectToHome />} />
-        <Route path="/checkout" element={
-          isLoggedIn ? <Checkout /> : <RedirectToHome />
-        } />
+        <Route path="/checkout" element={<AuthRoute element={<Checkout />} />} />
         <Route path="/privacy" element={<PrivacyPolicy />} />
         <Route path="/terms" element={<TermsOfService />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />

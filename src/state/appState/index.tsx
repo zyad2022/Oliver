@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 interface AppState {
   currentUser: FirebaseUser | null;
   isLoggedIn: boolean;
+  isAuthLoaded: boolean;
   logout: () => Promise<void>;
   onNavigate: (page: string, options?: { replace?: boolean }) => void;
   prevPage: string | null;
@@ -18,6 +19,7 @@ const AppStateContext = createContext<AppState | undefined>(undefined);
 export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [currentUser, setCurrentUser] = useState<FirebaseUser | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isAuthLoaded, setIsAuthLoaded] = useState(false);
   const [prevPage, setPrevPage] = useState<string | null>(null);
   const [navHistory, setNavHistory] = useState<{ path: string; scroll: number }[]>([]);
   const navigate = useNavigate();
@@ -26,7 +28,7 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
     // Handle redirect result from Google login
     const handleRedirectResult = async () => {
       // Force clear any body lock left over from mobile popup attempt
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = '';
       
       try {
         const result = await getRedirectResult(auth);
@@ -44,8 +46,8 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
             });
           }
           
-          // Redirect to homepage & reload after successful login
-          window.location.href = '/';
+          document.body.style.overflow = '';
+          navigate('/');
         }
       } catch (error) {
         console.error('Error handling redirect result:', error);
@@ -56,10 +58,11 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       // Ensure UI is updated and clean up any lock
       if (user) {
-        document.body.style.overflow = 'unset';
+        document.body.style.overflow = '';
       }
       setCurrentUser(user);
       setIsLoggedIn(!!user);
+      setIsAuthLoaded(true);
     });
     return () => unsubscribe();
   }, []);
@@ -144,8 +147,8 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
   }, [navigate, navHistory]);
 
   const value = React.useMemo(() => ({
-    currentUser, isLoggedIn, logout, onNavigate, prevPage
-  }), [currentUser, isLoggedIn, logout, onNavigate, prevPage]);
+    currentUser, isLoggedIn, isAuthLoaded, logout, onNavigate, prevPage
+  }), [currentUser, isLoggedIn, isAuthLoaded, logout, onNavigate, prevPage]);
 
   return (
     <AppStateContext.Provider value={value}>

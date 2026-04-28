@@ -145,13 +145,13 @@ body::after {
 html {
   font-family: var(--font-arabic);
   color: var(--color-natural-text);
-  overflow-x: hidden;
+  /* overflow-x managed by wrapper to prevent iOS Safari freeze */
 }
 
 body {
   font-family: var(--font-arabic);
   color: var(--color-natural-text);
-  overflow-x: hidden;
+  /* overflow-x managed by wrapper to prevent iOS Safari freeze */
 }
 
 .en-text {

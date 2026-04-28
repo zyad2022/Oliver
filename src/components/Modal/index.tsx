@@ -12,7 +12,7 @@ import { Product } from '../../data';
 const ModalOverlay: React.FC<{ children: React.ReactNode; onClose: () => void }> = ({ children, onClose }) => {
   React.useEffect(() => {
     document.body.style.overflow = 'hidden';
-    return () => { document.body.style.overflow = 'unset'; };
+    return () => { document.body.style.overflow = ''; };
   }, []);
 
   return (
@@ -45,7 +45,14 @@ const ModalOverlay: React.FC<{ children: React.ReactNode; onClose: () => void }>
 export const ModalSystem: React.FC = () => {
   const { activeModal, closeModal, setShouldOpenAuth } = useUI();
   const { addToCart } = useCart();
-  const { onNavigate, isLoggedIn } = useAppState();;
+  const { onNavigate, isLoggedIn } = useAppState();
+
+  React.useEffect(() => {
+    if (isLoggedIn && (activeModal.type === 'auth' || activeModal.type === 'auth-required')) {
+      closeModal();
+      document.body.style.overflow = '';
+    }
+  }, [isLoggedIn, activeModal.type, closeModal]);
 
   return (
     <AnimatePresence>

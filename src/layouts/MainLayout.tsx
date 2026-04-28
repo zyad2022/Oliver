@@ -31,7 +31,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col font-arabic">
+    <div className="min-h-screen flex flex-col font-arabic overflow-x-hidden relative">
       <Header 
         cartCount={cartItems.reduce((acc, item) => acc + item.cartQuantity, 0)} 
         currentPage={location.pathname === '/' ? 'home' : location.pathname.substring(1)} 
