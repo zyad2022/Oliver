@@ -72,9 +72,13 @@ export function Collection() {
         break;
       case 'default':
       default:
-        // Use ID for default consistent sorting
-        result.sort((a, b) => parseInt(a.id) - parseInt(b.id));
-        break;
+       // أحدث منتج يظهر أولًا
+       result.sort((a, b) => {
+        const dateA = new Date(a.dateAdded || 0).getTime();
+        const dateB = new Date(b.dateAdded || 0).getTime();
+        return dateB - dateA;
+      });
+      break;
     }
 
     return result;
