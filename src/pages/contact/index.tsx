@@ -34,6 +34,10 @@ export function Contact() {
           {/* Email Block */}
           <a
             href="mailto:oliver.brand.market@gmail.com"
+            onClick={(e) => {
+              e.preventDefault();
+              window.location.href = 'mailto:oliver.brand.market@gmail.com';
+            }}
             className="flex flex-col items-center gap-4 p-8 rounded-2xl bg-gold-primary/5 hover:bg-gold-primary/10 border border-transparent hover:border-gold-primary/30 transition-all cursor-pointer w-full group"
           >
             <div className="w-16 h-16 rounded-full bg-white text-gold-primary shadow-sm flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
