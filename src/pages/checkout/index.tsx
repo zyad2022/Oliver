@@ -4,6 +4,7 @@ import { motion } from 'motion/react';
 import { useCart, useAppState } from '../../state';
 import { PageTitle } from '../../components/PageTitle';
 import { X, Check, Truck, Smartphone } from 'lucide-react';
+import { UI_CONSTANTS } from '../../constants';
 
 export function Checkout() {
   const { cartItems, placeOrder } = useCart();
@@ -15,6 +16,12 @@ export function Checkout() {
   const total = subtotal;
 
   const handlePlaceOrderClick = () => {
+    if (cartItems.length === 0) {
+      alert('السلة فارغة. يرجى إضافة منتجات أولاً.');
+      onNavigate('home');
+      return;
+    }
+
     if (!selectedMethod) {
       alert('الرجاء اختيار طريقة الدفع أولاً');
       return;
@@ -22,9 +29,9 @@ export function Checkout() {
 
     const methodLabel = selectedMethod === 'vodafone' ? 'Vodafone Cash' : 'Cash on Delivery';
     
-    // Generate WhatsApp message
+    // Build Safe Order Info
     const orderItemsText = cartItems
-      .map(item => `• ${item.name} × ${item.cartQuantity} — ${item.price * item.cartQuantity} EGP`)
+      .map(item => `• ${item.name || 'منتج'} × ${item.cartQuantity || 1} — ${(item.price || 0) * (item.cartQuantity || 1)} EGP`)
       .join('\n');
 
     const customerName = currentUser?.displayName || currentUser?.email || 'عميل';
@@ -54,39 +61,40 @@ export function Checkout() {
   const executeOrderCompletion = async (encodedMessage: string, methodLabel: string) => {
     setIsPlacingOrder(true);
     try {
+      console.log('Initiating checkout for method:', methodLabel);
+      
+      // Perform order placement (clears cart)
       await placeOrder(methodLabel);
       
       const phoneNumber = UI_CONSTANTS.WHATSAPP_NUMBER;
+      if (!phoneNumber) {
+        throw new Error('WhatsApp number is not configured in constants.');
+      }
+
       const intentUrl = `whatsapp://send?phone=${phoneNumber}&text=${encodedMessage}`;
       const webUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
       
+      console.log('Redirecting to WhatsApp:', webUrl);
+
       const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 768;
 
       if (isMobile) {
-        const now = Date.now();
-        let hasNavigated = false;
-
-        const handleVisibilityChange = () => {
-          if (document.hidden) {
-            hasNavigated = true;
-          }
-        };
-
-        document.addEventListener('visibilitychange', handleVisibilityChange);
+        // Attempt deep link first, fallback to web
+        const start = Date.now();
         window.location.href = intentUrl;
 
         setTimeout(() => {
-          document.removeEventListener('visibilitychange', handleVisibilityChange);
-          // If we haven't navigated and it's been less than 1000ms (to account for slightly delayed executions without app)
-          if (!hasNavigated && !document.hidden) {
+          // If we are still here after 500ms, it likely didn't open the app or worked silently
+          if (Date.now() - start < 1500) {
             window.location.href = webUrl;
           }
         }, 500);
       } else {
         window.location.href = webUrl;
       }
-    } catch (error) {
-      alert('حدث خطأ أثناء إتمام الطلب. يرجى المحاولة مرة أخرى.');
+    } catch (error: any) {
+      console.error('Checkout error details:', error);
+      alert(`حدث خطأ أثناء إتمام الطلب: ${error?.message || 'Unknown error'}`);
     } finally {
       setIsPlacingOrder(false);
     }

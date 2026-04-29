@@ -61,12 +61,25 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const clearCart = React.useCallback(() => setCartItems([]), []);
 
   const placeOrder = React.useCallback(async (paymentMethod: string) => {
-    if (!currentUser || cartItems.length === 0) return;
+    if (!currentUser) {
+      throw new Error('يجب تسجيل الدخول لإتمام الطلب');
+    }
+    
+    if (cartItems.length === 0) {
+      throw new Error('السلة فارغة');
+    }
 
     try {
+      console.log('Placing order with method:', paymentMethod, 'Items:', cartItems.length);
+      // In a real app, you might send this to a backend here.
+      // For this WhatsApp-based flow, we just clear the cart locally.
       clearCart();
+      
+      // Ensure localStorage is also cleared (clearCart already updates state, which triggers persistence)
+      localStorage.removeItem('oliver_cart_v1');
     } catch (error) {
-      console.error('Error placing order:', error);
+      console.error('CRITICAL: Error during order placement logic:', error);
+      throw error;
     }
   }, [currentUser, cartItems, clearCart]);
 
