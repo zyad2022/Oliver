@@ -25,13 +25,17 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
     if (showMessage === "true") {
       setToastMessage("من فضلك قم بتسجيل الدخول أولاً لإكمال الطلب");
       localStorage.removeItem("auth_required_message");
-      
+    }
+  }, [location.pathname]);
+
+  useEffect(() => {
+    if (toastMessage) {
       const timer = setTimeout(() => {
         setToastMessage(null);
       }, 3000);
       return () => clearTimeout(timer);
     }
-  }, [location.pathname]);
+  }, [toastMessage]);
 
   React.useEffect(() => {
     if (shouldOpenAuth && location.pathname === '/') {
