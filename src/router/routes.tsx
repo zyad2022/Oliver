@@ -30,7 +30,10 @@ const Loader = () => (
 const AuthRoute: React.FC<{ element: React.ReactNode }> = ({ element }) => {
   const { isLoggedIn, isAuthLoaded } = useAppState();
   if (!isAuthLoaded) return <Loader />;
-  if (!isLoggedIn) return <RedirectToHome />;
+  if (!isLoggedIn) {
+    localStorage.setItem("auth_required_message", "true");
+    return <RedirectToHome />;
+  }
   return <>{element}</>;
 };
 
