@@ -28,7 +28,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
       
       const timer = setTimeout(() => {
         setToastMessage(null);
-      }, 4000);
+      }, 3000);
       return () => clearTimeout(timer);
     }
   }, [location.pathname]);
@@ -53,6 +53,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
             initial={{ opacity: 0, y: -20, x: "-50%" }}
             animate={{ opacity: 1, y: 0, x: "-50%" }}
             exit={{ opacity: 0, y: -20, x: "-50%" }}
+            transition={{ duration: 0.3 }}
             className="fixed top-24 left-1/2 z-[200] bg-red-500 text-white px-6 py-3 rounded-full shadow-xl font-medium text-center w-[90%] max-w-sm text-sm sm:text-base pointer-events-none"
           >
             {toastMessage}
